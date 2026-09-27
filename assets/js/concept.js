@@ -1,6 +1,6 @@
 /**
  * Concept Page - Enhanced Navigation
- * Handles smooth scrolling to showreel video
+ * Handles smooth scrolling to showreel video and auto-play
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,16 +19,24 @@ document.addEventListener('DOMContentLoaded', () => {
           // Close menu if open
           const menuWrapper = document.querySelector('.nav-menu-wrapper');
           if (menuWrapper && menuWrapper.dataset.menuOpen === 'true') {
-            const closer = menuWrapper.querySelector('.menu-icon-wrap');
+            const closer = menuWrapper.querySelector('.menu-icon-wrap.long');
             if (closer) closer.click();
           }
 
-          // Smooth scroll to showreel
+          // Scroll to showreel and open lightbox
           setTimeout(() => {
             showreelSection.scrollIntoView({
               behavior: 'smooth',
               block: 'center'
             });
+
+            // Click the lightbox to open the video
+            setTimeout(() => {
+              const lightboxLink = document.querySelector('.light-box a.w-lightbox');
+              if (lightboxLink) {
+                lightboxLink.click();
+              }
+            }, 600);
           }, 100);
         }
       }
@@ -44,6 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
           behavior: 'smooth',
           block: 'center'
         });
+
+        // Click the lightbox to open the video
+        setTimeout(() => {
+          const lightboxLink = document.querySelector('.light-box a.w-lightbox');
+          if (lightboxLink) {
+            lightboxLink.click();
+          }
+        }, 800);
       }
     }, 500);
   }
