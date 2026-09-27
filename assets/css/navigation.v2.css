@@ -27,3 +27,21 @@
 .site-video { aspect-ratio: 16 / 9; padding-top: 0 !important; }
 .site-video iframe { border: 0; }
 .video-fallback { text-align: center; margin: 16px 0 32px; }
+
+/* Hide empty dropdown toggle button */
+.dropdown-toggle:empty {
+  display: none !important;
+}
+
+/* Fix "The What" section - remove right push */
+.blocktext.rightmove {
+  text-align: left !important;
+  padding-right: inherit !important;
+  position: static !important;
+  left: 0 !important;
+}
+
+/* Keep heading aligned right */
+.lightheading.right {
+  text-align: right;
+}
