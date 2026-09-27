@@ -1,0 +1,29 @@
+/* Navigation repairs, kept separate from the original Webflow export. */
+.w-webflow-badge { display: none !important; }
+.nav-menu-wrapper, .nav-menu-wrapper:hover, .nav-menu-wrapper:active { display: block; }
+.nav-menu-wrapper[data-menu-open="false"] { visibility: hidden; pointer-events: none; }
+.nav-menu-wrapper[data-menu-open="true"] { visibility: visible; pointer-events: auto; }
+.nav-menu-wrapper[data-menu-open] .nav-menu { display: flex !important; transform: translateX(100%) !important; transition: transform .3s ease; overflow-y: auto; }
+.nav-menu-wrapper[data-menu-open="true"] .nav-menu { transform: translateX(0) !important; }
+.nav-menu-wrapper[data-menu-open] .menu-clickout { display: block !important; opacity: 0 !important; }
+.nav-menu-wrapper[data-menu-open="true"] .menu-clickout { opacity: 1 !important; }
+.nav-menu-wrapper[data-menu-open] .med-word.menu { transform: none !important; }
+.nav-menu-wrapper[data-menu-open] .symbol-menu-mobile { display: flex; opacity: 1 !important; }
+.menu-icon-wrap > img { width: 24px; min-width: 24px; height: 24px; object-fit: contain; }
+.menu-icon-wrap:focus-visible, .navbar-symbol:focus-visible, .nav-link:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+.brand .symbol-menu { display: flex !important; position: static !important; flex-direction: column; align-items: center; padding-top: 7.5vh; opacity: 0 !important; visibility: hidden; pointer-events: none; transition: opacity .25s ease, visibility .25s; }
+.brand:hover .symbol-menu, .brand:focus-within .symbol-menu { opacity: 1 !important; visibility: visible; pointer-events: auto; }
+.navbar-wrapper { overflow: visible; }
+@media (prefers-reduced-motion: reduce) { .brand .symbol-menu, .nav-menu-wrapper[data-menu-open] .nav-menu { transition: none; } }
+.navbar-symbol, .navbar-symbol-mobile { background-image: url("../images/5eeb32b13dedf90483944da2_Star%20(2)800%20px-min.png"); }
+.navbar-symbol.ns-2, .navbar-symbol-mobile.nsm-2 { background-image: url("../images/5eeb32b10a12fb37b5f18b77_Triangle-min.png"); }
+.navbar-symbol.ns-3, .navbar-symbol-mobile.nsm-3 { background-image: url("../images/5eeb32b1c473054572792667_Circle-min.png"); }
+.navbar-symbol.ns-4, .navbar-symbol-mobile.nsm-4 { background-image: url("../images/5eeb32b0b8b11d45407fb22a_Square-min.png"); }
+.navbar-symbol.ns-5, .navbar-symbol-mobile.nsm-5 { background-image: url("../images/5eeb32b167d40213b977fb8b_Root-min.png"); }
+
+/* Keep embedded forms from changing the host page's scrolling or cursor. */
+.body-collective { cursor: auto; }
+.community-interest-form { display: block; position: static; width: 100%; min-height: 600px; border: 0; }
+.site-video { aspect-ratio: 16 / 9; padding-top: 0 !important; }
+.site-video iframe { border: 0; }
+.video-fallback { text-align: center; margin: 16px 0 32px; }

@@ -1,0 +1,55 @@
+/* Concept Page Fixes */
+
+/* Fix "The What" section layout - prevent it from being pushed right and too narrow */
+.the-statements .blocktext.rightmove {
+  text-align: left !important;
+  justify-content: flex-start !important;
+  padding-right: inherit;
+  position: static !important;
+  left: 0 !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Keep the heading aligned right as intended */
+.the-statements .lightheading.right {
+  text-align: right;
+}
+
+/* Style the Apply button in dropdown */
+.dropdown-toggle {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #ffce00;
+  color: #000;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #ffce00;
+  margin: 20px 0;
+}
+
+.dropdown-toggle:hover {
+  background-color: transparent;
+  color: #ffce00;
+  border-color: #ffce00;
+}
+
+.dropdown-toggle:focus {
+  outline: 2px solid #ffce00;
+  outline-offset: 4px;
+}
+
+/* Ensure dropdown list appears correctly */
+.dropdown-list {
+  background: #111;
+  border: 1px solid #ffce00;
+  border-radius: 4px;
+  margin-top: 10px;
+  padding: 20px;
+}
