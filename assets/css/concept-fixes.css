@@ -16,40 +16,9 @@
   text-align: right;
 }
 
-/* Style the Apply button in dropdown */
-.dropdown-toggle {
-  display: inline-block;
-  padding: 15px 40px;
-  background-color: transparent !important;
-  color: #ffce00 !important;
-  font-family: Montserrat, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid #ffce00 !important;
-  margin: 20px 0;
+/* Hide empty dropdown toggle - Apply button will be added as image */
+.dropdown-toggle:empty {
+  display: none !important;
 }
 
-.dropdown-toggle:hover {
-  background-color: #ffce00 !important;
-  color: #000 !important;
-  border-color: #ffce00 !important;
-}
-
-.dropdown-toggle:focus {
-  outline: 2px solid #ffce00;
-  outline-offset: 4px;
-}
-
-/* Ensure dropdown list appears correctly */
-.dropdown-list {
-  background: #111;
-  border: 1px solid #ffce00;
-  border-radius: 4px;
-  margin-top: 10px;
-  padding: 20px;
-}
+/* Center the Apply button container
