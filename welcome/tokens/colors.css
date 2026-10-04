@@ -1,0 +1,93 @@
+/* ONCE — colour. Architecture: near-black botanical ground + parchment/aged-metal neutrals
+   + earthy Renaissance pigments + scarce gold + small eruptions of spectral iridescence.
+   Iridescence behaves as light leaking through the material world — never the base palette. */
+:root{
+/* 1 · The ground — black-green, not pure black */
+--void-black:#000201;
+--forest-black:#060D09;      /* canonical page background */
+--deep-botanical:#0C1410;    /* third surface — lifted black-green */
+--oxidised-shadow:#313C3A;
+--moss-charcoal:#494E45;
+
+/* 2 · Parchment, bone and manuscript — the white is never white */
+--old-parchment:#D1C4AC;     /* primary light surface */
+--parchment-cream:#CBC2AD;
+--antique-bone:#D5C3AD;
+--weathered-linen:#B7A791;   /* secondary panels */
+--dust:#A6968B;
+
+/* 3 · Earth, leather, terracotta, faded pigment — material, not flat UI fields */
+--dark-umber:#322419;
+--burnt-earth:#6C3D2D;
+--leather:#725E4D;
+--old-copper:#9F6850;
+--dust-rose:#D39684;
+--coral-clay:#E4A08F;
+
+/* 4 · Sage, oxidised metal, atmospheric blue */
+--oxidised-sage:#77796E;
+--mineral-grey:#6C777E;
+--verdigris-mist:#97BABD;
+--celestial-blue:#94AAC1;
+--pale-cyan:#92B2BC;
+
+/* 5 · The Pleroma — effect palette, one phenomenon, not six UI colours */
+--spectral-cyan:#9EDDDD;
+--pleroma-blue:#9CBCE3;
+--iridescent-lilac:#C0A0D0;
+--vision-pink:#D892B3;
+--solar-peach:#E4A08F;
+--pleroma-pale-gold:#E7CAA0;
+
+/* 6 · Gold and ritual metal — scarce; structure, geometry, navigation, borders */
+--old-gold:#B99A63;
+--brass:#9A7745;
+--pale-gold:#D2B783;
+--dark-bronze:#695038;
+
+/* Semantic */
+--surface-page:var(--forest-black);
+--surface-page-deep:var(--void-black);
+--surface-third:var(--deep-botanical);
+--surface-band-paper:var(--old-parchment);
+--surface-band-panel:var(--weathered-linen);
+--text-display:var(--antique-bone);
+--text-body:var(--old-parchment);
+--text-secondary:var(--oxidised-sage);
+--text-label:var(--old-gold);
+--text-on-paper:var(--forest-black);
+--text-on-paper-muted:var(--dark-umber);
+--rule-gold:rgba(185,154,99,0.28);
+--rule-gold-strong:var(--old-gold);
+--rule-on-paper:rgba(50,36,25,0.18);
+--action-primary-bg:var(--old-parchment);
+--action-primary-fg:var(--forest-black);
+--action-outline:rgba(185,154,99,0.45);
+--link:var(--old-parchment);
+--link-hover:var(--pale-gold);
+
+/* Aliases kept so existing components keep resolving */
+--once-forest:var(--forest-black);
+--once-forest-deep:var(--void-black);
+--once-charcoal-800:var(--deep-botanical);
+--once-charcoal-900:var(--void-black);
+--once-moss-700:var(--deep-botanical);
+--once-moss-900:var(--dark-umber);
+--once-parchment:var(--old-parchment);
+--once-bone:var(--antique-bone);
+--once-sage:var(--oxidised-sage);
+--once-gold:var(--old-gold);
+--once-gold-deep:var(--brass);
+--once-gold-pale:var(--pale-gold);
+--once-star:var(--pale-gold);
+--once-mint:var(--verdigris-mist);
+--once-black:var(--void-black);
+--once-white:#FFFFFF;
+
+/* Legacy website (once-collective.webflow.io) — continuity only, not for new work */
+--once-legacy-yellow:#FFCE00;
+--once-legacy-gold:#D6C115;
+--once-legacy-white-900:#FFFFFFDE;
+--once-legacy-white-600:#FFFFFF99;
+--once-legacy-light-text:#9E9E9E;
+}

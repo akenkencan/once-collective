@@ -1,0 +1,10 @@
+/* ONCE — minimal base: link colours and body defaults. Components style themselves inline via tokens. */
+body{margin:0;background:var(--surface-page);color:var(--text-body);font:var(--type-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none}
+a:hover{color:var(--link-hover)}
+.once-eyebrow{font:var(--type-eyebrow);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--text-label)}
+.once-meta{font:var(--type-meta);letter-spacing:var(--tracking-micro);text-transform:uppercase;color:var(--text-label)}
+.once-display{font:var(--type-display);color:var(--text-display);letter-spacing:var(--tracking-display);text-wrap:balance}
+.once-hero{font:var(--type-hero);color:var(--text-display);letter-spacing:var(--tracking-hero);text-transform:uppercase;text-wrap:balance}
+.once-display em{font-style:italic}
+.once-rule{height:1px;background:var(--rule-gold);border:0}

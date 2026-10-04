@@ -1,0 +1,36 @@
+@import url('../welcome-v03/style.css');
+/* Paper treatments affect the material only, never the foreground text. */
+.paper{position:relative;isolation:isolate;background:none;--paper-image:url('materials/paper-clean.webp');--paper-tone:brightness(1.04) saturate(.65)}
+.paper::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--paper-image) center/100% 100% no-repeat;filter:var(--paper-tone);pointer-events:none}
+.text-paper{padding:58px 64px}.meaning-copy{text-shadow:0 2px 5px rgba(32,24,16,.15)}
+.meaning-grid>article{--paper-image:url('materials/paper-fold.webp');--paper-tone:brightness(1.08) saturate(.5)}
+.meaning-grid .object-slot{--paper-image:url('materials/paper-map.webp');--paper-tone:brightness(1.18) saturate(.45)}
+.what-grid .object-slot{--paper-image:url('materials/paper-grain.webp');--paper-tone:brightness(1.04) saturate(.55)}
+.studio-heading>article{--paper-image:url('materials/paper-clean.webp');--paper-tone:brightness(.99) saturate(.7)}
+.studio-card{--paper-image:url('materials/paper-map.webp');--paper-tone:brightness(1.12) saturate(.35);min-height:180px;padding:30px}
+.studio-card>img{max-height:200px;width:auto;object-fit:contain}
+.image-caption{font:14px/1.5 var(--font-interface);padding:14px 0!important;opacity:.9!important;text-transform:none;letter-spacing:0}
+.hero-copy{align-self:start;padding-top:14px}.hero-art-footer{border:0}
+.section-heading{position:relative;justify-content:space-between!important;align-items:start!important}.section-heading>.section-symbol{order:2;margin-left:auto;width:48px;height:48px}.section-heading h2{order:1;max-width:calc(100% - 72px)}
+.what-copy>.section-heading{margin-bottom:28px}.what-copy .section-heading h2{margin-bottom:0}
+.symset-intro-art{align-items:start}.symset-intro-art>.section-symbol{align-self:start}
+.hero-art-footer>.section-symbol{display:none}.hero-heading{position:relative;padding-right:68px}.hero-heading::after{content:'';position:absolute;right:0;top:8px;width:48px;height:48px;background:url('../../assets/symbols/white/star.png') center/contain no-repeat;opacity:.85}
+.what-grid{gap:36px 30px}.what-copy{padding-right:0}.what-copy .claim{font-size:44px}.what-grid>aside{padding-top:4px}.diagram-pending img{aspect-ratio:auto;object-fit:contain}.what-grid .object-slot{min-height:220px}
+.studio-materials .workshop>img{aspect-ratio:4/3}.studio-heading>.studio-materials{margin-left:0}
+.rug-divider{position:relative;height:88px;margin:-44px 0;z-index:5;overflow:hidden}.rug-divider svg{width:100%;height:100%;display:block}
+.cards-section{padding-top:86px;background:#060D09}.cards-context h2{font-size:36px}.cards-context .section-heading{min-height:70px}.cards-context .section-symbol{width:42px;height:42px}.isolated-stationery{width:min(100%,300px);height:auto;margin-top:45px;display:block}
+.form-panel,.form-panel iframe{background:transparent!important;color-scheme:normal}.form-panel iframe{width:100%;min-height:700px}
+.after-form-artefacts{padding:0 var(--page-margin) 48px}.after-form-artefacts>.material-grid{display:grid;grid-template-columns:1fr 1fr 2fr;gap:28px;max-width:900px;margin:auto}.after-form-artefacts .wide{grid-column:auto}.after-form-artefacts .card-back img{height:210px;width:100%;object-fit:contain}.after-form-artefacts .object-slot{min-height:210px}.after-form-artefacts .low{max-height:none}.after-form-artefacts .paper{--paper-image:url('materials/paper-grain.webp')}
+footer{display:block;padding:24px var(--page-margin) 60px;border:0}
+.enter-portal{display:grid;grid-template-columns:1fr 1fr 1fr;min-width:0;width:100%;min-height:135px;gap:20px;padding:32px 7%;background:none;outline:0;border:0;isolation:isolate;color:#151812}
+.enter-portal:hover{outline:0;color:#151812}.portal-textile{position:absolute;inset:0;width:100%;height:100%;z-index:-1;filter:brightness(1.32) saturate(.55);transition:filter .25s}
+.enter-portal:hover .portal-textile{filter:brightness(1.48) saturate(.8)}.portal-logo{width:160px;justify-self:center;filter:brightness(0)}.portal-symbols{justify-self:start;gap:12px}.portal-label{justify-self:end;white-space:nowrap;font:16px var(--font-interface);letter-spacing:.08em}.enter-portal>span:last-child{font-size:16px}
+.symset-section{background:#0c1410 url('materials/paper-dark.webp') center/cover}.symset-section .lens-panel{background:rgba(6,13,9,.2)}
+@media(max-width:1050px){.text-paper{padding:44px 44px}.what-copy .claim{font-size:38px}.portal-logo{width:125px}.portal-symbols{gap:8px}.portal-symbols .section-symbol{width:18px;height:18px}}
+@media(max-width:740px){.text-paper{padding:38px 32px}.hero-heading{padding-right:35px}.hero-heading::after{width:26px;height:26px;top:0}.hero-heading h1{font-size:35px}.hero-copy{padding-top:0}.image-caption{font-size:13px}.section-heading>.section-symbol{width:38px;height:38px}.section-heading h2{max-width:calc(100% - 54px)}.what-copy .claim{font-size:38px}.what-grid>aside{padding-top:0}.what-grid .object-slot{min-height:190px}.rug-divider{height:50px;margin:-25px 0}.cards-section{padding-top:58px}.cards-context .section-heading{min-height:0}.cards-context h2{font-size:34px}.isolated-stationery{width:180px;margin-top:24px}.form-panel iframe{min-height:740px}.after-form-artefacts>.material-grid{grid-template-columns:1fr 1fr;gap:12px}.after-form-artefacts .wide{grid-column:1/-1}.after-form-artefacts .object-slot{min-height:150px}.enter-portal{grid-template-columns:1fr 1fr;padding:22px 24px;gap:16px;min-height:130px}.portal-symbols{grid-column:1/-1;justify-self:center;gap:18px}.portal-logo{width:105px;justify-self:start}.portal-label{font-size:13px!important}.enter-portal .section-symbol{width:20px;height:20px}.symset-section{background-size:auto 100%}}
+.rug-divider{height:108px;margin:-54px 0;background:url('materials/rugs.webp') center -16px/400px 400px repeat-x}.rug-divider svg{display:none}
+@media(max-width:740px){.rug-divider{height:59px;margin:-29px 0;background-size:220px 220px;background-position:center -9px}}
+.scene figcaption.image-caption{font-size:14px;line-height:1.5}
+@media(max-width:740px){.scene figcaption.image-caption{font-size:13px}}
+@media(max-width:740px){.meaning-grid>article.text-paper,.studio-heading>article.text-paper{padding:40px 34px}.meaning-copy>.lead{font-size:18px}.meaning-copy p{font-size:14px}}
+.enter-portal .portal-symbols .section-symbol{opacity:1;filter:brightness(0);width:24px;height:24px}

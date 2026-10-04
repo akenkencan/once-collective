@@ -1,0 +1,15 @@
+/* ONCE webfonts.
+   HEADING  Brygada 1918 (Google) — primary. Reckless = future evolution (licensed, not shipped).
+   BODY     Montserrat (local TTF). Saans = considered alternative (licensed, not shipped).
+   LABELS   Fragment Mono (Google). Saans Mono = considered alternative.
+   Legacy-only: Varela Round + Raleway (2020 guidelines), Cormorant Garamond (earlier draft). */
+@import url("https://fonts.googleapis.com/css2?family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Fragment+Mono:ital@0;1&family=Varela+Round&display=swap");
+@font-face{font-family:"Montserrat";src:url("../assets/fonts/Montserrat-Light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("../assets/fonts/Montserrat-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("../assets/fonts/Montserrat-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("../assets/fonts/Montserrat-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("../assets/fonts/Montserrat-SemiBold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("../assets/fonts/Montserrat-Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("../assets/fonts/CormorantGaramond-Variable.ttf") format("truetype");font-weight:300 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Raleway";src:url("../assets/fonts/Raleway-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Raleway";src:url("../assets/fonts/Raleway-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}

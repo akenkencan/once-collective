@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'ONCE Brygada 1918';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Brygada1918-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'ONCE Brygada 1918';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/Brygada1918-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'ONCE Fragment Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/FragmentMono-Regular.ttf) format('truetype');
+}

@@ -1,0 +1,33 @@
+/* ONCE — effects. Iridescence is textured and liquid, never a flat or morphing gradient.
+   No ease-out cubic-bezier, no card shadow, no halo, no portal. */
+:root{
+/* The Pleroma as material: dark reality → membrane → spectral rupture → light.
+   Every finish layers a fine grain and an irregular flow so it reads as film on liquid. */
+--grain:repeating-conic-gradient(rgba(255,255,255,.05) 0deg 2deg,rgba(0,0,0,.05) 2deg 4deg); /* @kind other */
+--nacre:radial-gradient(120% 70% at 18% 28%,var(--spectral-cyan) 0%,rgba(158,221,221,0) 46%),radial-gradient(110% 80% at 62% 18%,var(--pleroma-blue) 0%,rgba(156,188,227,0) 44%),radial-gradient(130% 90% at 78% 62%,var(--iridescent-lilac) 0%,rgba(192,160,208,0) 48%),radial-gradient(120% 85% at 35% 82%,var(--vision-pink) 0%,rgba(216,146,179,0) 46%),radial-gradient(140% 100% at 92% 92%,var(--solar-peach) 0%,rgba(228,160,143,0) 50%),linear-gradient(160deg,var(--deep-botanical),var(--void-black)); /* @kind other */
+--prismatic:conic-gradient(from 195deg at 42% 58%,var(--vision-pink),var(--solar-peach) 14%,var(--pleroma-pale-gold) 26%,var(--spectral-cyan) 44%,var(--pleroma-blue) 58%,var(--iridescent-lilac) 74%,var(--vision-pink) 100%); /* @kind other */
+--opalescent:radial-gradient(58% 64% at 28% 32%,rgba(158,221,221,.9),rgba(158,221,221,0) 62%),radial-gradient(52% 60% at 72% 26%,rgba(192,160,208,.85),rgba(192,160,208,0) 58%),radial-gradient(70% 62% at 52% 78%,rgba(216,146,179,.8),rgba(216,146,179,0) 64%),radial-gradient(60% 55% at 88% 70%,rgba(231,202,160,.7),rgba(231,202,160,0) 60%); /* @kind other */
+--oil-slick:conic-gradient(from 0deg at 46% 54%,var(--spectral-cyan),var(--pleroma-blue) 12%,var(--iridescent-lilac) 28%,var(--vision-pink) 42%,var(--solar-peach) 56%,var(--pleroma-pale-gold) 70%,var(--verdigris-mist) 84%,var(--spectral-cyan) 100%); /* @kind other */
+--silk-drift:linear-gradient(104deg,rgba(158,221,221,0) 0%,rgba(158,221,221,.5) 14%,rgba(156,188,227,.55) 32%,rgba(192,160,208,.6) 50%,rgba(216,146,179,.55) 68%,rgba(231,202,160,.45) 86%,rgba(231,202,160,0) 100%); /* @kind other */
+
+/* Motion — soft symmetric easing only; slow, liquid, low frequency */
+--ease:ease-in-out; /* @kind other */
+--ease-linear:linear; /* @kind other */
+--dur-fast:200ms; /* @kind other */
+--dur-base:350ms; /* @kind other */
+--dur-slow:600ms; /* @kind other */
+--dur-ambient:22s; /* @kind other */
+--dur-silk:34s; /* @kind other */
+
+/* Paper behaviour */
+--tape-tilt:-8deg; /* @kind other */
+--card-tilt-a:-8deg; /* @kind other */
+--card-tilt-b:8deg; /* @kind other */
+--card-tilt-c:-9deg; /* @kind other */
+--card-tilt-d:11deg; /* @kind other */
+--desaturate-photo:grayscale(0.85) contrast(1.02); /* @kind other */
+
+/* Legacy 2020 guidelines */
+--shadow-legacy-heading:1.5px 2.6px 14px rgba(0,0,0,0.6);
+--blur-legacy-word:14px; /* @kind other */
+}

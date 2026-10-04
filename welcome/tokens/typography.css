@@ -1,0 +1,61 @@
+/* ONCE — type tokens.
+   HEADING Brygada 1918 · BODY Montserrat · LABELS Fragment Mono.
+   Alternatives held for later: Reckless (heading), Saans (body), Saans Mono (labels). */
+:root{
+--font-heading:"Brygada 1918",Georgia,"Times New Roman",serif;
+--font-body:"Montserrat",system-ui,sans-serif;
+--font-label:"Fragment Mono",ui-monospace,"SFMono-Regular",monospace;
+/* aliases kept so existing components resolve */
+--font-serif:var(--font-heading);
+--font-sans:var(--font-body);
+/* legacy 2020 guidelines only */
+--font-legacy-heading:"Varela Round",sans-serif;
+--font-legacy-label:"Raleway",sans-serif;
+
+/* Sizes */
+--text-display-xl:82px;
+--text-display-hero:104px;  /* largest scale — FULL CAPS, bold */
+--text-display-l:62px;   /* Guidelines Heading 0 (62/70) */
+--text-display-m:54px;
+--text-heading-1:38px;   /* Guidelines H1 (38/44) */
+--text-heading-2:24px;   /* Guidelines H2 (24/32) */
+--text-heading-3:18px;   /* Guidelines H3 bold (18/28) */
+--text-lead:20px;
+--text-body-l:18px;      /* Guidelines body (18/28) */
+--text-body:15px;
+--text-body-s:13px;
+--text-caption:12px;
+--text-label:11px;
+--text-eyebrow:10px;
+--text-micro:8px;
+
+--leading-display:1.0;
+--leading-tight:1.1;
+--leading-heading:1.16;
+--leading-body:1.56;
+--leading-nav:1.7;
+--leading-micro:1.8;
+
+--tracking-display:-0.01em;
+--tracking-hero:0.01em;     /* caps need air, not negative tracking */
+--tracking-body:0;
+--tracking-label:0.12em;  /* Fragment Mono is already wide — 0.12em, not 2px */
+--tracking-micro:0.18em;
+
+--weight-light:300;
+--weight-regular:400;
+--weight-medium:500;
+--weight-semibold:600;
+--weight-bold:700;
+
+/* Composite styles */
+--type-hero:var(--weight-bold) var(--text-display-hero)/0.95 var(--font-heading);
+--type-display:var(--weight-regular) var(--text-display-xl)/var(--leading-display) var(--font-heading);
+--type-claim:var(--weight-regular) var(--text-display-m)/var(--leading-tight) var(--font-heading);
+--type-lead:var(--weight-regular) var(--text-lead)/1.4 var(--font-body);
+--type-body:var(--weight-regular) var(--text-body)/var(--leading-body) var(--font-body);
+--type-eyebrow:var(--weight-regular) var(--text-eyebrow)/1 var(--font-label);
+--type-nav:var(--weight-regular) var(--text-label)/var(--leading-nav) var(--font-label);
+--type-button:var(--weight-regular) var(--text-body-s)/1 var(--font-body);
+--type-meta:var(--weight-regular) var(--text-micro)/var(--leading-micro) var(--font-label);
+}
