@@ -12,9 +12,10 @@
   }else if(video.canPlayType('application/vnd.apple.mpegurl'))video.src=video.dataset.stream;
   else failure('This browser cannot play the film. Please try a current browser.');
  }
- setup();
+ let initialized=false;
  button.addEventListener('click',async()=>{
   status.hidden=true;
+  if(!initialized){setup();initialized=true;}
   if(video.error){if(hls)hls.destroy();setup();}
   else if(hls)hls.startLoad();
   try{await video.play();}catch(e){failure('Playback could not start. Please try again.');}
