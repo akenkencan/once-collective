@@ -5,8 +5,11 @@
   let heights=[0,0];
   cards.forEach((card,i)=>{
    if(card.classList.contains('reveal-finale')){
-    const img=card.querySelector("img"),y=Math.max(...heights),w=width*.96,ch=w*(img.naturalHeight/img.naturalWidth||1.33);
-    Object.assign(card.style,{width:w+'px',height:ch+'px',left:width*.02+'px',top:y+'px'});
+    const img=card.querySelector("img"),y=Math.max(...heights),ratio=img.naturalHeight/img.naturalWidth||1.33;
+    const yellow=document.querySelector('.paper-card-tray img');
+    const room=yellow.getBoundingClientRect().bottom-tray.getBoundingClientRect().top-y;
+    const w=Math.max(cw,Math.min(width*.96,Math.max(0,room)/ratio)),ch=w*ratio;
+    Object.assign(card.style,{width:w+'px',height:ch+'px',left:(width-w)/2+'px',top:y+'px'});
     card.style.setProperty('--hidden-x','0px');card.style.setProperty('--hidden-y',(-ch-y-40)+'px');heights=[y+ch,y+ch];return;
    }
    if(card.classList.contains('optional-reveal')){
@@ -42,6 +45,6 @@
   anim=body.animate([{height:from+'px'},{height:to+'px'}],{duration,easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'});
   anim.onfinish=()=>{details.open=expanded;anim.cancel();anim=null;body.style.overflow='';layout()};
  });
-collapse.addEventListener('click',()=>{group.classList.add('is-closing');setTimeout(()=>{details.querySelector('summary').click();details.querySelector('summary').focus({preventScroll:true});group.classList.remove('is-closing')},matchMedia('(prefers-reduced-motion: reduce)').matches?0:500)});
-tray.querySelectorAll('img').forEach(c=>c.addEventListener('load',layout));new ResizeObserver(layout).observe(group);sync();
+collapse.addEventListener('click',()=>{group.classList.add('is-closing');setTimeout(()=>{details.querySelector('summary').click();details.querySelector('summary').focus({preventScroll:true});group.classList.remove('is-closing')},matchMedia('(prefers-reduced-motion: reduce)').matches?0:800)});
+tray.querySelectorAll('img').forEach(c=>c.addEventListener('load',layout));const observer=new ResizeObserver(layout);observer.observe(group);observer.observe(document.querySelector(".meaning-paper-stack"));sync();
 })();
