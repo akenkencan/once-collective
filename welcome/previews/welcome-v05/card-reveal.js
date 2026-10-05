@@ -31,8 +31,6 @@
    card.style.setProperty('--hidden-x',(width/2-x-cw/2)+'px');card.style.setProperty('--hidden-y',(-ch-y-40)+'px');
    heights[col]+=ch+padding;
   });
-  const last=cards.filter(c=>c.style.display!=='none').at(-1);
-  if(last){collapse.style.left=(parseFloat(last.style.left)-10)+'px';collapse.style.top=(parseFloat(last.style.top)-57.6)+'px'}
   collapse.tabIndex=expanded?0:-1;tray.style.height=details.open?(Math.max(...heights)+50)+'px':'0px';
  }
  const paperTray=document.querySelector('.paper-card-tray');
