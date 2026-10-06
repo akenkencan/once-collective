@@ -34,7 +34,7 @@
   collapse.tabIndex=expanded?0:-1;tray.style.height=details.open?(Math.max(...heights)+50)+'px':'0px';
  }
  const paperTray=document.querySelector('.paper-card-tray');
- function sync(open=details.open){paperTray.style.height=open?(paperTray.clientWidth/1.43)+'px':'0px';paperTray.classList.toggle('is-open',open);paperTray.setAttribute('aria-hidden',String(!open));group.classList.toggle('is-open',open);paperStack.classList.toggle('is-open',open);tray.setAttribute('aria-hidden',String(!open));layout()}
+ function sync(open=details.open){document.querySelector('.joker-portrait').setAttribute('aria-expanded',String(open));paperTray.style.height=open?(paperTray.clientWidth/1.43)+'px':'0px';paperTray.classList.toggle('is-open',open);paperTray.setAttribute('aria-hidden',String(!open));group.classList.toggle('is-open',open);paperStack.classList.toggle('is-open',open);tray.setAttribute('aria-hidden',String(!open));layout()}
  const body=details.querySelector('.meaning-expanded');
  let expanded=details.open,anim;
  details.querySelector('summary').addEventListener('click',e=>{
@@ -50,5 +50,8 @@
   anim.onfinish=()=>{details.open=expanded;anim.cancel();anim=null;body.style.overflow='';layout()};
  });
 collapse.addEventListener('click',()=>{group.classList.add('is-closing');paperStack.classList.add('is-closing');setTimeout(()=>{details.querySelector('summary').click();details.querySelector('summary').focus({preventScroll:true});group.classList.remove('is-closing');paperStack.classList.remove('is-closing')},matchMedia('(prefers-reduced-motion: reduce)').matches?0:800)});
+const portrait=document.querySelector('.joker-portrait');
+portrait.addEventListener('click',()=>details.querySelector('summary').click());
+portrait.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();details.querySelector('summary').click()}});
 tray.querySelectorAll('img').forEach(c=>c.addEventListener('load',layout));const observer=new ResizeObserver(layout);observer.observe(group);observer.observe(document.querySelector(".meaning-paper-stack"));sync();
 })();
