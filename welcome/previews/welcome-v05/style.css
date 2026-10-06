@@ -639,3 +639,10 @@ header{padding-right:76px}
  .lens-panel>.symset-mobile-art{display:none}
  .lens-panel>.lens-grid{padding-right:0}
 }
+
+/* Let the card turn beyond its paper; tuck decorative tiles into spare space. */
+.studio-card.paper.object-slot,.studio-rotating-card,.studio-materials{overflow:visible}
+.studio-card.paper{position:relative;z-index:5}
+.studio-materials{position:relative;isolation:isolate}
+.studio-materials.tiles-tucked>.studio-underlay{position:absolute;top:var(--tile-top);bottom:auto;left:0;right:0;margin-top:0;z-index:0}
+.studio-materials>.studio-composition{position:relative;z-index:1}
