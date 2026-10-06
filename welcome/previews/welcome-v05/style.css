@@ -656,3 +656,9 @@ header{padding-right:76px}
 .studio-extra-tiles.has-room{display:grid}
 .studio-extra-tiles svg{display:block;width:100%;height:auto;aspect-ratio:1;overflow:hidden}
 @media(max-width:1151px){.studio-extra-tiles.has-room{display:none}}
+
+/* The full affirmation artwork appears at 90% of the 1440px desktop layout. */
+.hero-affirmation img{clip-path:none;transform:none}
+.hero-affirmation h2{font-family:'Brygada 1918',Georgia,serif;font-weight:700;opacity:1}
+.hero-affirmation[aria-hidden="true"]{visibility:hidden}
+@media(max-width:1295px){.hero-affirmation{display:none}}

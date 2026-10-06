@@ -5,9 +5,10 @@
   if(compact.matches){scene.after(ending);reveal.style.height='0px';reveal.setAttribute('aria-hidden','true');return}
   if(ending.parentNode!==copy)copy.append(ending);
   const available=Math.max(0,copy.clientHeight-intro.offsetHeight-ending.offsetHeight-24);
-  const progress=Math.max(0,Math.min(1,(innerWidth-1080)/360));
-  const height=Math.min(available,copy.clientWidth*1648/2944);
-  reveal.style.height=height+'px';reveal.style.setProperty('--reveal-progress',progress);reveal.style.setProperty('--reveal-radius',(progress*85)+'%');reveal.style.setProperty('--reveal-text',Math.max(0,Math.min(1,(progress-.85)/.15))); reveal.setAttribute('aria-hidden',String(height<80));
+  const visible=innerWidth>=1296;
+  const height=visible?Math.min(available,copy.clientWidth*1648/2944):0;
+  reveal.style.height=height+'px';
+  reveal.setAttribute('aria-hidden',String(!visible||height<80));
  }
  const observer=new ResizeObserver(()=>requestAnimationFrame(place));[copy,intro,art].forEach(e=>observer.observe(e));compact.addEventListener('change',place);window.addEventListener('resize',place);document.fonts.ready.then(place);place();
 })();
