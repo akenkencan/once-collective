@@ -646,3 +646,13 @@ header{padding-right:76px}
 .studio-materials{position:relative;isolation:isolate}
 .studio-materials.tiles-tucked>.studio-underlay{position:absolute;top:var(--tile-top);bottom:auto;left:0;right:0;margin-top:0;z-index:0}
 .studio-materials>.studio-composition{position:relative;z-index:1}
+
+/* Reveal around the rose window; extra tiles occupy existing space only. */
+.hero-affirmation{display:flex;align-items:center;justify-content:center}
+.hero-affirmation img{width:auto;height:100%;max-width:100%;object-fit:contain;transform:none;clip-path:circle(var(--reveal-radius,0%) at 50% 38%)}
+.hero-affirmation h2{opacity:var(--reveal-text,0);pointer-events:none}
+.studio-heading{position:relative}
+.studio-extra-tiles{display:none;position:absolute;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;pointer-events:none}
+.studio-extra-tiles.has-room{display:grid}
+.studio-extra-tiles svg{display:block;width:100%;height:auto;aspect-ratio:1;overflow:hidden}
+@media(max-width:1151px){.studio-extra-tiles.has-room{display:none}}
