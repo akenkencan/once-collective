@@ -5,8 +5,9 @@
   if(compact.matches){scene.after(ending);reveal.style.height='0px';reveal.setAttribute('aria-hidden','true');return}
   if(ending.parentNode!==copy)copy.append(ending);
   const available=Math.max(0,copy.clientHeight-intro.offsetHeight-ending.offsetHeight-24);
-  const visible=innerWidth>=1296;
-  const height=visible?Math.min(available,copy.clientWidth*1648/2944):0;
+  const imageWidth=360,imageHeight=imageWidth*1648/2944;
+  const visible=innerWidth>=1296&&copy.clientWidth>=imageWidth&&available>=imageHeight;
+  const height=visible?imageHeight:0;
   reveal.style.height=height+'px';
   reveal.setAttribute('aria-hidden',String(!visible||height<80));
  }

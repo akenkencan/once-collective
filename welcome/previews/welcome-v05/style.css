@@ -662,3 +662,14 @@ header{padding-right:76px}
 .hero-affirmation h2{font-family:'Brygada 1918',Georgia,serif;font-weight:700;opacity:1}
 .hero-affirmation[aria-hidden="true"]{visibility:hidden}
 @media(max-width:1295px){.hero-affirmation{display:none}}
+
+/* Keep the affirmation artwork fixed; remove it when either dimension cannot fit. */
+.hero-affirmation{width:360px;max-width:none;align-self:center}
+.hero-affirmation img{width:360px;height:201.52px;max-width:none;flex-shrink:0}
+.hero-affirmation h2{font-size:28px}
+.welcome-menu-toggle{width:18px;padding:5px 0}
+.welcome-menu-symbols{flex-direction:column;align-items:center;gap:18px}
+.welcome-menu-symbols a{display:flex;align-items:center;justify-content:center;width:56px;height:56px}
+.welcome-menu-symbols img{display:block;width:48px;height:48px;object-fit:contain;opacity:.8;transition:opacity .2s}
+.welcome-menu-symbols a:hover img,.welcome-menu-symbols a:focus-visible img{opacity:1}
+#welcome-site-menu{overflow-y:auto}
