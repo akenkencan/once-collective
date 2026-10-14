@@ -7,7 +7,7 @@
   // Use only luminous oil bands from the supplied image. Propagate the nearest
   // eligible sampled pixel through its dark/brown regions, without inventing hues.
   const seen=new Uint8Array(256*194),queue=new Int32Array(256*194);let head=0,tail=0;
-  for(let i=0;i<seen.length;i++){const k=i*4,a=texture[k],b=texture[k+1],c=texture[k+2];if(Math.max(a,b,c)>175&&Math.max(a,b,c)-Math.min(a,b,c)>32&&c>110){seen[i]=1;queue[tail++]=i}}
+  for(let i=0;i<seen.length;i++){const k=i*4,a=texture[k],b=texture[k+1],c=texture[k+2];if(Math.max(a,b,c)>215&&Math.min(a,b,c)>115&&Math.max(a,b,c)-Math.min(a,b,c)>30&&(.2126*a+.7152*b+.0722*c)>170){seen[i]=1;queue[tail++]=i}}
   while(head<tail){const i=queue[head++],px=i%256,py=Math.floor(i/256);for(const j of [px>0?i-1:-1,px<255?i+1:-1,py>0?i-256:-1,py<193?i+256:-1])if(j>=0&&!seen[j]){seen[j]=1;queue[tail++]=j;for(let q=0;q<3;q++)texture[j*4+q]=texture[i*4+q]}}};
  function attach(element,surface){
   if(registry.has(element))return registry.get(element);

@@ -19,12 +19,18 @@
 })();
 document.querySelectorAll('[data-ambient-video]').forEach(video=>{new IntersectionObserver(entries=>{if(entries[0].isIntersecting){video.preload='metadata';video.muted=true;video.play().catch(()=>{})}else video.pause()},{rootMargin:'100px'}).observe(video)});
 
-// Public Mux films: lazy streaming, native controls, and no credentials in the browser.
-document.querySelectorAll('[data-mux-film]').forEach(video=>{
- let loaded=false;function load(){if(loaded)return;loaded=true;if(video.canPlayType('application/vnd.apple.mpegurl'))video.src=video.dataset.hls;else if(window.Hls?.isSupported()){const hls=new Hls();hls.loadSource(video.dataset.hls);hls.attachMedia(video)}else video.src=video.dataset.hls}
- const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){load();io.disconnect()}},{rootMargin:'300px'});io.observe(video);video.addEventListener('pointerdown',load,{once:true});
+
+// Editorial films load on approach. Inline films have only click-to-pause and optional progress.
+document.querySelectorAll('[data-mux-film],[data-inline-film]').forEach(video=>{
+ const inline=video.hasAttribute('data-inline-film');let userPaused=false,visible=false;
+ async function play(){try{await ONCEMedia.ensure(video);if(visible&&!userPaused)await video.play()}catch(e){video.dataset.playbackError=e.message||e.name}}
+ new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible){if(inline)play();else ONCEMedia.ensure(video).catch(()=>{})}else video.pause()},{threshold:.12}).observe(video);
+ if(inline){
+  video.controls=false;video.muted=true;video.loop=true;video.setAttribute('disablepictureinpicture','');video.setAttribute('controlslist','nodownload nofullscreen noremoteplayback');video.addEventListener('volumechange',()=>{if(!video.muted)video.muted=true});
+  function toggle(){userPaused=!userPaused;if(userPaused)video.pause();else play();video.setAttribute('aria-label',userPaused?'Play film':'Pause film')}
+  video.addEventListener('click',toggle);video.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle()}});
+  if(video.hasAttribute('data-minimal-progress')){const progress=document.createElement('progress');progress.className='film-progress';progress.max=1;progress.value=0;progress.setAttribute('aria-label','Film progress');video.after(progress);video.addEventListener('timeupdate',()=>{progress.value=video.duration?video.currentTime/video.duration:0})}
+ }
 });
-// Scroll reveals own their opacity; removed Webflow timelines cannot leave copy hidden.
-document.querySelectorAll('.concept-page .section-8>*').forEach(el=>{
- el.classList.add('concept-scroll-reveal');const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){el.classList.add('is-visible');io.disconnect()}},{threshold:.15});io.observe(el);
-});
+// About symbols share the same Colour Burst material as Apply and the home symbols.
+document.querySelectorAll('[data-about-symbol]').forEach(el=>ONCEColourBurst.attach(el,el.querySelector('.about-symbol-burst')));
