@@ -1,0 +1,50 @@
+.found-page{font-family:'ONCE Montserrat',Montserrat,sans-serif;background:#0f1713;color:#cec3ab;overflow-x:clip}
+.found-page h1,.found-page h2,.found-page h3,.found-page h4,.found-page h5,.found-page blockquote,.found-page .italic-text,.found-page .italic-text-2{font-family:'ONCE Brygada 1918',Georgia,serif!important}
+.found-page p,.found-page .lowerpara,.found-page .lowerblock,.found-page .paragraph-73,.found-page .paragraph-75{font-family:'ONCE Montserrat',Montserrat,sans-serif!important;font-weight:400;line-height:1.7}
+.found-page .heading-46{font-weight:400;font-size:clamp(42px,6vw,96px);line-height:1.08;letter-spacing:0}
+.found-page .heading-45{font-weight:400;line-height:1.25}
+.found-page .heroheading{font-weight:400}
+.found-page .widecontainer{padding-inline:clamp(22px,5vw,70px)}
+.found-disclosure{position:relative;width:100%}
+.found-read-toggle{cursor:pointer;position:relative;padding:24px;text-align:center;border-block:1px solid #9b835944}
+.found-read-toggle:focus-visible{outline:2px solid #cec3ab;outline-offset:4px}
+.found-read-toggle .up,.found-read-toggle .down{display:none}
+.found-read-toggle .heading-26{font:400 clamp(28px,4vw,44px)/1.2 'ONCE Brygada 1918',serif;margin:0}
+.found-read-toggle .heading-26:last-child:after{content:' +';display:inline-block;margin-left:12px}
+.found-read-toggle[aria-expanded=true] .heading-26:last-child:after{content:' −'}
+.found-read-panel{overflow:hidden;padding:0;background:transparent}
+.found-read-panel[hidden]{display:none}
+.found-read-panel .div-block-24{padding-block:30px}
+.found-page [data-proximity-film]{opacity:0!important;transition:opacity 1.1s ease;pointer-events:none;overflow:hidden;border-radius:2px;isolation:isolate}
+.found-page [data-proximity-film].is-playing{opacity:1!important}
+.found-page [data-proximity-film] video{width:100%;height:100%;object-fit:cover}
+.found-page .div-block-21{position:relative;gap:clamp(30px,5vw,80px);grid-template-columns:repeat(2,minmax(0,1fr));padding-inline:clamp(24px,5vw,70px)}
+.found-page .div-block-22{min-width:0;position:relative}
+.found-page .background-video{width:100%;max-width:100%;height:auto;aspect-ratio:16/10;left:auto;top:auto;margin:0;position:relative}
+.found-page .background-video.vid2{width:52%;margin:80px 0 60px auto;aspect-ratio:16/9;height:auto;top:auto}
+.found-page .background-video.vid3{width:78%;margin:0 auto 40px 0}
+.found-page .background-video.vid1{width:78%;margin:0 0 60px auto}
+.found-page .background-video.vid7{margin-top:100px}
+.found-page .background-video.vid6{width:85%;margin-top:20px}
+.found-page .background-video.vid5{width:82%;margin:80px 0 0 auto}
+.found-artefact-pair{display:flex;justify-content:space-between;align-items:center;gap:30px;margin:80px 0 50px;pointer-events:none}
+.found-artefact-pair svg{width:clamp(100px,20vw,220px);height:230px;overflow:hidden}
+.found-artefact-pair img{width:clamp(110px,20vw,230px);height:280px;object-fit:contain;transform:rotate(8deg)}
+@media(max-width:767px){.found-page .div-block-21{grid-template-columns:1fr}.found-page .background-video.vid2{width:85%;margin-block:45px}.found-page .background-video.vid7,.found-page .background-video.vid5{margin-top:10px}.found-page .container-22{padding-inline:20px}.found-artefact-pair{margin-block:40px}.found-artefact-pair svg,.found-artefact-pair img{height:180px}.found-page .div-block-22:empty{display:none}}
+@media(prefers-reduced-motion:reduce){.found-page [data-proximity-film]{transition:none}}
+
+.found-page .div-block-63,.found-page .div-block-64,.found-page .paragraph-95{font-family:'ONCE Montserrat',Montserrat,sans-serif!important}
+/* Remove fixed offsets from the old floating-video grid, so the new flow owns its space. */
+.found-page .div-block-21{height:auto;grid-template-rows:none;grid-auto-rows:auto}
+.found-page .div-block-22{display:block;margin:0;left:auto;right:auto;top:auto;width:auto;height:auto}
+.found-page .heading-27,.found-page .heading-46{width:auto;max-width:100%;margin:32px 0;overflow-wrap:anywhere}
+.found-read-panel .heading-2{width:auto;max-width:100%;margin-inline:0}
+.found-read-panel .w-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin:32px 0;float:none}
+.found-read-panel .w-row:before,.found-read-panel .w-row:after{display:none}
+.found-read-panel .w-col{width:auto;float:none;min-width:0;padding:0}
+.found-read-panel p{width:auto;max-width:100%;position:static;margin-inline:0;overflow-wrap:anywhere}
+@media(max-width:767px){.found-read-panel .w-row{grid-template-columns:1fr}.found-read-panel .div-block-24{padding-inline:8px}.found-page .heading-46{font-size:clamp(32px,8vw,48px)}}
+
+.found-artefact-pair .found-armillary{width:clamp(100px,20vw,220px);height:230px;object-fit:contain;transform:none}
+.found-page h1,.found-page h2,.found-page blockquote{overflow-wrap:anywhere}
+@media(max-width:767px){.found-page .heading-18,.found-page .heading-20,.found-page .heading-41{font-size:clamp(30px,8vw,48px);line-height:1.15}.found-read-panel .heading-2{font-size:clamp(28px,7.5vw,42px);line-height:1.2}.found-page .container-9{padding-inline:22px}}

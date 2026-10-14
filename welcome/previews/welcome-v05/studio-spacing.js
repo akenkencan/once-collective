@@ -4,7 +4,7 @@
  let frame;
  function layout(){
   cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{
-   if(getComputedStyle(tiles).display==='none'){column.classList.remove('tiles-tucked');extras.classList.remove('has-room');return}
+   if(innerWidth<=1100||getComputedStyle(tiles).display==='none'){column.classList.remove('tiles-tucked');extras.classList.remove('has-room');return}
    const c=column.getBoundingClientRect(),p=composition.getBoundingClientRect(),t=text.getBoundingClientRect(),height=tiles.getBoundingClientRect().height;
    const naturalBottom=p.bottom+38+height;
    const tileSize=(t.width-48)/4,space=c.bottom-t.bottom;

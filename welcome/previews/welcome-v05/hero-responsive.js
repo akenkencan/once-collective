@@ -1,15 +1,10 @@
 (() => {
- const copy=document.querySelector('.hero-copy'),ending=copy.querySelector('.hero-ending'),art=document.querySelector('.hero-art'),scene=art.querySelector('.scene'),reveal=copy.querySelector('.hero-affirmation'),intro=copy.querySelector('.hero-intro');
- const compact=matchMedia('(max-width:1050px)');
+ const hero=document.querySelector('.hero');if(!hero)return;
+ const copy=hero.querySelector('.hero-copy'),art=hero.querySelector('.hero-art'),scene=art.querySelector('.scene'),ending=hero.querySelector('.hero-ending'),objects=hero.querySelector('.hero-composition');
+ const mid=matchMedia('(min-width:741px) and (max-width:1100px)'),compact=matchMedia('(max-width:1050px)');
  function place(){
-  if(compact.matches){scene.after(ending);reveal.style.height='0px';reveal.setAttribute('aria-hidden','true');return}
-  if(ending.parentNode!==copy)copy.append(ending);
-  const available=Math.max(0,copy.clientHeight-intro.offsetHeight-ending.offsetHeight-24);
-  const imageWidth=360,imageHeight=imageWidth*1648/2944;
-  const visible=innerWidth>=1296&&copy.clientWidth>=imageWidth&&available>=imageHeight;
-  const height=visible?imageHeight:0;
-  reveal.style.height=height+'px';
-  reveal.setAttribute('aria-hidden',String(!visible||height<80));
+  if(compact.matches){if(ending.parentNode!==art)scene.after(ending)}else if(ending.parentNode!==copy)copy.append(ending);
+  if(mid.matches){if(objects.parentNode!==hero)hero.append(objects)}else if(objects.parentNode!==art)art.append(objects);
  }
- const observer=new ResizeObserver(()=>requestAnimationFrame(place));[copy,intro,art].forEach(e=>observer.observe(e));compact.addEventListener('change',place);window.addEventListener('resize',place);document.fonts.ready.then(place);place();
+ mid.addEventListener('change',place);compact.addEventListener('change',place);place();
 })();

@@ -617,11 +617,11 @@ video.studio-loop{display:block;width:100%;height:100%;min-height:160px;object-f
 
 /* Responsive opening reveal and original site controls. */
 .hero-copy{position:relative}
-.hero-affirmation{position:relative;height:0;min-height:0;flex-shrink:0;overflow:hidden;margin-top:auto;isolation:isolate}
-.hero-affirmation img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.72);transform:translateY(calc((1 - var(--reveal-progress,0))*45px))}
-.hero-affirmation h2{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:90%;margin:0;text-align:right;color:#fff;font:800 clamp(20px,2.15vw,34px)/1.25 var(--font-body);text-shadow:0 2px 5px #1119;overflow-wrap:normal}
+
+
+
 .hero-copy>.hero-ending{margin-top:0}
-.hero-affirmation[aria-hidden="true"] h2{visibility:hidden}
+
 .hero-art>.hero-ending{margin:0;padding:22px 0 0;border-top:1px solid var(--rule-gold)}
 .joker-portrait[role="button"]{cursor:pointer}
 .joker-portrait:focus-visible{outline:2px solid #665039;outline-offset:5px}
@@ -629,7 +629,7 @@ header{padding-right:76px}
 .welcome-menu-toggle{position:absolute;right:22px;top:50%;transform:translateY(-50%)}
 .enter-portal .heat-symbol>img{filter:invert(1) drop-shadow(.6px 0 #111713) drop-shadow(-.6px 0 #111713) drop-shadow(0 .6px #111713)}
 .enter-portal:hover .heat-symbol>img,.enter-portal:focus-visible .heat-symbol>img{filter:drop-shadow(.6px 0 white) drop-shadow(-.6px 0 white) drop-shadow(0 .6px white)}
-@media(max-width:1050px){.hero-affirmation{display:none}.hero-art{gap:24px}}
+@media(max-width:1050px){.hero-art{gap:24px}}
 @media(max-width:740px){.welcome-menu-toggle{top:22px;transform:none;right:16px}header{padding-right:64px}.enter-portal .portal-symbols{padding-top:12px;padding-bottom:4px}}
 
 .symset-corner-art{display:none}
@@ -648,9 +648,9 @@ header{padding-right:76px}
 .studio-materials>.studio-composition{position:relative;z-index:1}
 
 /* Reveal around the rose window; extra tiles occupy existing space only. */
-.hero-affirmation{display:flex;align-items:center;justify-content:center}
-.hero-affirmation img{width:auto;height:100%;max-width:100%;object-fit:contain;transform:none;clip-path:circle(var(--reveal-radius,0%) at 50% 38%)}
-.hero-affirmation h2{opacity:var(--reveal-text,0);pointer-events:none}
+
+
+
 .studio-heading{position:relative}
 .studio-extra-tiles{display:none;position:absolute;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;pointer-events:none}
 .studio-extra-tiles.has-room{display:grid}
@@ -658,18 +658,220 @@ header{padding-right:76px}
 @media(max-width:1151px){.studio-extra-tiles.has-room{display:none}}
 
 /* The full affirmation artwork appears at 90% of the 1440px desktop layout. */
-.hero-affirmation img{clip-path:none;transform:none}
-.hero-affirmation h2{font-family:'Brygada 1918',Georgia,serif;font-weight:700;opacity:1}
-.hero-affirmation[aria-hidden="true"]{visibility:hidden}
-@media(max-width:1295px){.hero-affirmation{display:none}}
+
+
+
+@media(max-width:1295px){}
 
 /* Keep the affirmation artwork fixed; remove it when either dimension cannot fit. */
-.hero-affirmation{width:360px;max-width:none;align-self:center}
-.hero-affirmation img{width:360px;height:201.52px;max-width:none;flex-shrink:0}
-.hero-affirmation h2{font-size:28px}
+
+
+
 .welcome-menu-toggle{width:18px;padding:5px 0}
 .welcome-menu-symbols{flex-direction:column;align-items:center;gap:18px}
 .welcome-menu-symbols a{display:flex;align-items:center;justify-content:center;width:56px;height:56px}
 .welcome-menu-symbols img{display:block;width:48px;height:48px;object-fit:contain;opacity:.8;transition:opacity .2s}
 .welcome-menu-symbols a:hover img,.welcome-menu-symbols a:focus-visible img{opacity:1}
 #welcome-site-menu{overflow-y:auto}
+
+/* Responsive composition: typography scales within a readable range; objects use spare room. */
+.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);column-gap:clamp(28px,4vw,76px);row-gap:clamp(24px,2.5vw,40px);padding-top:clamp(32px,3.5vw,64px)}
+.hero-heading{grid-column:1/-1;min-width:0;padding-right:90px}
+.hero-heading h1{font-size:clamp(38px,6.7vw,116px);line-height:1.04;max-width:none}
+.hero-copy{grid-column:1;padding:0;min-width:0;align-self:stretch;justify-content:space-between;gap:clamp(28px,3vw,52px)}
+.hero-intro{padding-bottom:0}
+.hero .hero-copy .hero-intro>p{font-size:clamp(18px,calc(.9vw + 10.5px),28px);line-height:1.6;font-weight:500;margin:0 0 1em}
+.hero .hero-copy .hero-intro>p:last-child{margin-bottom:0}
+.hero .hero-copy .hero-intro>p.lead{font-size:clamp(21px,calc(1.45vw + 7.8px),32px);line-height:1.5}
+.hero .hero-ending{font-size:clamp(22px,1.65vw,30px)!important;line-height:1.45;margin:0;padding-top:24px}
+.hero-art{grid-column:2;min-width:0;padding:0;align-content:start;gap:24px}
+.hero .scene>img{width:100%;height:auto;max-height:520px;object-fit:cover}
+.hero-composition{height:clamp(160px,12vw,230px);min-height:0;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(20px,3vw,56px)}
+.hero-composition .hero-iridescence{height:100%;max-height:200px;min-width:0}
+.hero-composition .light-ribbon{height:60%;width:100%;min-width:0}
+.hero-composition .hero-botanical{width:100%;height:100%;max-height:220px;object-fit:contain}
+.hero>.hero-composition{grid-column:1/-1;width:min(100%,660px);justify-self:center;margin:0}
+.meaning-grid>aside{align-self:stretch;align-content:space-between;row-gap:clamp(24px,3vw,56px)}
+.meaning-grid>aside>.framed-reveal{align-self:end}
+.what-grid>aside.material-grid{row-gap:clamp(24px,3vw,52px)}
+.studio-heading{row-gap:clamp(32px,4vw,64px)}
+.studio-materials{min-width:0}
+.cards-context .card-back{max-width:100%;width:min(100%,540px)}
+@media(min-width:741px) and (max-width:1100px){
+ .meaning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .meaning-paper-stack{grid-column:1/-1;grid-row:auto}
+ .meaning-grid>aside{grid-column:1/-1;grid-row:auto;margin:0;align-self:start;align-items:start;align-content:start;column-gap:32px;row-gap:24px}
+ .meaning-grid>aside>.scene{grid-column:1;grid-row:1}
+ .meaning-grid>aside>.framed-reveal{grid-column:2;grid-row:1/3;align-self:center}
+ .meaning-grid>aside>.object-slot{grid-column:1;grid-row:2;min-height:150px;max-height:180px}
+ .meaning-grid>aside>.object-slot:nth-of-type(2){display:none}
+ .meaning-grid .meaning-paper-stack>article.paper{padding:48px clamp(40px,6vw,68px)}
+ .studio-heading>.studio-materials{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start;margin:0}
+ .studio-materials>.studio-card{grid-column:1;grid-row:1;min-height:0;align-self:start}
+ .studio-materials>.studio-accents{grid-column:1;grid-row:2;width:55%;max-height:160px}
+ .studio-materials>.studio-composition{grid-column:2;grid-row:1/3;align-self:center}
+ .studio-materials>.studio-underlay,.studio-materials.tiles-tucked>.studio-underlay{position:static;grid-column:1/-1;grid-row:3;margin:0 auto;width:min(100%,420px);gap:20px}
+ .studio-heading>article.paper{margin:0;padding:clamp(36px,5vw,56px)}
+ .studio-extra-tiles.has-room{display:none}
+ .what-instruments{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(min-width:741px) and (max-width:1050px){
+ .hero{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero-copy{align-self:start;gap:0}
+ .hero .hero-copy .hero-intro>p{font-size:clamp(18px,1.9vw,20px)}
+ .hero .hero-copy .hero-intro>p.lead{font-size:clamp(21px,2.2vw,23px)}
+ .hero .hero-ending{font-size:clamp(21px,2.1vw,24px)!important}
+ .hero-art{align-self:start}
+ .hero>.hero-composition{height:160px}
+ .symset-section{padding-bottom:160px}
+ .symset-corner-art{width:120px;height:140px;bottom:16px}
+}
+@media(min-width:1101px){
+ .studio-heading>.studio-materials{align-self:stretch;align-content:space-between;row-gap:clamp(18px,2.5vw,48px)}
+}
+@media(max-width:740px){
+ .hero{grid-template-columns:minmax(0,1fr);row-gap:28px;padding-top:32px}
+ .hero-heading{padding-right:48px}
+ .hero-heading h1{font-size:clamp(34px,8.7vw,60px);line-height:1.06}
+ .hero-copy,.hero-art{grid-column:1;align-self:start}
+ .hero .hero-copy .hero-intro>p{font-size:18px;line-height:1.65}
+ .hero .hero-copy .hero-intro>p.lead{font-size:21px;line-height:1.5}
+ .hero .hero-ending{font-size:22px!important}
+ .hero-composition{height:170px}
+ .meaning-grid>aside{align-self:start;align-content:start;row-gap:24px}
+ .what-grid>aside.material-grid{row-gap:24px}
+ .studio-materials{max-width:100%;width:100%}
+ .cards-context .card-back{width:min(100%,435px)}
+}
+
+/* The opening objects form a shared base, keeping both prose and city columns compact. */
+@media(min-width:741px){
+ .hero>.hero-composition{width:min(100%,920px)}
+ .studio-accents{max-height:140px}
+ .studio-composition{width:min(100%,380px);max-height:none;justify-self:center}
+}
+
+/* Contain the paper's overscan at the viewport edge while retaining its irregular silhouette. */
+#meaning{overflow-x:clip}
+@media(min-width:741px) and (max-width:1100px){
+ .studio-heading>article.paper,.studio-heading>.studio-materials{grid-column:1/-1}
+}
+@media(min-width:480px) and (max-width:740px){
+ .studio-heading>.studio-materials{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:center}
+ .studio-materials>.studio-card{grid-column:1;grid-row:1;min-height:0}
+ .studio-materials>.studio-composition{grid-column:2;grid-row:1;max-height:360px;align-self:center}
+}
+
+/* The Symset copy determines the row height; its decorative frame fits that space. */
+.symset-art-slot{grid-column:1;grid-row:1;position:relative;min-width:0;min-height:0;align-self:stretch}
+.symset-art-slot>.framed-light{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain;object-position:left top}
+@media(max-width:1050px){.symset-art-slot{display:none}}
+
+/* Cap decorative scale before it can make a neighbouring text column unnecessarily tall. */
+.joker-portrait{max-width:430px;margin-inline:auto}
+@media(min-width:1051px){
+ .symset-heading.section-grid{grid-template-columns:clamp(130px,14vw,220px) minmax(0,1fr) 70px}
+}
+@media(min-width:1101px){
+ .studio-materials>.studio-card.paper{max-width:480px;width:100%;justify-self:center}
+ .studio-materials>.studio-accents{max-height:110px}
+ .studio-materials>.studio-composition{width:min(100%,380px);max-height:none;justify-self:center}
+}
+
+/* October 14: keep objects grouped, reserve reading space and make closed states explicit. */
+.hero-art>.hero-composition{width:100%;margin:0;grid-column:auto;height:clamp(170px,14vw,250px)}
+.meaning-grid>aside.material-grid{align-self:start;align-content:start;padding-top:5px;row-gap:28px}
+.meaning-specimens{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;min-width:0}
+.meaning-specimens>.paper.object-slot{min-width:0;min-height:0;height:170px;max-height:none;padding:12px;overflow:visible;display:flex!important}
+.meaning-specimens .meaning-compass,.meaning-specimens .specimen{width:100%;height:100%;max-height:146px;object-fit:contain;transform:none;margin:0}
+.meaning-grid>aside>.framed-reveal{align-self:start;margin-top:0;min-width:0;padding-bottom:24px}
+.joker-portrait{width:94%;max-width:430px}
+.card-reveal[aria-hidden="true"]>.falling-card{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.card-reveal[aria-hidden="false"]>.falling-card{opacity:1;visibility:visible;transform:translate(0,0) scale(1) rotate(var(--angle))}
+.card-reveal{margin-top:32px;min-width:0;overflow:visible;clip-path:none}
+.painting-lens{display:none;position:absolute;z-index:25;pointer-events:none;border-radius:50%;background-repeat:no-repeat;background-color:#e4e1d1;border:1px solid #e9f1efb3;box-shadow:0 10px 24px #06100a88,inset 0 0 5px 2px #fff9,inset 0 0 14px 5px #102b3199;isolation:isolate}
+.lens-active>.painting-lens{display:block}
+.painting-lens::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 30% 23%,#fff6,transparent 27%),radial-gradient(circle at center,transparent 66%,#9af5ed44 78%,#ffd4c466 88%,#fff8 97%);box-shadow:inset 3px 1px 3px #d6fdff88,inset -3px -1px 3px #ffcfed88}
+.painting-lens::after{content:'';position:absolute;inset:4px;border-radius:inherit;border:1px solid #fff5;box-shadow:inset 0 0 10px #081b1b66}
+.what-ending{min-width:0}.what-ending p:first-child{margin-top:24px}
+.what-instruments{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,32px);align-items:center}
+.what-instruments svg{height:clamp(110px,11vw,170px)}
+.what-grid>aside>.diagram-pending{align-self:center}
+.what-grid>aside.material-grid{row-gap:clamp(24px,3vw,44px);align-content:space-between}
+.cards-ending{min-width:0}.cards-ending>p:first-child{margin-top:24px}
+.enter-portal{position:relative}
+.portal-main-link{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.enter-portal>.portal-symbols{position:relative;z-index:3;pointer-events:none}
+.portal-symbol-link{display:grid;place-items:center;min-width:44px;min-height:44px;pointer-events:auto}
+.enter-portal>.thermal-logo,.enter-portal>.portal-label{pointer-events:none;position:relative;z-index:2}
+.enter-portal:focus-within{transform:scale(1.01)}
+.portal-main-link:focus-visible{outline:2px solid #fff;outline-offset:6px}
+@media(min-width:1101px) and (max-width:1350px){
+ .meaning-specimens{grid-template-columns:minmax(0,1fr)}
+ .meaning-specimens>.paper.object-slot{height:140px}
+}
+@media(min-width:741px) and (max-width:1100px){
+ .meaning-grid{column-gap:24px;row-gap:28px;padding-inline:clamp(20px,3.5vw,40px)}
+ .meaning-grid .meaning-paper-stack>article.paper{padding:38px clamp(26px,4vw,44px)}
+ .meaning-grid>aside.material-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start;padding-top:5px}
+ .meaning-grid>aside>.scene{grid-column:1;grid-row:1}
+ .meaning-grid>aside>.meaning-specimens{grid-column:1;grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .meaning-specimens>.paper.object-slot{height:140px;padding:12px}
+ .meaning-grid>aside>.framed-reveal{grid-column:2;grid-row:1/3;align-self:start;padding-bottom:0}
+ .meaning-grid>aside>.card-reveal{grid-column:1/-1;grid-row:3;margin-top:8px}
+ .meaning-grid .joker-portrait{width:94%;max-width:430px}
+ .what-grid>aside>.what-ending{grid-column:1/-1;grid-row:2}
+ .what-grid>aside>.diagram-pending{grid-row:3}
+ .what-grid>aside>.what-instruments{grid-row:4;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .what-instruments svg{height:130px}
+ .what-grid>aside.material-grid{align-content:start;align-self:start;row-gap:28px}
+ .what-ending p:first-child{margin-top:0}
+ .cards-ending{padding-top:20px;border-top:1px solid var(--rule-gold)}
+ .cards-ending>p:first-child{margin-top:0}
+ .symset-section{padding-bottom:48px}
+ .lens-panel{position:relative;padding-bottom:36px}
+ .lens-panel>.symset-corner-art{display:block;position:absolute;right:0;bottom:20px;width:clamp(75px,11vw,120px);height:150px;z-index:0;pointer-events:none;opacity:.9}
+ .lens-panel>.lens-grid{padding-right:clamp(90px,13vw,140px)}
+}
+@media(max-width:740px){
+ .meaning-grid{padding-inline:16px;row-gap:30px}
+ .meaning-grid .meaning-paper-stack>article.paper{padding:36px 24px}
+ .meaning-grid .meaning-paper-stack>article.paper::before{inset:-4% -9%}
+ .meaning-grid>aside.material-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+ .meaning-grid>aside>.scene{grid-column:1/-1;grid-row:1}
+ .meaning-grid>aside>.meaning-specimens{grid-column:1/-1;grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .meaning-specimens>.paper.object-slot{display:flex!important;height:150px;padding:12px}
+ .meaning-grid>aside>.framed-reveal{grid-column:1/-1;grid-row:3;margin-top:0}
+ .meaning-grid .joker-portrait{width:min(86%,350px)}
+ .what-instruments,.what-grid>aside>.what-instruments{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+ .what-instruments svg,.what-instruments svg:nth-child(n+3){display:block;height:clamp(72px,18vw,120px)}
+ .portal-symbol-link{min-width:44px;min-height:44px}
+ .portal-symbols{gap:clamp(4px,2vw,12px)}
+}
+@media(max-width:379px){.meaning-specimens>.paper.object-slot{height:120px}.meaning-grid .meaning-paper-stack>article.paper{padding-inline:18px}.portal-symbols{gap:2px}}
+@media(prefers-reduced-motion:reduce){.painting-lens{transition:none}}
+
+/* Individually cropped plates have a physical scale instead of shrinking an entire source sheet. */
+.studio-materials>.studio-accents{display:grid;gap:14px;width:min(90%,400px);height:auto;max-height:none;margin:0 auto;padding:8px 0;align-self:start}
+.studio-accents>svg{display:block;width:100%;height:auto;overflow:hidden}
+.studio-accents>svg:nth-child(2){width:60%;justify-self:center}
+@media(min-width:1101px){.studio-materials{align-content:start!important;row-gap:28px!important}.studio-materials>.studio-composition{width:min(100%,330px)}}
+@media(min-width:741px) and (max-width:1100px){.studio-materials>.studio-accents{grid-column:1;grid-row:2;width:90%;max-height:none}}
+@media(max-width:740px){.studio-materials>.studio-accents{display:none}}
+
+/* Latest review: a stronger reading rhythm and clearance inside the Studio frame. */
+.what-copy>.claim{margin-bottom:clamp(30px,3.2vw,56px)}
+.what-copy>p:not(.claim):not(.closing-line){font-size:clamp(18px,calc(1vw + 6px),22px);line-height:1.75}
+.what-ending{padding-top:clamp(10px,1.5vw,24px)}
+.what-ending>p+p{margin-top:clamp(28px,3vw,48px)}
+.studio-heading>article.paper>p{margin-left:2%;margin-right:2%}
+@media(max-width:740px){.what-copy>p:not(.claim):not(.closing-line){font-size:18px}.what-copy>.claim{margin-bottom:30px}.what-ending{padding-top:8px}}
+
+/* Reserve an actual column: legacy first-child rules must not span the frame across the copy. */
+.symset-section .symset-heading>.symset-art-slot{grid-column:1/2;grid-row:1;overflow:hidden;isolation:isolate}
+.symset-section .symset-heading>.symset-intro-copy{grid-column:2/3;grid-row:1;min-width:0}
+.symset-section .symset-heading>.section-symbol{grid-column:3/4;grid-row:1}
+.symset-section .symset-art-slot>.framed-light{max-width:100%;clip-path:inset(0)}
+.joker-portrait.lens-active,.joker-portrait.lens-active *{cursor:none!important}
+@media(max-width:1050px){.symset-section .symset-heading>.symset-intro-copy{grid-column:1/2}.symset-section .symset-heading>.section-symbol{grid-column:2/3}}
+.symset-section>.corner-wisp{width:70px;height:280px;right:0;top:45px;overflow:hidden}

@@ -59,3 +59,10 @@
 .lightheading.right {
   text-align: right;
 }
+
+@font-face{font-family:'ONCE Brygada 1918';src:url('/welcome/previews/welcome-v02/fonts/Brygada1918-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'ONCE Montserrat';src:url('/welcome/assets/fonts/Montserrat-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'ONCE Montserrat';src:url('/welcome/assets/fonts/Montserrat-Medium.ttf') format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'ONCE Fragment Mono';src:url('/welcome/previews/welcome-v02/fonts/FragmentMono-Regular.ttf') format('truetype');font-display:swap}
+.nav-menu .med-word.menu,.nav-menu .close{font-family:'ONCE Brygada 1918',Georgia,serif!important;font-weight:400}
+.nav-menu .small-link,.nav-menu .acreditation-text{font-family:'ONCE Montserrat',sans-serif!important}

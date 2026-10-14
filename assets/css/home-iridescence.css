@@ -1,0 +1,29 @@
+/* Rounded symbol treatments; spectral material replaces the five animated GIFs. */
+.icon-wrap{isolation:isolate;touch-action:manipulation}
+.icon-wrap>.rounded-symbol{width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 1px 1px #fff3)}
+.icon-wrap>.oil-icon{inset:0;width:100%;height:100%;box-sizing:border-box;display:block;pointer-events:none;opacity:0;transition:opacity .32s ease}
+.oil-base{display:block;width:100%;height:100%;object-fit:contain;filter:brightness(.9)}
+.oil-face{position:absolute;inset:2vh;mask-image:var(--oil-mask);-webkit-mask-image:var(--oil-mask);mask-size:100% 100%;-webkit-mask-size:100% 100%;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;overflow:hidden;mix-blend-mode:multiply;opacity:.94}
+.oil-flow{position:absolute;inset:-70%;background-image:conic-gradient(from 45deg,#ffe8a3,#ec6bc5,#6ae2d3,#7186f0,#ffd8a1,#b8ffdf,#e88ede,#ffe8a3),url('/welcome/previews/welcome-v05/materials/studio-full.webp');background-blend-mode:color-dodge;background-size:100% 100%,cover;filter:url('#symbol-oil-warp') saturate(1.7) contrast(1.12);transform-origin:var(--oil-x,50%) var(--oil-y,50%);animation:symbol-oil-flow 5.6s ease-in-out infinite alternate;animation-play-state:paused}
+.icon-wrap.is-energized>.oil-icon,.icon-wrap:focus-visible>.oil-icon{opacity:1!important}
+.icon-wrap.is-energized .oil-flow,.icon-wrap:focus-visible .oil-flow{animation-play-state:running}
+.icon-wrap:focus-visible{outline:1px solid #dfd7b3;outline-offset:6px;border-radius:12px}
+@keyframes symbol-oil-flow{0%{transform:translate(-8%,-5%) rotate(-22deg) scale(1.02);background-position:0 15%}45%{transform:translate(8%,4%) rotate(48deg) scale(1.25);background-position:75% 65%}100%{transform:translate(-3%,9%) rotate(145deg) scale(1.05);background-position:25% 100%}}
+@media(min-width:992px){body[data-keyboard-symbol] .fullscreen-section.overlay{display:block!important;pointer-events:none}body[data-keyboard-symbol] .fullscreen-section.overlay h1,body[data-keyboard-symbol] .fullscreen-section.overlay h3,body[data-keyboard-symbol] .fullscreen-section.overlay h5{opacity:0!important}body[data-keyboard-symbol="star"] .fullscreen-section.overlay .star,body[data-keyboard-symbol="triangle"] .fullscreen-section.overlay .triangle,body[data-keyboard-symbol="circle"] .fullscreen-section.overlay .circle,body[data-keyboard-symbol="square"] .fullscreen-section.overlay .square,body[data-keyboard-symbol="root"] .fullscreen-section.overlay .root{opacity:1!important}body[data-keyboard-symbol] .fullscreen-section:not(.overlay)>.text{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.oil-flow{animation:none;filter:saturate(1.4)}.icon-wrap>.oil-icon{transition:none}}
+
+@media(max-width:767px){.icon-wrap>.oil-icon{padding:30vh 2vh}.oil-face{top:50%;bottom:auto;left:2vh;right:2vh;aspect-ratio:1;transform:translateY(-50%)}}
+/* Spectral currents stay inside a smaller, lighter symbol silhouette. */
+.icon-wrap>.rounded-symbol{transform:scale(.78);filter:none}
+.oil-base{transform:scale(.78);filter:brightness(.85)}
+.oil-face{transform:scale(.78);mix-blend-mode:normal;opacity:1}
+.oil-canvas{display:block;width:100%;height:100%;filter:saturate(.83) contrast(1.1);image-rendering:auto}
+@media(max-width:767px){.oil-face{transform:translateY(-50%) scale(.78)}}
+.icon-wrap>.rounded-symbol{transform:scale(.78)!important;transition:opacity .32s ease}
+.icon-wrap.is-energized>.rounded-symbol{opacity:0!important}
+
+.oil-canvas{filter:saturate(.95) brightness(1.35) contrast(1.05)}
+.oil-face{filter:drop-shadow(0 0 1px #b5a9ba99)}
+
+/* Preserve the reference palette in the rendered canvas. */
+.oil-canvas{filter:none}

@@ -62,6 +62,6 @@ const label=portal.querySelector('.portal-label');label.classList.add('thermal-t
  function start(){if(!raf)raf=requestAnimationFrame(tick)}
  portal.addEventListener('pointermove',e=>{const r=target.getBoundingClientRect();tx=(e.clientX-r.left+8)/(r.width+16);ty=(e.clientY-r.top+8)/(r.height+16);want=1;start()});
  portal.addEventListener('pointerleave',()=>{want=0;start()});
- portal.addEventListener('focus',()=>{tx=ty=.5;want=1;start()});portal.addEventListener('blur',()=>{want=0;start()});
+ portal.addEventListener('focusin',()=>{tx=ty=.5;want=1;start()});portal.addEventListener('focusout',()=>{want=0;start()});
  new ResizeObserver(build).observe(target);logo.addEventListener('load',build);document.fonts.ready.then(build);build();
 });
