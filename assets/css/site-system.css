@@ -132,3 +132,4 @@ body.site-unified .nav-menu .med-word{font-family:var(--font-heading)!important}
 @media(prefers-reduced-motion:reduce){.concept-page .section-8 .concept-scroll-reveal{transition:none}}
 @media(max-width:479px){.concept-page .big-main-heading{font-size:clamp(30px,8.7vw,42px)!important;overflow-wrap:normal;max-width:96%;margin-inline:auto}.concept-page .section-8{max-width:100%;overflow-wrap:normal}}
 .world-editorial>.editorial-film{width:100%;margin:0}
+.concept-page .div-block-34{width:100%;max-width:100%;overflow:hidden}.concept-page .image-26{width:min(600px,100%);max-width:100%;height:auto;display:block;margin-inline:auto}
