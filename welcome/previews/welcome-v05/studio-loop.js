@@ -1,8 +1,8 @@
 (() => {
  const v=document.querySelector('video.studio-loop'),button=document.querySelector('.studio-play-retry');if(!v)return;
- v.muted=true;v.defaultMuted=true;v.volume=0;
- const play=()=>{v.muted=true;v.play().then(()=>button.hidden=true).catch(()=>{button.hidden=false})};
- v.addEventListener('canplay',play);v.addEventListener('playing',()=>button.hidden=true);button.addEventListener('click',play);
+ let interacted=false,userPaused=false;v.muted=true;v.defaultMuted=true;v.volume=1;
+ const play=()=>{if(userPaused)return;v.muted=!interacted;v.play().then(()=>button.hidden=true).catch(()=>{button.hidden=false})};
+ v.addEventListener('canplay',play);v.addEventListener('playing',()=>button.hidden=true);button.addEventListener('click',()=>{interacted=true;userPaused=false;play()});v.addEventListener('click',()=>{interacted=true;v.muted=false;v.volume=1;userPaused=!v.paused;if(userPaused)v.pause();else play()});
  let started=false;function start(){if(started)return;started=true;
  if(window.Hls&&Hls.isSupported()){
   const h=new Hls({maxBufferLength:15});h.attachMedia(v);

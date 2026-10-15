@@ -5,7 +5,7 @@ const {createElement:h,useEffect,useRef,useState}=React;
 function HeatSymbol({symbol,active,point,heat=60,soft=50,area=50,intensity=1,edgeOnly=false}){
  const canvas=useRef(null);
  const state=useRef({image:null,field:null,raf:0,power:0,x:.5,y:.5});
- useEffect(()=>{let live=true;const img=new Image();img.onload=()=>{if(!live)return;const base=document.createElement('canvas');base.width=base.height=256;const g=base.getContext('2d',{willReadFrequently:true});g.fillStyle='#000';g.fillRect(0,0,256,256);g.shadowColor='white';g.shadowBlur=6+soft/8;for(let i=0;i<4;i++)g.drawImage(img,32,32,192,192);state.current.field=g.getImageData(0,0,256,256).data;state.current.image=img;paint(active?1:0,.5,.5)};img.src=`../../assets/symbols/white/${symbol}.png`;return()=>{live=false;cancelAnimationFrame(state.current.raf)}},[symbol,soft]);
+ useEffect(()=>{let live=true;const img=new Image();img.onload=()=>{if(!live)return;const base=document.createElement('canvas');base.width=base.height=256;const g=base.getContext('2d',{willReadFrequently:true});g.fillStyle='#000';g.fillRect(0,0,256,256);g.shadowColor='white';g.shadowBlur=6+soft/8;for(let i=0;i<4;i++)g.drawImage(img,32,32,192,192);state.current.field=g.getImageData(0,0,256,256).data;state.current.image=img;paint(active?1:0,.5,.5)};img.src=`/welcome/assets/symbols/white/${symbol}.png`;return()=>{live=false;cancelAnimationFrame(state.current.raf)}},[symbol,soft]);
  function paint(power,x,y){
   const c=canvas.current,s=state.current;if(!c||!s.field)return;
   const g=c.getContext('2d'),out=g.createImageData(256,256);
@@ -26,5 +26,5 @@ function HeatSymbol({symbol,active,point,heat=60,soft=50,area=50,intensity=1,edg
  }
 
  useEffect(()=>{const s=state.current;cancelAnimationFrame(s.raf);const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;let frames=0;function tick(){const target=active?intensity:0;s.power=reduced?target:s.power+(target-s.power)*.2;s.x=reduced?point.x:s.x+(point.x-s.x)*.25;s.y=reduced?point.y:s.y+(point.y-s.y)*.25;paint(s.power,s.x,s.y);if(!reduced&&++frames<32&&(Math.abs(target-s.power)>.005||Math.abs(point.x-s.x)>.005||Math.abs(point.y-s.y)>.005))s.raf=requestAnimationFrame(tick)}tick();return()=>cancelAnimationFrame(s.raf)},[active,point.x,point.y,heat,area,intensity]);
- return h('span',{className:'heat-symbol'},h('img',{src:`../../assets/symbols/white/${symbol}.png`,alt:'',width:80,height:80}),h('canvas',{ref:canvas,width:256,height:256,'aria-hidden':true}));
+ return h('span',{className:'heat-symbol'},h('img',{src:`/welcome/assets/symbols/white/${symbol}.png`,alt:'',width:80,height:80}),h('canvas',{ref:canvas,width:256,height:256,'aria-hidden':true}));
 }

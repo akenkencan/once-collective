@@ -43,10 +43,14 @@
 .oil-face{transform:none!important;mask-size:100% 100%;-webkit-mask-size:100% 100%}
 .icon-wrap>.rounded-symbol{opacity:1!important}.icon-wrap.is-energized>.rounded-symbol{opacity:0!important}
 .icon-wrap.is-retreating>.rounded-symbol{opacity:0!important}.icon-wrap.is-retreating>.oil-icon{opacity:1!important}
-.large-word.circle.community-word{position:relative!important;left:auto!important;right:auto!important;margin-inline:0!important;transform:none!important;max-width:90vw;white-space:nowrap;font-size:min(16vh,12vw)!important;transition:opacity .5s,filter .5s!important}
-@media(min-width:768px){.fullscreen-section.overlay .text-row:has(.community-word){justify-content:center!important;padding:0 4vw;box-sizing:border-box}.fullscreen-section.overlay .community-word{margin:0!important;left:auto!important}}
+.large-word.circle.circle-title{position:relative!important;left:auto!important;right:auto!important;margin-inline:0!important;transform:none!important;max-width:90vw;white-space:nowrap;font-size:min(16vh,12vw)!important;transition:opacity .5s,filter .5s!important}
+@media(min-width:768px){.fullscreen-section.overlay .text-row:has(.circle-title){justify-content:center!important;padding:0 4vw;box-sizing:border-box}.fullscreen-section.overlay .circle-title{margin:0!important;left:auto!important}}
 @media(max-width:767px){.oil-face{transform:translateY(-50%)!important}}
 /* The revealed Community title has one stationary, viewport-centred position. */
-.fullscreen-section.overlay .community-word{position:fixed!important;left:50%!important;right:auto!important;top:8vh!important;transform:translateX(-50%)!important;margin:0!important;width:max-content!important;max-width:92vw!important;font-size:min(16vh,12vw)!important;text-align:center!important;transition:opacity .5s!important}
-.fullscreen-section.overlay .community-word{top:0!important}
-.oil-face .burst-canvas{filter:brightness(1.18)}
+.fullscreen-section.overlay .circle-title{position:fixed!important;left:50%!important;right:auto!important;top:8vh!important;transform:translateX(-50%)!important;margin:0!important;width:max-content!important;max-width:92vw!important;font-size:min(16vh,12vw)!important;text-align:center!important;transition:opacity .5s!important}
+.fullscreen-section.overlay .circle-title{top:0!important}
+.oil-face .burst-canvas{filter:none}
+
+/* Keep the revealed top-line Vision left of the star, and Curation right of the square. */
+.fullscreen-section.overlay .home-vision-title{position:absolute!important;left:5vw!important;right:auto!important;margin:0!important;max-width:36vw;font-size:min(14vh,10vw)!important;transform:none!important;text-align:left}
+.fullscreen-section.overlay .home-curation-title{position:relative!important;left:5vw!important;margin-left:4vw!important;transform:none!important;white-space:nowrap}

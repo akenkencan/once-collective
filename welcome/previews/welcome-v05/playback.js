@@ -14,12 +14,13 @@
  }
  let initialized=false;
  button.addEventListener('click',async()=>{
-  status.hidden=true;
+  status.hidden=true;video.muted=false;video.volume=1;
   if(!initialized){setup();initialized=true;}
   if(video.error){if(hls)hls.destroy();setup();}
   else if(hls)hls.startLoad();
   try{await video.play();}catch(e){failure('Playback could not start. Please try again.');}
  });
+ video.addEventListener('pointerdown',()=>{video.muted=false;video.volume=1});
  video.addEventListener('playing',()=>{button.hidden=true;status.hidden=true;});
  video.addEventListener('error',()=>failure('The film could not load. Please try again.'));
 })();

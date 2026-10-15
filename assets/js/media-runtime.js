@@ -5,7 +5,7 @@
   if(jobs.has(video))return jobs.get(video);
   const job=new Promise((resolve,reject)=>{
    if(video.readyState>=1){resolve(video);return}
-   video.preload='auto';video.muted=true;video.playsInline=true;
+   video.preload='auto';video.playsInline=true;
    video.addEventListener('loadedmetadata',()=>resolve(video),{once:true});
    video.addEventListener('error',()=>reject(video.error||new Error('Film unavailable')),{once:true});
    if(video.dataset.hls){
