@@ -2,13 +2,13 @@
    Symbols share the same renderer through ONCEColourBurst.attach(element, surface). */
 (() => {
  const reduced=matchMedia('(prefers-reduced-motion:reduce)'),registry=new Map();
- let texture=null,dark=[12,19,20];const image=new Image();image.src='/assets/images/colour-burst-reference-soft.webp';
+ let texture=null,dark=[12,19,20];const image=new Image();image.src='/assets/images/colour-burst-reference-opal.webp';
  image.onload=()=>{const c=document.createElement('canvas');c.width=256;c.height=194;const x=c.getContext('2d');x.drawImage(image,0,0,256,194);texture=x.getImageData(0,0,256,194).data;
   let darkest=Infinity;for(let i=0;i<texture.length;i+=4){const sum=texture[i]+texture[i+1]+texture[i+2];if(sum<darkest){darkest=sum;dark=[texture[i],texture[i+1],texture[i+2]]}}
   // Use only luminous oil bands from the supplied image. Propagate the nearest
   // eligible sampled pixel through its dark/brown regions, without inventing hues.
   const seen=new Uint8Array(256*194),queue=new Int32Array(256*194);let head=0,tail=0;
-  for(let i=0;i<seen.length;i++){const k=i*4,a=texture[k],b=texture[k+1],c=texture[k+2];if(Math.max(a,b,c)>145&&Math.min(a,b,c)>75&&Math.max(a,b,c)-Math.min(a,b,c)>25&&c>100&&(.2126*a+.7152*b+.0722*c)>110){seen[i]=1;queue[tail++]=i}}
+  for(let i=0;i<seen.length;i++){const k=i*4,a=texture[k],b=texture[k+1],c=texture[k+2];if(Math.max(a,b,c)>150&&Math.min(a,b,c)>85&&Math.max(a,b,c)-Math.min(a,b,c)>22&&((c>a*.92)||(b>a*1.08)||(a>175&&b>165&&c>115))&&(.2126*a+.7152*b+.0722*c)>130){seen[i]=1;queue[tail++]=i}}
   while(head<tail){const i=queue[head++],px=i%256,py=Math.floor(i/256);for(const j of [px>0?i-1:-1,px<255?i+1:-1,py>0?i-256:-1,py<193?i+256:-1])if(j>=0&&!seen[j]){seen[j]=1;queue[tail++]=j;for(let q=0;q<3;q++)texture[j*4+q]=texture[i*4+q]}}};
  function attach(element,surface){
   if(registry.has(element))return registry.get(element);
@@ -28,7 +28,7 @@
       for(let q=0;q<3;q++){const p=(iy*256+ix)*4+q;pixels.data[k+q]=(texture[p]*(1-fx)+texture[p+4]*fx)*(1-fy)+(texture[p+1024]*(1-fx)+texture[p+1028]*fx)*fy}
      }else{pixels.data[k]=116;pixels.data[k+1]=179;pixels.data[k+2]=204}
      // Thin dark currents occupy only a small fraction of the material.
-     const seam=Math.sin((r+fold-t*.25)*42+a*.8);if(seam>.997){const mix=(seam-.997)/.003*.85;for(let q=0;q<3;q++)pixels.data[k+q]=pixels.data[k+q]*(1-mix)+dark[q]*mix}
+     const seam=Math.sin((r+fold-t*.25)*42+a*.8);if(r>.78&&seam>.998){const mix=(seam-.998)/.002*.45;for(let q=0;q<3;q++)pixels.data[k+q]=pixels.data[k+q]*(1-mix)+dark[q]*mix}
      const reveal=reduced.matches?1:Math.min(1,(now-start)/280),rough=noise(dx*5+t*.13,dy*5-t*.1)*.65+noise(dx*13-t*.08,dy*13)*.35;
      const edge=r+(rough-.5)*.48*Math.min(1,r*4)+fold*.35;
      pixels.data[k+3]=liquidMatte?255*Math.max(0,Math.min(1,((1-Math.pow(1-reveal,2))*1.85-edge)*24)):255;

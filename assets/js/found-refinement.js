@@ -29,7 +29,7 @@
    near=next;
   }
   video.addEventListener('ended',()=>{finished=true;fade()});
-  box.addEventListener('pointerenter',()=>{finished=false;start()});box.addEventListener('focus',()=>{finished=false;start()});function interact(){video.muted=false;video.volume=1;if(active&&!video.paused){video.pause()}else if(active){video.play().catch(()=>{})}else{finished=false;start()}}
+  box.addEventListener('pointerenter',()=>{finished=false;start()});box.addEventListener('focus',()=>{finished=false;start()});function interact(){video.muted=true;video.volume=0;if(active&&!video.paused){video.pause()}else if(active){video.play().catch(()=>{})}else{finished=false;start()}}
   box.addEventListener('click',interact);box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();interact()}});
   const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)ONCEMedia.ensure(video).catch(()=>{});else{clearTimeout(leaveTimer);fade();near=false}},{rootMargin:'200px'});observer.observe(box);
   return {check,stop:fade};

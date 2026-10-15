@@ -2,7 +2,7 @@
 document.querySelectorAll('[data-feature-player]').forEach(panel=>{
  const video=panel.querySelector('video'),slot=panel.querySelector('.reel-embedded-slot'),button=panel.querySelector('.feature-play'),dialog=document.querySelector('.reel-dialog'),expanded=dialog.querySelector('.reel-dialog-slot');
  let started=false;
- async function start(){video.muted=false;video.volume=1;button.hidden=true;started=true;expanded.append(video);dialog.showModal();try{await ONCEMedia.ensure(video);await video.play()}catch(e){video.dataset.playbackError=e.message;dialog.close();button.hidden=false}dialog.querySelector('.reel-close').focus()}
+ async function start(){video.muted=video.hasAttribute('data-silent-film');video.volume=video.hasAttribute('data-silent-film')?0:1;button.hidden=true;started=true;expanded.append(video);dialog.showModal();try{await ONCEMedia.ensure(video);await video.play()}catch(e){video.dataset.playbackError=e.message;dialog.close();button.hidden=false}dialog.querySelector('.reel-close').focus()}
  button.addEventListener('click',start);
  video.addEventListener('pointerdown',()=>{video.muted=false;video.volume=1});
  video.addEventListener('click',e=>{
