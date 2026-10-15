@@ -54,3 +54,28 @@
 /* Keep the revealed top-line Vision left of the star, and Curation right of the square. */
 .fullscreen-section.overlay .home-vision-title{position:absolute!important;left:5vw!important;right:auto!important;margin:0!important;max-width:36vw;font-size:min(14vh,10vw)!important;transform:none!important;text-align:left}
 .fullscreen-section.overlay .home-curation-title{position:relative!important;left:5vw!important;margin-left:4vw!important;transform:none!important;white-space:nowrap}
+
+/* Preserve the original revealed word layout and limit changes to requested offsets. */
+.icon-wrap:focus-visible{outline:none!important;border-radius:0!important}
+@media(min-width:992px){
+body[data-keyboard-symbol] .fullscreen-section.overlay{display:flex!important;flex-direction:column;justify-content:space-between}
+body[data-word-symbol] .fullscreen-section.overlay{display:none!important}
+.fullscreen-section.overlay .text-row.first .large-word{font-size:min(16vh,10vw)!important}
+.fullscreen-section.overlay .text-row.sixth .triangle{position:relative;left:-2vw}
+.fullscreen-section.overlay .text-row.sixth .root{position:relative;left:2vw}
+.fullscreen-section.overlay .star-2{transform:none!important}
+.fullscreen-section.overlay .star-2>.star:first-child{position:absolute;right:3vw;white-space:nowrap;font-size:min(6.19vh,4.3vw);margin:0}
+body[data-word-symbol] .icon-wrap.is-energized>.oil-icon{transform:scale(1.05)!important}
+}
+@media(min-width:992px){.fullscreen-section.overlay .circle-title{top:8vh!important}}
+/* Reveal follows the underlying type positions, with outer rows arriving first. */
+.fullscreen-section.overlay,body[data-keyboard-symbol] .fullscreen-section.overlay{display:none!important}
+.fullscreen-section:not(.overlay)>.text{opacity:1!important;transition:opacity .95s cubic-bezier(.22,1,.36,1)!important}
+body[data-keyboard-symbol] .fullscreen-section:not(.overlay)>.text{opacity:.78!important}
+.home-reveal-plane{position:fixed;inset:0;z-index:9;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .8s cubic-bezier(.22,1,.36,1)}
+.home-reveal-plane.is-visible{opacity:1}
+.home-reveal-word{position:fixed;display:block;margin:0;padding:0;white-space:nowrap;color:#eee;pointer-events:none}
+@media(min-width:992px){.fullscreen-section:not(.overlay) .text-row.first .large-word{font-size:min(16vh,10vw)!important}}
+@media(prefers-reduced-motion:reduce){.home-reveal-plane,.fullscreen-section:not(.overlay)>.text{transition:none!important}}
+.home-reveal-word{font-family:var(--font-heading)!important}
+body.site-unified .home-reveal-word{font-family:var(--font-heading)!important}
