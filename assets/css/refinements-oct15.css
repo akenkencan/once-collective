@@ -22,3 +22,10 @@
 .community-content,.community-content :is(p,h1,h2,a,strong,em){text-transform:none!important}.page-about .aboutcol{text-transform:none!important}
 .connected-copy>.connected-wide-passage{width:min(1240px,100%);max-width:none}.connected-line{display:block;text-wrap:pretty}.connected-line+.connected-line{margin-top:.3em}.concept-origin-lines{display:flex;flex-direction:column;gap:20px;width:min(1280px,100%);margin-inline:auto!important;text-align:center}.concept-page .concept-origin-line{font:400 clamp(20px,2.6vw,38px)/1.5 var(--font-body);letter-spacing:.012em;margin:0;text-wrap:balance;text-transform:none}.concept-page .blocktext{text-wrap:pretty}.page-found .widecontainer>.heroheading.lowest{word-spacing:.015em;text-wrap:pretty}
 @media(max-width:700px){.concept-origin-lines{gap:18px}.concept-page .concept-origin-line{font-size:22px}}
+
+/* The street animation sits behind the canonical rounded Square outline. */
+.world-loop-frame.about-symbol{border:0;background:transparent;overflow:visible}
+.world-loop-frame .world-square-film{position:absolute;inset:9.2%;overflow:hidden;border-radius:5%;z-index:0}
+.world-loop-frame .world-square-film>.world-square-loop{display:block;width:100%;height:100%!important;min-height:0!important;object-fit:cover!important}
+.world-loop-frame>.world-square-symbol{position:relative;z-index:1;width:100%;height:100%!important;min-height:0!important;object-fit:contain!important}
+.world-loop-frame>.about-symbol-burst{z-index:2}
