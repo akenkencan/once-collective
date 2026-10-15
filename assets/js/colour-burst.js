@@ -2,14 +2,7 @@
    Symbols share the same renderer through ONCEColourBurst.attach(element, surface). */
 (() => {
  const reduced=matchMedia('(prefers-reduced-motion:reduce)'),registry=new Map();
- let texture=null,dark=[12,19,20];const image=new Image();image.src='/assets/images/colour-burst-reference-opal.webp';
- image.onload=()=>{const c=document.createElement('canvas');c.width=256;c.height=194;const x=c.getContext('2d');x.drawImage(image,0,0,256,194);texture=x.getImageData(0,0,256,194).data;
-  let darkest=Infinity;for(let i=0;i<texture.length;i+=4){const sum=texture[i]+texture[i+1]+texture[i+2];if(sum<darkest){darkest=sum;dark=[texture[i],texture[i+1],texture[i+2]]}}
-  // Use only luminous oil bands from the supplied image. Propagate the nearest
-  // eligible sampled pixel through its dark/brown regions, without inventing hues.
-  const seen=new Uint8Array(256*194),queue=new Int32Array(256*194);let head=0,tail=0;
-  for(let i=0;i<seen.length;i++){const k=i*4,a=texture[k],b=texture[k+1],c=texture[k+2];if(Math.max(a,b,c)>150&&Math.min(a,b,c)>85&&Math.max(a,b,c)-Math.min(a,b,c)>22&&((c>a*.92)||(b>a*1.08)||(a>175&&b>165&&c>115))&&(.2126*a+.7152*b+.0722*c)>130){seen[i]=1;queue[tail++]=i}}
-  while(head<tail){const i=queue[head++],px=i%256,py=Math.floor(i/256);for(const j of [px>0?i-1:-1,px<255?i+1:-1,py>0?i-256:-1,py<193?i+256:-1])if(j>=0&&!seen[j]){seen[j]=1;queue[tail++]=j;for(let q=0;q<3;q++)texture[j*4+q]=texture[i*4+q]}}};
+ const spectrum=["#1E3A5F", "#3E6FA8", "#7A4FA0", "#C2507E", "#D9A441", "#4F8F5B"].map(hex=>[parseInt(hex.slice(1,3),16),parseInt(hex.slice(3,5),16),parseInt(hex.slice(5,7),16)]),dark=[35,21,30];
  function attach(element,surface){
   if(registry.has(element))return registry.get(element);
   const canvas=document.createElement('canvas');canvas.className='burst-canvas';canvas.width=canvas.height=180;surface.replaceChildren(canvas);
@@ -24,9 +17,9 @@
      const fold=.13*Math.sin(a*5+r*7-t*.7+seed)+.09*Math.sin(a*8-r*9+t*.6)+.07*Math.sin(dx*11+dy*8-t*.5);
      const u=((r+fold-t*.25)%1+1)%1,v=((a/6.283+.09*Math.sin(r*5+a*3+t*.35)+t*.018+seed)%1+1)%1;
      const k=(y*180+x)*4;
-     if(texture){const sx=u*254,sy=v*192,ix=Math.floor(sx),iy=Math.floor(sy),fx=sx-ix,fy=sy-iy;
-      for(let q=0;q<3;q++){const p=(iy*256+ix)*4+q;pixels.data[k+q]=(texture[p]*(1-fx)+texture[p+4]*fx)*(1-fy)+(texture[p+1024]*(1-fx)+texture[p+1028]*fx)*fy}
-     }else{pixels.data[k]=116;pixels.data[k+1]=179;pixels.data[k+2]=204}
+     const phase=((u+v*.16)*6)%6,index=Math.floor(phase),fraction=phase-index;
+     const blend=Math.max(0,Math.min(1,(fraction-.5)*2.35+.5)),smooth=blend*blend*(3-2*blend),next=(index+1)%6;
+     for(let q=0;q<3;q++)pixels.data[k+q]=spectrum[index][q]*(1-smooth)+spectrum[next][q]*smooth;
      // Thin dark currents occupy only a small fraction of the material.
      const seam=Math.sin((r+fold-t*.25)*42+a*.8);if(r>.78&&seam>.998){const mix=(seam-.998)/.002*.45;for(let q=0;q<3;q++)pixels.data[k+q]=pixels.data[k+q]*(1-mix)+dark[q]*mix}
      const reveal=reduced.matches?1:Math.min(1,(now-start)/280),rough=noise(dx*5+t*.13,dy*5-t*.1)*.65+noise(dx*13-t*.08,dy*13)*.35;

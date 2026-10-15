@@ -1,7 +1,8 @@
-/* Liquid artwork supplied by Alex; shared engine with six restrained variations. */
+/* User-supplied liquid engine, including the newest sixfold spectrum variant. */
 (()=>{
   var create = function createOnceLiquid(canvas, initial) {
       var MAXB = 28;
+      var CURSOR = MAXB - 1;
       var P = {};
       var key;
       for (key in initial) P[key] = initial[key];
@@ -52,6 +53,7 @@ void main() {
   vec4 k0 = uK[0]; vec4 k1 = uK[1]; vec4 k2 = uK[2]; vec4 k3 = uK[3]; vec4 k4 = uK[4];
   vec4 k5 = uK[5]; vec4 k6 = uK[6]; vec4 k7 = uK[7]; vec4 k8 = uK[8]; vec4 k9 = uK[9];
   vec4 k10 = uK[10]; vec4 k11 = uK[11]; vec4 k12 = uK[12]; vec4 k13 = uK[13];
+  vec4 k18 = uK[18]; vec4 k19 = uK[19];
   float aspect = k12.w; float t = k12.z; float seed = k12.y;
   vec2 fc = gl_FragCoord.xy;
   vec2 p0 = vec2(fc.x, uRes.y - fc.y) / uRes.y;
@@ -59,20 +61,47 @@ void main() {
   vec2 ctr = vec2(aspect * 0.5, 0.5);
   vec2 p = p0;
 
-  if (k9.z > 0.5 && k8.z > 0.0) {
-    vec2 dm = p - k9.xy; float dl = length(dm); float R = max(k8.w, 0.01);
+  if (k9.z > 0.5) {
+    vec2 mp = k9.xy;
+    vec2 dm = p - mp;
+    float dl = length(dm);
+    float R = max(k8.w, 0.01);
     float w = exp(-(dl * dl) / (R * R * 0.35));
-    p += k8.z * 0.025 * w * sin(dl * 70.0 - t * 5.0) * (dm / (dl + 0.0001));
+    if (k18.w != 0.0) {
+      float an = k18.w * w * 3.0;
+      float cs = cos(an); float sn = sin(an);
+      dm = vec2(cs * dm.x - sn * dm.y, sn * dm.x + cs * dm.y);
+    }
+    if (k18.z != 0.0) dm *= 1.0 - k18.z * w * 0.6;
+    p = mp + dm;
+    dl = length(dm);
+    if (k8.z > 0.0) {
+      float env = exp(-dl / (R * max(k18.x, 0.05))) * smoothstep(0.0, R * 0.12, dl);
+      p += k8.z * 0.02 * env * sin(dl * k18.y - k9.w * 6.2831853) * (dm / (dl + 0.0001));
+    }
+  }
+  if (k19.w > 0.0) {
+    vec2 sd = p - k19.xy; float sl = length(sd);
+    float rad = k19.z * 0.55;
+    float band = exp(-pow((sl - rad) / 0.035, 2.0));
+    p += k19.w * 0.03 * band * exp(-k19.z * 1.6) * (sd / (sl + 0.0001));
   }
 
+  vec2 sc = k10.xy;
   vec2 q = p;
-  float fold = k1.w;
-  if (fold > 1.5) {
-    vec2 d = p - ctr; float r = length(d);
-    float seg = 6.2831853 / fold;
-    float ang = mod(atan(d.y, d.x) - k2.x, seg);
-    ang = min(ang, seg - ang);
-    q = ctr + r * vec2(cos(ang + k2.x), sin(ang + k2.x));
+  if (k11.z > 0.5) q.x = sc.x + abs(q.x - sc.x);
+  if (k11.w > 0.5) q.y = sc.y + abs(q.y - sc.y);
+  float fold = k1.w; float twist = k10.z; float echo = k10.w;
+  if (fold > 1.5 || echo > 0.0) {
+    vec2 d = q - sc; float r = length(d);
+    float ang = atan(d.y, d.x) - k2.x - twist * r;
+    if (echo > 0.0) r = echo - abs(mod(r, 2.0 * echo) - echo);
+    if (fold > 1.5) {
+      float seg = 6.2831853 / fold;
+      ang = mod(ang, seg);
+      if (k11.y < 0.5) ang = min(ang, seg - ang);
+    }
+    q = sc + r * vec2(cos(ang + k2.x), sin(ang + k2.x));
   }
 
   vec2 wq = q * k0.z + vec2(seed);
@@ -85,6 +114,7 @@ void main() {
 
   if (k0.w > 0.0) { float cr = fbm(fq * k1.x + vec2(seed * 1.7, t * 0.02)); f *= 1.0 + k0.w * (cr - 0.5) * 1.8; }
   if (k1.y > 0.0) { float vn = fbm(fq * k1.z + vec2(11.3, seed + t * 0.03)); f *= 1.0 - k1.y * smoothstep(0.52, 0.74, vn); }
+  if (k11.x > 0.0) f *= smoothstep(k11.x, k11.x + 0.05, length(p0 - sc));
 
   float ef = k12.x;
   if (ef > 0.0) {
@@ -118,33 +148,6 @@ void main() {
     float axis = 1.0 - smoothstep(px * 0.5, px * 1.5, min(dcen.x, dcen.y));
     outc = over(outc, uK[17].rgb, max(gline * 0.6, axis) * k8.y);
   }
-
-  float veil = k9.w;
-  float tearIn = 0.0; float lip = 0.0; float tv = 0.0; float tw = 1.0;
-  if (veil > 0.5) {
-    vec2 tc = vec2(k10.x * aspect, k10.y);
-    vec2 dir = vec2(cos(k10.z), sin(k10.z)); vec2 nr = vec2(-dir.y, dir.x);
-    vec2 d = p0 - tc;
-    float u = dot(d, dir) / max(k10.w * 0.5, 0.001);
-    float v = dot(d, nr);
-    float env = sqrt(max(0.0, 1.0 - u * u));
-    float jag = (fbm(vec2(u * 5.0, seed + 2.0)) - 0.5) * 1.6 + (vnoise(vec2(u * 38.0, seed + 5.0)) - 0.5) * 0.7;
-    float w = k11.x * 0.11 * env * max(0.0, 1.0 + k11.y * jag);
-    float wob = k11.y * 0.025 * (fbm(vec2(u * 2.5, seed + 9.0)) - 0.5) * env;
-    float vv = v - wob;
-    float sd = abs(vv) - w;
-    tearIn = (1.0 - smoothstep(-px, px, sd)) * step(0.0001, env);
-    float fib = vnoise(vec2(u * 160.0 + seed, vv * 700.0));
-    float lw = k11.z * (0.4 + 0.6 * env) * (0.5 + fib);
-    lip = (1.0 - smoothstep(0.0, lw + px, sd)) * (1.0 - tearIn) * smoothstep(0.0, 0.2, env);
-    tv = vv; tw = max(w, 0.0001);
-    float gl0 = fbm(p0 * 3.0 + vec2(t * 0.05, -t * 0.03) + vec2(seed));
-    float centre = 1.0 - clamp(abs(tv) / tw, 0.0, 1.0);
-    vec3 vc = uK[18].rgb + ramp(gl0 * 1.5 + t * 0.02, 1.0) * k11.w * centre;
-    outc = over(outc, vc, tearIn);
-    if (veil < 1.5) outc = over(outc, uK[19].rgb * (0.82 + 0.3 * vnoise(p0 * 900.0)), lip);
-  }
-  float windowMask = veil > 1.5 ? tearIn : 1.0;
 
   float rings = k5.z; float gap = k5.w;
   float outer = T * (1.0 - gap * (rings + 0.5)) - aaF;
@@ -193,12 +196,10 @@ void main() {
         }
       }
       ra *= (1.0 - aBody);
-      outc = over(outc, uK[16].rgb, ra * k7.z * windowMask);
+      outc = over(outc, uK[16].rgb, ra * k7.z);
     }
-    outc = over(outc, col, aBody * k7.z * windowMask);
+    outc = over(outc, col, aBody * k7.z);
   }
-
-  if (veil > 1.5) outc = over(outc, uK[19].rgb * (0.82 + 0.3 * vnoise(p0 * 900.0)), lip);
 
   gl_FragColor = outc;
 }
@@ -244,9 +245,9 @@ void main() {
       function srand(i, k) { var x = Math.sin((i + 1) * 127.1 + k * 311.7 + (Number(P.seed) || 0) * 74.7) * 43758.5453; return x - Math.floor(x); }
       function aspect() { return canvas.height > 0 ? canvas.width / canvas.height : 1; }
       function bleed() {
-        var v = P.veil && P.veil !== 'off';
-        return { L: !v && P.anchor === 'left' ? 1 : 0, R: !v && P.anchor === 'right' ? 1 : 0, T: !v && P.anchor === 'top' ? 1 : 0, B: !v && P.anchor === 'bottom' ? 1 : 0 };
+        return { L: P.anchor === 'left' ? 1 : 0, R: P.anchor === 'right' ? 1 : 0, T: P.anchor === 'top' ? 1 : 0, B: P.anchor === 'bottom' ? 1 : 0 };
       }
+      function maxCount() { return Math.max(0, Math.min(CURSOR, Math.round(P.count))); }
 
       var blobs = [];
       var T = 0;
@@ -254,16 +255,12 @@ void main() {
         blobs = [];
         for (var i = 0; i < MAXB; i++) {
           var a = srand(i, 1) * Math.PI * 2, rr = Math.sqrt(srand(i, 2));
-          blobs.push({ x: 0, y: 0, vx: 0, vy: 0, ox: Math.cos(a) * rr, oy: Math.sin(a) * rr, u: srand(i, 5) * 2 - 1, rf: srand(i, 3), ph: srand(i, 4) * 6.2832, life: 0, dr: 0, r: 0, on: false });
+          blobs.push({ x: 0, y: 0, vx: 0, vy: 0, ox: Math.cos(a) * rr, oy: Math.sin(a) * rr, rf: srand(i, 3), ph: srand(i, 4) * 6.2832, life: 0, dr: 0, r: 0, on: false });
         }
         placeAll();
       }
       function homeOf(b, A) {
         var s = P.scale, sp = P.spread * s;
-        if (P.veil && P.veil !== 'off') {
-          var ta = P.tearAngle * Math.PI / 180, tx = P.tearX * A, ty = P.tearY, Lh = P.tearLength * 0.5 * 0.85;
-          return [tx + Math.cos(ta) * b.u * Lh - Math.sin(ta) * b.oy * 0.03, ty + Math.sin(ta) * b.u * Lh + Math.cos(ta) * b.oy * 0.03];
-        }
         if (P.anchor === 'left') return [sp * 0.15 + b.ox * sp * 0.35, 0.5 + b.oy * sp * 1.1];
         if (P.anchor === 'right') return [A - sp * 0.15 + b.ox * sp * 0.35, 0.5 + b.oy * sp * 1.1];
         if (P.anchor === 'top') return [A / 2 + b.ox * sp * 1.1, sp * 0.15 + b.oy * sp * 0.35];
@@ -275,19 +272,21 @@ void main() {
         for (var i = 0; i < blobs.length; i++) { var h = homeOf(blobs[i], A); blobs[i].x = h[0]; blobs[i].y = h[1]; blobs[i].vx = 0; blobs[i].vy = 0; }
       }
 
-      var m = { x: -10, y: -10, vx: 0, vy: 0, t: 0, has: false, inside: false };
+      var m = { x: -10, y: -10, sx: -10, sy: -10, vx: 0, vy: 0, t: 0, has: false, inside: false, down: false, lx: -10, ly: -10, cb: 0 };
+      var shock = { x: 0, y: 0, age: 9, s: 0 };
+      var rippleClock = 0;
       var FX = new Float32Array(MAXB), FY = new Float32Array(MAXB);
 
       function step(dt) {
         if (dt <= 0) return;
         T += dt;
         var A = aspect();
-        var n = Math.max(0, Math.min(MAXB, Math.round(P.count)));
+        var n = maxCount();
         var s = P.scale;
         var ga = P.gravityAngle * Math.PI / 180, gdx = Math.cos(ga), gdy = Math.sin(ga);
         var bl = bleed();
         var i, j, b;
-        for (i = 0; i < MAXB; i++) {
+        for (i = 0; i < CURSOR; i++) {
           b = blobs[i];
           if (i < n) {
             b.on = true;
@@ -299,9 +298,9 @@ void main() {
           } else { b.on = false; b.r = 0; }
           FX[i] = 0; FY[i] = 0;
         }
-        for (i = 0; i < MAXB; i++) {
+        for (i = 0; i < CURSOR; i++) {
           b = blobs[i]; if (!b.on) continue;
-          for (j = i + 1; j < MAXB; j++) {
+          for (j = i + 1; j < CURSOR; j++) {
             var c = blobs[j]; if (!c.on) continue;
             var dx = c.x - b.x, dy = c.y - b.y, d = Math.sqrt(dx * dx + dy * dy) + 0.00001;
             var rs = (b.r + c.r) * 0.9, f = 0;
@@ -311,8 +310,8 @@ void main() {
             FX[i] += ux * f; FY[i] += uy * f; FX[j] -= ux * f; FY[j] -= uy * f;
           }
         }
-        var mR = P.mouseRadius, mOn = m.has && m.inside && P.mouseMode !== 'off';
-        for (i = 0; i < MAXB; i++) {
+        var mR = Math.max(P.mouseRadius, 0.01), mOn = m.has && m.inside && P.mouseMode !== 'off';
+        for (i = 0; i < CURSOR; i++) {
           b = blobs[i]; if (!b.on) continue;
           var fx = FX[i], fy = FY[i];
           if (i < n) { var h = homeOf(b, A); fx += (h[0] - b.x) * P.home; fy += (h[1] - b.y) * P.home; }
@@ -322,14 +321,19 @@ void main() {
           fx += P.turbulence * 0.35 * Math.sin(b.y * 3.1 + T * 0.7 + b.ph);
           fy += P.turbulence * 0.35 * Math.cos(b.x * 2.7 - T * 0.6 + b.ph * 1.3);
           if (mOn) {
-            var mx = b.x - m.x, my = b.y - m.y, md = Math.sqrt(mx * mx + my * my) + 0.00001;
+            var mx = b.x - m.sx, my = b.y - m.sy, md = Math.sqrt(mx * mx + my * my) + 0.00001;
             if (md < mR) {
-              var w = 1 - md / mR; w *= w;
+              var w = Math.pow(1 - md / mR, P.falloff);
               var F = P.mouseForce * w;
-              if (P.mouseMode === 'attract') { fx -= mx / md * F; fy -= my / md * F; }
-              else if (P.mouseMode === 'repel') { fx += mx / md * F * 1.5; fy += my / md * F * 1.5; }
-              else if (P.mouseMode === 'stir') { fx += (-my / md) * F + m.vx * w * 2; fy += (mx / md) * F + m.vy * w * 2; }
-              else if (P.mouseMode === 'drag') { fx += m.vx * F * 2.5; fy += m.vy * F * 2.5; }
+              var ux2 = mx / md, uy2 = my / md;
+              var mode = P.mouseMode;
+              if (mode === 'attract') { fx -= ux2 * F; fy -= uy2 * F; }
+              else if (mode === 'repel') { fx += ux2 * F * 1.5; fy += uy2 * F * 1.5; }
+              else if (mode === 'stir') { fx += -uy2 * F; fy += ux2 * F; }
+              else if (mode === 'vortex') { fx += -uy2 * F * 1.2 - ux2 * F * 0.6; fy += ux2 * F * 1.2 - uy2 * F * 0.6; }
+              else if (mode === 'pull') { fx += (m.sx - b.x) * F * 6 + (m.vx - b.vx) * w * 2; fy += (m.sy - b.y) * F * 6 + (m.vy - b.vy) * w * 2; }
+              else if (mode === 'drag') { fx += m.vx * F * 2.5; fy += m.vy * F * 2.5; }
+              fx += m.vx * w * P.fling * 3; fy += m.vy * w * P.fling * 3;
             }
           }
           var mg = P.contain ? P.padding + b.r * 1.25 : P.padding, KW = 30;
@@ -342,7 +346,7 @@ void main() {
           var damp = Math.exp(-P.viscosity * dt);
           b.vx *= damp; b.vy *= damp;
           var sp2 = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
-          if (sp2 > 1.5) { b.vx *= 1.5 / sp2; b.vy *= 1.5 / sp2; }
+          if (sp2 > 3) { b.vx *= 3 / sp2; b.vy *= 3 / sp2; }
           b.x += b.vx * dt; b.y += b.vy * dt;
           if (P.contain) {
             var lo = mg * 0.6;
@@ -352,51 +356,92 @@ void main() {
             if (!bl.B) b.y = Math.min(b.y, 1 - lo);
           }
         }
-        var dm = Math.exp(-6 * dt);
+      }
+
+      function cursorTick(rdt) {
+        var follow = 1 + 30 * Math.pow(1 - Math.min(P.cursorLag, 0.95), 2);
+        var a = 1 - Math.exp(-follow * rdt);
+        if (m.sx < -5) { m.sx = m.x; m.sy = m.y; }
+        m.sx += (m.x - m.sx) * a; m.sy += (m.y - m.sy) * a;
+        var dm = Math.exp(-6 * rdt);
         m.vx *= dm; m.vy *= dm;
+        rippleClock += rdt * P.rippleSpeed;
+        if (shock.s > 0) { shock.age += rdt; if (shock.age > 3) shock.s = 0; }
+        var target = (m.has && m.inside && P.mouseMode !== 'off') ? P.cursorBlob : 0;
+        m.cb += (target - m.cb) * (1 - Math.exp(-6 * rdt));
+        var cb = blobs[CURSOR];
+        cb.x = m.sx; cb.y = m.sy; cb.r = m.cb * P.scale; cb.on = cb.r > 0.001;
       }
 
       function spawn(x, y) {
-        var n = Math.max(0, Math.min(MAXB, Math.round(P.count)));
-        if (n >= MAXB) return;
+        var n = maxCount();
+        if (n >= CURSOR) return;
         var best = -1, bestLife = 2;
-        for (var i = n; i < MAXB; i++) { if (blobs[i].life < bestLife) { bestLife = blobs[i].life; best = i; } }
+        for (var i = n; i < CURSOR; i++) { if (blobs[i].life < bestLife) { bestLife = blobs[i].life; best = i; } }
         if (best < 0) return;
         var b = blobs[best];
         b.x = x; b.y = y; b.vx = m.vx * 0.3; b.vy = m.vy * 0.3; b.life = 1; b.dr = P.dropSize; b.on = true; b.r = P.dropSize * P.scale;
+        dirty = true;
+      }
+      function burst(x, y) {
+        var R = Math.max(P.mouseRadius, 0.05) * 2;
+        for (var i = 0; i < CURSOR; i++) {
+          var b = blobs[i]; if (!b.on) continue;
+          var dx = b.x - x, dy = b.y - y, d = Math.sqrt(dx * dx + dy * dy) + 0.0001;
+          if (d < R) { var w = 1 - d / R; var imp = (0.6 + P.mouseForce * 0.12) * w; b.vx += dx / d * imp; b.vy += dy / d * imp; }
+        }
+      }
+      function click(x, y) {
+        if (P.clickAction === 'none') return;
+        if (P.splash > 0) { shock.x = x; shock.y = y; shock.age = 0; shock.s = P.splash * (P.clickAction === 'burst' ? 1.4 : 0.8); }
+        if (P.clickAction === 'drop') spawn(x, y);
+        else if (P.clickAction === 'burst') burst(x, y);
         dirty = true;
       }
 
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       var placed = false;
       function resize() {
-        var scale = Math.min(dpr * (P.resolution || 0.75), 620 / Math.max(canvas.clientWidth, canvas.clientHeight, 1));
+        var scale = Math.min(dpr * (P.resolution || 0.75),620/Math.max(canvas.clientWidth,canvas.clientHeight,1));
         var w = Math.max(2, Math.round(canvas.clientWidth * scale)), h = Math.max(2, Math.round(canvas.clientHeight * scale));
         if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); dirty = true; }
         if (!placed && canvas.clientHeight > 0) { placed = true; placeAll(); }
       }
 
+      function foldPt(x, y, A, rot) {
+        var cx = P.symCX * A, cy = P.symCY;
+        if (P.mirrorX) x = cx + Math.abs(x - cx);
+        if (P.mirrorY) y = cy + Math.abs(y - cy);
+        var fold = Math.round(Number(P.symmetry)) || 1, echo = Number(P.echo) || 0;
+        if (fold > 1 || echo > 0) {
+          var dx = x - cx, dy = y - cy, r = Math.sqrt(dx * dx + dy * dy);
+          var a = Math.atan2(dy, dx) - rot - (Number(P.twist) || 0) * r;
+          if (echo > 0) { var mm = ((r % (2 * echo)) + 2 * echo) % (2 * echo); r = echo - Math.abs(mm - echo); }
+          if (fold > 1) {
+            var seg = Math.PI * 2 / fold;
+            a = ((a % seg) + seg) % seg;
+            if (P.symMode !== 'rotate') a = Math.min(a, seg - a);
+          }
+          x = cx + r * Math.cos(a + rot); y = cy + r * Math.sin(a + rot);
+        }
+        return [x, y];
+      }
+
       function render() {
         var A = aspect();
+        var D = Math.PI / 180;
         var fold = Math.round(Number(P.symmetry)) || 1;
-        var rot = P.symSpin * T * 0.15;
-        var seg = Math.PI * 2 / fold, cx = A / 2, cy = 0.5;
+        var rot = (Number(P.symAngle) || 0) * D + P.symSpin * T * 0.15;
         for (var i = 0; i < MAXB; i++) {
           var b = blobs[i], x = b.x, y = b.y;
-          if (b.on && fold > 1) {
-            var dx = x - cx, dy = y - cy, r = Math.sqrt(dx * dx + dy * dy), a = Math.atan2(dy, dx) - rot;
-            a = ((a % seg) + seg) % seg; a = Math.min(a, seg - a);
-            x = cx + r * Math.cos(a + rot); y = cy + r * Math.sin(a + rot);
-          }
+          if (b.on) { var fp = foldPt(x, y, A, rot); x = fp[0]; y = fp[1]; }
           B[i * 3] = x; B[i * 3 + 1] = y; B[i * 3 + 2] = b.on ? b.r : 0;
         }
         var cols = [P.c0, P.c1, P.c2, P.c3, P.c4, P.c5, P.c0];
         for (var c = 0; c < 7; c++) { var rgb = hex(cols[c]); PAL[c * 3] = rgb[0]; PAL[c * 3 + 1] = rgb[1]; PAL[c * 3 + 2] = rgb[2]; }
         var bl = bleed();
         var mOn = m.has && m.inside && P.mouseMode !== 'off';
-        var veilMode = P.veil === 'spill' ? 1 : (P.veil === 'window' ? 2 : 0);
-        var open = Math.max(0, P.opening * (1 + P.breathe * 0.35 * Math.sin(T * 0.9)));
-        var D = Math.PI / 180;
+        var cursorFx = m.has && m.inside;
         var vals = [
           P.tension, P.warp, P.warpScale, P.crinkle,
           P.crinkleScale, P.voids, P.voidScale, fold,
@@ -407,15 +452,17 @@ void main() {
           P.softness, P.depth, P.specular, P.lightAngle * D,
           P.viewShift, P.grain, P.opacity, P.grid ? 1 : 0,
           P.gridCount, P.gridOpacity, P.ripple, P.mouseRadius,
-          m.x, m.y, mOn ? 1 : 0, veilMode,
-          P.tearX, P.tearY, P.tearAngle * D, P.tearLength,
-          open, P.jagged, P.lipWidth, P.glow,
+          m.sx, m.sy, cursorFx ? 1 : 0, rippleClock,
+          P.symCX * A, P.symCY, P.twist, P.echo,
+          P.core, P.symMode === 'rotate' ? 1 : 0, P.mirrorX ? 1 : 0, P.mirrorY ? 1 : 0,
           P.edgeFade, ((Number(P.seed) || 0) * 1.731) % 50, T, A,
           bl.L, bl.R, bl.T, bl.B
         ];
         for (var v = 0; v < vals.length; v++) K[v] = Number(vals[v]) || 0;
-        var colKeys = [P.poolColor, P.crustColor, P.ringColor, P.gridColor, P.voidColor, P.lipColor];
-        for (var q = 0; q < 6; q++) { var cc = hex(colKeys[q]); K[56 + q * 4] = cc[0]; K[57 + q * 4] = cc[1]; K[58 + q * 4] = cc[2]; K[59 + q * 4] = 0; }
+        var colKeys = [P.poolColor, P.crustColor, P.ringColor, P.gridColor];
+        for (var q = 0; q < 4; q++) { var cc = hex(colKeys[q]); K[56 + q * 4] = cc[0]; K[57 + q * 4] = cc[1]; K[58 + q * 4] = cc[2]; K[59 + q * 4] = 0; }
+        K[72] = Number(P.rippleDecay) || 1; K[73] = Number(P.rippleWave) || 40; K[74] = Number(P.lens) || 0; K[75] = Number(P.swirl) || 0;
+        K[76] = shock.x; K[77] = shock.y; K[78] = shock.age; K[79] = shock.s;
 
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform3fv(uB, B);
@@ -437,15 +484,25 @@ void main() {
           var dtm = Math.max((now - m.t) / 1000, 0.008);
           m.vx = m.vx * 0.6 + ((l.x - m.x) / dtm) * 0.4;
           m.vy = m.vy * 0.6 + ((l.y - m.y) / dtm) * 0.4;
-          var vmax = 4, vm = Math.sqrt(m.vx * m.vx + m.vy * m.vy);
+          var vmax = 5, vm = Math.sqrt(m.vx * m.vx + m.vy * m.vy);
           if (vm > vmax) { m.vx *= vmax / vm; m.vy *= vmax / vm; }
         }
         m.x = l.x; m.y = l.y; m.t = now; m.has = true; m.inside = l.inside;
+        if (m.down && P.paintTrail && l.inside) {
+          var ddx = l.x - m.lx, ddy = l.y - m.ly;
+          if (Math.sqrt(ddx * ddx + ddy * ddy) > Math.max(P.dropSize, 0.02) * 0.7) { spawn(l.x, l.y); m.lx = l.x; m.ly = l.y; }
+        }
       }
-      function onDown(e) { var l = local(e); if (l && l.inside && P.clickSpawn) spawn(l.x, l.y); }
-      function onLeave() { m.inside = false; }
+      function onDown(e) {
+        var l = local(e); if (!l || !l.inside) return;
+        m.down = true; m.lx = l.x; m.ly = l.y;
+        click(l.x, l.y);
+      }
+      function onUp() { m.down = false; }
+      function onLeave() { m.inside = false; m.down = false; }
       window.addEventListener('pointermove', onMove, { passive: true });
       window.addEventListener('pointerdown', onDown, { passive: true });
+      window.addEventListener('pointerup', onUp, { passive: true });
       window.addEventListener('blur', onLeave);
       document.addEventListener('mouseleave', onLeave);
 
@@ -460,12 +517,13 @@ void main() {
       function frame(now) {
         if (dead) return;
         raf = requestAnimationFrame(frame);
-        var dt = Math.min((now - last) / 1000, 1 / 30);
+        var rdt = Math.min((now - last) / 1000, 1 / 30);
         last = now;
         if (!visible) return;
         resize();
+        cursorTick(rdt);
         if (P.paused) { if (dirty) { render(); dirty = false; } return; }
-        step(dt * P.speed);
+        step(rdt * P.speed);
         render();
         dirty = false;
       }
@@ -484,6 +542,7 @@ void main() {
           dead = true; cancelAnimationFrame(raf);
           window.removeEventListener('pointermove', onMove);
           window.removeEventListener('pointerdown', onDown);
+          window.removeEventListener('pointerup', onUp);
           window.removeEventListener('blur', onLeave);
           document.removeEventListener('mouseleave', onLeave);
           if (io) io.disconnect();
@@ -494,9 +553,11 @@ void main() {
 
 const base={"count": 14, "size": 0.04, "sizeVar": 0.59, "tension": 0.85, "warp": 0.07, "warpScale": 3, "crinkle": 0.64, "crinkleScale": 16, "voids": 0.28, "voidScale": 4.5, "symmetry": 1, "symSpin": 0, "speed": 0.35, "turbulence": 1.2, "viscosity": 4.9, "gravity": 0, "gravityAngle": 90, "heat": 0, "heatRate": 0.3, "cohesion": 1.2, "separation": 1, "pulse": 0.08, "home": 1, "aspect": "1:1", "anchor": "center", "contain": true, "padding": 0.06, "edgeFade": 0.04, "spread": 0.42, "scale": 1, "palette": "film", "c0": "#d8aec9", "c1": "#b0a2d5", "c2": "#94c9df", "c3": "#aad8c5", "c4": "#e0d49a", "c5": "#dcc4b2", "bands": 5.1, "sharpness": 2.85, "colorFlow": 0.4, "colorScale": 1.5, "hue": 0, "saturation": 1, "brightness": 1, "pools": 0.035, "poolScale": 2, "poolColor": "#171d28", "crust": 0.08, "crustWidth": 0.47, "crustColor": "#6b7295", "crustGrain": 0.51, "rings": 3, "ringGap": 0.11, "ringColor": "#b5b8cf", "softness": 0.196, "depth": 0.23, "specular": 0.42, "lightAngle": 118, "viewShift": 0.59, "grain": 0.045, "opacity": 1, "grid": false, "gridCount": 8, "gridOpacity": 0.35, "gridColor": "#B99A63", "mouseMode": "attract", "mouseRadius": 0.29, "mouseForce": 2, "ripple": 0.71, "clickSpawn": true, "dropSize": 0.15, "veil": "off", "tearX": 0.5, "tearY": 0.5, "tearAngle": 70, "tearLength": 0.6, "opening": 0.06, "jagged": 0.5, "breathe": 0.2, "lipWidth": 0.012, "lipColor": "#D1C4AC", "voidColor": "#000201", "glow": 0.35, "resolution": 0.65, "paused": false, "seed": 1};
 const aboutPreset={"count": 14, "size": 0.06, "sizeVar": 0.63, "tension": 1, "warp": 0.07, "warpScale": 3, "crinkle": 0.64, "crinkleScale": 16, "voids": 0.28, "voidScale": 4.5, "symmetry": 1, "symSpin": 0, "speed": 1, "turbulence": 1.88, "viscosity": 4.9, "gravity": 0, "gravityAngle": 90, "heat": 0, "heatRate": 0.3, "cohesion": 1.2, "separation": 1, "pulse": 0.08, "home": 1, "aspect": "1:1", "anchor": "center", "contain": true, "padding": 0.06, "edgeFade": 0.04, "spread": 0.42, "scale": 1, "palette": "film", "c0": "#d8aec9", "c1": "#b0a2d5", "c2": "#94c9df", "c3": "#aad8c5", "c4": "#e0d49a", "c5": "#dcc4b2", "bands": 5.1, "sharpness": 2.85, "colorFlow": 0.4, "colorScale": 1.5, "hue": 0, "saturation": 1, "brightness": 1, "pools": 0.035, "poolScale": 2, "poolColor": "#171d28", "crust": 0.08, "crustWidth": 0.47, "crustColor": "#6b7295", "crustGrain": 0.51, "rings": 3, "ringGap": 0.11, "ringColor": "#b5b8cf", "softness": 0.196, "depth": 0.23, "specular": 0.42, "lightAngle": 118, "viewShift": 0.59, "grain": 0.045, "opacity": 1, "grid": false, "gridCount": 8, "gridOpacity": 0.35, "gridColor": "#B99A63", "mouseMode": "attract", "mouseRadius": 0.29, "mouseForce": 2, "ripple": 0.71, "clickSpawn": true, "dropSize": 0.15, "veil": "off", "tearX": 0.5, "tearY": 0.5, "tearAngle": 70, "tearLength": 0.6, "opening": 0.06, "jagged": 0.5, "breathe": 0.2, "lipWidth": 0.012, "lipColor": "#D1C4AC", "voidColor": "#000201", "glow": 0.35, "resolution": 0.65, "paused": false, "seed": 1};
+const spectrumPreset={"count": 3, "size": 0.095, "sizeVar": 0.63, "tension": 1.82, "warp": 0.2, "warpScale": 1.6, "crinkle": 0.51, "crinkleScale": 20, "voids": 0.12, "voidScale": 4, "symmetry": 6, "symMode": "kaleido", "mirrorX": false, "mirrorY": false, "symAngle": 0, "symSpin": 0, "twist": 0, "echo": 0, "core": 0, "symCX": 0.5, "symCY": 0.5, "speed": 0.6, "turbulence": 0.6, "viscosity": 1.8, "gravity": 0, "gravityAngle": 90, "heat": 0, "heatRate": 0.3, "cohesion": 1.2, "separation": 1, "pulse": 0.08, "home": 1, "aspect": "1:1", "anchor": "center", "contain": true, "padding": 0.06, "edgeFade": 0.04, "spread": 0.32, "scale": 1, "palette": "oil", "c0": "#1E3A5F", "c1": "#3E6FA8", "c2": "#7A4FA0", "c3": "#C2507E", "c4": "#D9A441", "c5": "#4F8F5B", "bands": 4.45, "sharpness": 2.35, "colorFlow": 1.04, "colorScale": 2.55, "hue": 0.33, "saturation": 1, "brightness": 1, "pools": 0.4, "poolScale": 2, "poolColor": "#0B0806", "crust": 0.75, "crustWidth": 0.57, "crustColor": "#7A4A2A", "crustGrain": 0.7, "rings": 3, "ringGap": 0.15, "ringColor": "#D1C4AC", "softness": 0.13, "depth": 0, "specular": 0.4, "lightAngle": 225, "viewShift": 0.6, "grain": 0.05, "opacity": 1, "grid": false, "gridCount": 8, "gridOpacity": 0.35, "gridColor": "#B99A63", "mouseMode": "attract", "mouseRadius": 0.5, "mouseForce": 3.5, "falloff": 3.1, "fling": 2.25, "cursorLag": 0.3, "cursorBlob": 0, "ripple": 1.41, "rippleSpeed": 0.27, "rippleWave": 15, "rippleDecay": 1, "lens": 0, "swirl": 0, "clickAction": "drop", "splash": 0.4, "paintTrail": false, "dropSize": 0.08, "resolution": 0.75, "paused": false, "seed": 1};
 document.querySelectorAll('[data-once-liquid]').forEach((root,index)=>{
  const variant=Number(root.dataset.onceLiquid)||0,isAbout=root.dataset.liquidPreset==='about-new';
- const params={...(isAbout?aboutPreset:base),seed:1+variant*137,hue:(isAbout?.04:.025)*variant,paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
+ const chosen=(isAbout&&variant%3===2)?spectrumPreset:(isAbout?aboutPreset:base);
+ const params={...spectrumPreset,...chosen,seed:1+variant*137,hue:(Number(chosen.hue)||0)+(isAbout?.04:.025)*variant,paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
  const effect=create(root.querySelector('canvas'),params);if(!effect.ok){root.querySelector('canvas').hidden=true;root.classList.add('liquid-fallback')}
 });
 })();
