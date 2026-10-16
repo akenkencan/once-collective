@@ -282,3 +282,35 @@ body.site-unified.page-found{background-color:#111!important}
 .community-promises>li>img{width:30px;height:34px}
 .about-talisman>img{object-fit:contain}.about-talisman{transition:transform .3s}.about-talisman:hover{transform:scale(1.12)}
 @media(max-width:800px){.community-restored .community-promises{grid-template-columns:1fr;gap:36px;margin-bottom:65px}.community-restored .community-introduction>h1{margin-bottom:55px!important}}
+
+/* October 17: proportional artwork, compact slides and room to rotate. */
+.connected-oracle-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(220px,.7fr);gap:6%;align-items:center;margin:55px 0}
+.connected-oracle-row>p{width:100%!important;margin:0!important}.connected-oracle-row figure{margin:0;justify-self:end;width:min(100%,400px)}.connected-oracle-row img{width:100%;height:auto;display:block}
+.found-vision-art{align-self:start;overflow:visible}.found-vision-art img{position:static;width:100%;height:auto;object-fit:contain}
+.found-tree-photo{width:100%;margin:0;overflow:hidden;aspect-ratio:2/.98}.found-tree-photo img{width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:2/1;object-fit:contain;display:block;margin:0!important;transform:none!important}
+.community-restored-grid{align-items:start!important}.community-restored-grid .c-img-box{align-self:start!important}.community-restored-grid .c-img-box img{object-fit:contain!important;transform:none!important}
+.contact-actions{display:flex;gap:18px;flex-wrap:wrap;justify-content:inherit}.contact-actions .colour-burst-button{font-size:18px!important;padding:15px 23px;min-height:58px}
+.contact-socials[hidden],.social-dropdown[hidden]{display:none!important}.contact-socials{padding-block:12px}.concept-contact .contact-actions,.concept-contact .contact-socials{justify-content:center}.concept-contact .contact-socials{margin:20px auto 35px}.social-dropdown{margin:24px auto}.social-dropdown .arkhive-social-links{padding:20px 0}
+.about-natural-piece{width:clamp(75px,8.25vw,135px);height:165px}.about-editorial .about-symbols{width:84px}.about-editorial .about-symbol{width:78px;height:78px}.about-editorial{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) 84px}
+body.nav-left-near>.navbar-wrapper .brand,body.nav-right-near>.navbar-wrapper .menu-icon-wrap{opacity:1!important;visibility:visible!important;transform:none!important}
+.pitch-dialog{padding:0!important;overflow:auto;display:none;background:#080908}.pitch-dialog[open]{display:grid;place-items:center}
+.pitch-dialog>.pitch-reader{width:100%;max-width:none;height:auto;min-height:0;margin:auto;border:0;border-radius:0;box-shadow:none;background:#080908;overflow:visible}
+.pitch-toolbar{padding:4px 12px;border:0;background:#080908;min-height:34px}.pitch-toolbar strong{font-size:16px}.pitch-tools{gap:8px}
+.pitch-reader button,.pitch-reader .pitch-download{width:29px;height:28px;padding:4px;font-size:20px;border:0}.pitch-download svg{width:20px;height:20px}
+.pitch-stage{width:100%;flex:none;aspect-ratio:var(--pitch-ratio,16/9);background:transparent}.pitch-slide{display:block;width:100%;height:auto;max-width:none;max-height:none;object-fit:contain}
+.pitch-pagination{padding:3px 12px;gap:18px;border:0;background:#080908}.pitch-pagination button{height:27px}.pitch-dock{width:100%;max-width:none}.pitch-dock .pitch-reader{border:0;border-radius:0;box-shadow:none}
+@media(max-width:1050px){.about-editorial{grid-template-columns:1fr 1fr}.about-editorial .about-symbols{width:100%}.about-editorial .about-symbol{width:52px;height:52px}}
+@media(max-width:650px){.about-editorial,.connected-oracle-row{grid-template-columns:1fr}.connected-oracle-row figure{width:min(75%,360px);margin:25px auto;justify-self:center}.about-natural-piece{width:63px;height:98px}.contact-actions{gap:12px}.contact-actions .colour-burst-button{font-size:16px!important;padding:12px 18px}.found-vision-art{aspect-ratio:auto}.pitch-toolbar strong{font-size:14px}}
+
+/* Balance the final welcome sentences, then use only the card's actual clearance. */
+.cards-context .cards-ending{padding-top:0!important;border:0!important;display:flex;flex-direction:column;gap:34px;margin-top:34px}
+.cards-context .cards-ending>p{margin:0!important}
+.cards-section>.cards-context{align-self:start}
+.welcome-card-clearance{flex:none;min-height:0;padding:70px 0 65px}
+.cards-context .welcome-card-clearance>.card-back{translate:none;width:min(90%,500px)}
+#cards.cards-section{padding-bottom:0!important;margin-bottom:0!important}#entry{margin-top:0!important;padding-top:12px!important}
+@media(min-width:1101px){.studio-heading>article.paper{align-self:stretch;display:flex;flex-direction:column;justify-content:space-between}.studio-heading>article.paper::before{background-size:100% 100%;inset:0}.studio-heading>.workshop{height:auto;aspect-ratio:16/9;min-height:0}.studio-heading>.workshop video{object-fit:cover}.studio-materials>.studio-composition{align-self:end}}
+@media(max-width:740px){.welcome-card-clearance{padding:50px 0 48px}.cards-context .cards-ending{gap:28px;margin-top:28px}.cards-context .welcome-card-clearance>.card-back{width:80%}}
+body.nav-left-near>.navbar-wrapper,body.nav-right-near>.navbar-wrapper{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+.community-restored-grid>img.image-17{width:100%!important;height:auto!important;align-self:start!important;margin:0!important;object-fit:contain!important}
+.about-natural-elements{overflow:clip}

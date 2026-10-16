@@ -9,12 +9,12 @@ const symbols=[
 ];
 const lenses=[
  {label:'We need collective…',words:['Transformation','Imagination','Action','Wisdom','Power']},
- {label:'The High Brow',words:['Space','Direction','Energy','Wisdom','Unity']},
- {label:'The Action',words:['Living','Seeing','Moving','Collecting','Connecting']},
- {label:'The Esoteric',words:['Evolution','Purpose','Action','Education','Possibility']},
+ {label:'High Brow',words:['Space','Direction','Energy','Structure','Unity']},
+ {label:'The Action',words:['Living','Seeing','Moving','Building','Giving']},
+ {label:'The Esoteric',words:['Evolution','Purpose','Essence','Guidance','Possibility']},
  {label:'Elemental',words:['Spirit','Wind','Water','Fire','Earth']},
  {label:'Technological Analogy',words:['Goal','Output','Processor','Database','API']},
- {label:'Meditative',words:['Being','Seeing','Living','Knowing','Feeling']}
+ {label:'Meditative',words:['Being','Attending','Breathing','Knowing','Feeling']}
 ];
 function SymbolButton({s,i,active,setActive}){const [point,setPoint]=useState({x:.5,y:.5});return h('button',{className:'symbol-choice','aria-pressed':active,'aria-controls':'lens-panel','aria-label':`${s.title}: ${s.question}`,onPointerEnter:()=>setActive(i),onPointerMove:e=>{const r=e.currentTarget.querySelector('.heat-symbol').getBoundingClientRect();setPoint({x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))})},onPointerLeave:()=>setPoint({x:.5,y:.5}),onFocus:()=>setActive(i),onClick:()=>setActive(i)},h(HeatSymbol,{symbol:s.key,active,point}),h('span',{className:'symbol-title'},s.title,h('small',null,s.question)));}
 function SymSet(){const [active,setActive]=useState(0);const s=symbols[active];return h(React.Fragment,null,

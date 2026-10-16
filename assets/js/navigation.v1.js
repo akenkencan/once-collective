@@ -48,9 +48,13 @@
  brand.addEventListener('focusin',open);
  brand.addEventListener('focusout',event=>{if(!brand.contains(event.relatedTarget))closeLater()});
  document.addEventListener('pointermove',event=>{
+  const approaching=event.clientX<Math.min(360,innerWidth*.3)&&event.clientY<190;
+  document.body.classList.toggle('nav-left-near',approaching);
+  document.body.classList.toggle('nav-right-near',event.clientX>innerWidth-Math.min(300,innerWidth*.25)&&event.clientY<170);
+  if(approaching)open();
   if(!brand.classList.contains('symbol-menu-open'))return;
   const logo=brand.getBoundingClientRect(),symbols=menu.getBoundingClientRect();
-  const inside=event.clientX>=0&&event.clientX<=Math.max(logo.right,symbols.right)+36&&event.clientY>=0&&event.clientY<=Math.max(logo.bottom,symbols.bottom)+28;
+  const inside=event.clientX>=0&&event.clientX<=Math.max(360,logo.right,symbols.right)+60&&event.clientY>=0&&event.clientY<=Math.max(190,logo.bottom,symbols.bottom)+45;
   if(inside){clearTimeout(timer);timer=undefined}else closeLater();
  },{passive:true});
 })();
