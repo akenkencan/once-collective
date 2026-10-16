@@ -10,7 +10,7 @@
  function restore(){for(const item of pairs){item.source.style.translate=item.translate;item.source.style.scale=item.scale;item.source.style.transformOrigin=item.origin}}
  function align(){
   if(!revealing)return;
-  const margin=Math.max(16,innerWidth*.018),centre=innerWidth/2,clearance=Math.max(72,innerHeight*.115),lane=centre-clearance-margin-(innerWidth>=992?85:0),gap=18;
+  const margin=Math.max(16,innerWidth*.018),centre=innerWidth/2,clearance=Math.max(72,innerHeight*.115),lane=centre-clearance-margin,gap=18;
   const rows=new Map();
   for(const item of pairs){const r=item.source.getBoundingClientRect(),scale=item.appliedScale||1;item.base={x:r.x-(item.dx||0),y:r.y-(item.dy||0),width:r.width/scale,height:r.height/scale};if(!rows.has(item.row))rows.set(item.row,[]);rows.get(item.row).push(item)}
   for(const [rowIndex,items] of rows){
