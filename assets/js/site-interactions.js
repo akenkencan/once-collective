@@ -63,3 +63,10 @@ document.querySelectorAll('video').forEach(video=>{
  video.addEventListener('pause',()=>video.dataset.playbackState='paused');
  video.addEventListener('volumechange',()=>video.dataset.audioState=video.muted||video.volume===0?'muted':'enabled');
 });
+
+// The Circle application film starts silently and gains audio on the first page click.
+document.querySelectorAll('video[data-unmute-on-interaction]').forEach(video=>{
+ document.addEventListener('click',event=>{video.muted=false;video.volume=1;video.dataset.audioState='enabled';if(event.target===video){event.preventDefault();event.stopPropagation();ONCEMedia.ensure(video).then(()=>video.play()).catch(error=>video.dataset.playbackError=error.message)}},{capture:true,once:true});
+});
+
+document.querySelectorAll('[data-social-symbol]').forEach(el=>ONCEColourBurst.attach(el,el.querySelector('.social-burst')));

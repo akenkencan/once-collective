@@ -24,5 +24,5 @@
  function request(){if(!pending){pending=true;requestAnimationFrame(update)}}window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);update();
 })();
 
-// The first-load scroll hint retires permanently after the first reading gesture.
-(()=>{const cue=document.querySelector('.concept-scroll-cue');if(!cue)return;let dismissed=false;function retire(){if(!dismissed&&scrollY>4){dismissed=true;cue.style.opacity='0';cue.style.pointerEvents='none'}}window.addEventListener('scroll',retire,{passive:true});retire()})();
+// Show the cue after one second, then retire it as the opening text comes into view.
+(()=>{const cue=document.querySelector('.concept-scroll-cue');if(!cue)return;let dismissed=false;const reveal=setTimeout(()=>{if(!dismissed)cue.style.opacity='.5'},1000);function retire(){requestAnimationFrame(()=>{const first=document.querySelector('.concept-intro .fader');if(!dismissed&&scrollY>4&&Number(first?.style.getPropertyValue('--intro-opacity'))>.01){dismissed=true;clearTimeout(reveal);cue.style.opacity='0';cue.style.pointerEvents='none'}})}window.addEventListener('scroll',retire,{passive:true});retire()})();

@@ -4,6 +4,7 @@ document.querySelectorAll('[data-feature-player]').forEach(panel=>{
  let started=false;
  async function start(){video.muted=video.hasAttribute('data-silent-film');video.volume=video.hasAttribute('data-silent-film')?0:1;button.hidden=true;started=true;expanded.append(video);dialog.showModal();try{await ONCEMedia.ensure(video);await video.play()}catch(e){video.dataset.playbackError=e.message;dialog.close();button.hidden=false}dialog.querySelector('.reel-close').focus()}
  button.addEventListener('click',start);
+ video.addEventListener('ended',()=>{if(document.body.classList.contains('page-found')&&dialog.open)dialog.close()});
  video.addEventListener('pointerdown',()=>{video.muted=false;video.volume=1});
  video.addEventListener('click',e=>{
   if(!dialog.open){start();return}

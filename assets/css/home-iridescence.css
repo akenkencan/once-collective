@@ -79,3 +79,11 @@ body[data-keyboard-symbol] .fullscreen-section:not(.overlay)>.text{opacity:.78!i
 @media(prefers-reduced-motion:reduce){.home-reveal-plane,.fullscreen-section:not(.overlay)>.text{transition:none!important}}
 .home-reveal-word{font-family:var(--font-heading)!important}
 body.site-unified .home-reveal-word{font-family:var(--font-heading)!important}
+
+/* Half-white strokes remain visible beneath the faster core-symbol activation. */
+.icon-wrap:not(.is-energized):not(.is-retreating)>.rounded-symbol{opacity:.5!important}
+
+.home-reveal-word{transform-origin:0 0}
+
+.icon-wrap.is-painted:not(.is-energized)>.oil-icon{opacity:1!important;transform:scale(.78)!important}
+.icon-wrap.is-painted>.rounded-symbol{opacity:0!important}
