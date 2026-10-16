@@ -23,3 +23,6 @@
  function update(){pending=false;const r=intro.getBoundingClientRect(),p=Math.max(0,Math.min(37,-r.top/Math.max(1,r.height-innerHeight*.35)*37));items.forEach(({el,points})=>{if(el)el.style.setProperty('--intro-opacity',matchMedia('(prefers-reduced-motion:reduce)').matches?'1':String(interpolate(points,p)))});intro.dataset.scrollProgress=p.toFixed(2)}
  function request(){if(!pending){pending=true;requestAnimationFrame(update)}}window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);update();
 })();
+
+// The first-load scroll hint retires permanently after the first reading gesture.
+(()=>{const cue=document.querySelector('.concept-scroll-cue');if(!cue)return;let dismissed=false;function retire(){if(!dismissed&&scrollY>4){dismissed=true;cue.style.opacity='0';cue.style.pointerEvents='none'}}window.addEventListener('scroll',retire,{passive:true});retire()})();

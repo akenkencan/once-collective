@@ -130,3 +130,50 @@
 @media(max-width:800px){.found-vision-section{grid-template-columns:minmax(0,1fr);gap:25px;padding-inline:4vw!important}.found-vision-art{aspect-ratio:3/4}.world-page .world-media-stack>.world-image{top:calc(16vh - var(--stack-image-height,320px))}}
 .found-read-panel:not([hidden]){overflow:visible}
 .colour-burst-button>.burst-surface{inset:0}
+/* Reading cue appears only at first load; motion code fades it on the first scroll. */
+.concept-scroll-cue{opacity:.5;transition:opacity .6s ease}
+.world-application-actions{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.world-application-actions .colour-burst-button{min-width:330px;min-height:86px;font-size:22px!important;padding:22px 36px}
+.community-text-pair:has(>.community-copy:only-child){grid-template-columns:minmax(0,1fr);max-width:1000px;margin-inline:auto}
+/* Match calibrated near-black media to the off-black page without recolouring it. */
+.community-restored img[src*='.gif'],.community-hero video{mix-blend-mode:lighten;filter:contrast(1.12) brightness(.97)}
+.page-found img[src*='Star%20(3)']{mix-blend-mode:lighten;filter:none}
+.community-personal-map{width:min(1200px,100%)!important;max-height:none!important;margin:25px auto 40px!important}
+.community-personal-map img{width:100%!important;height:auto!important;max-height:none!important}
+.community-restored-support>.w-row{align-items:stretch}
+.community-restored-support>.w-row>.w-col:has(img){position:relative;min-height:560px}
+.community-restored-support>.w-row>.w-col img{height:100%!important;max-height:none!important;object-fit:contain!important}
+/* About: an inhabited image at left, editorial copy at right, symbols on the outer edge. */
+.page-about .container-15{position:relative;max-width:1800px;width:96%;isolation:isolate}
+.about-editorial{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) 70px;gap:3%;align-items:start;position:relative;z-index:1}
+.about-main-art{position:relative;align-self:stretch;min-height:850px;margin:0;overflow:hidden}
+.about-main-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;mask-image:linear-gradient(90deg,#000 0%,#000 65%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 65%,transparent 100%)}
+.about-editorial-copy{min-width:0;padding:0 0 25px}
+.about-editorial-copy h1{margin:0 0 30px;font:400 clamp(42px,4vw,68px)/1.2 var(--font-heading)}
+.page-about .about-editorial-copy .aboutcol{font:400 clamp(19px,1.6vw,25px)/1.65 var(--font-body);width:100%;margin:0 0 32px;display:block;position:static}
+.about-editorial-copy .about-contact{margin:30px 0 0;text-align:left}
+.about-editorial .about-symbols{display:flex;flex-direction:column;gap:25px;padding:30px 0 0;align-items:center;width:70px;grid-area:auto}
+.about-editorial .about-symbol{width:65px;height:65px}
+.about-edge-elements{position:absolute;inset:-45px 0 -15px;z-index:0;pointer-events:none;overflow:hidden}
+.about-edge-piece{position:absolute;object-fit:contain;opacity:.72;max-width:17%}
+.edge-piece-1{left:-3%;top:0;width:180px;transform:rotate(18deg)}
+.edge-piece-2{left:38%;top:56%;width:100px;transform:rotate(-22deg)}
+.edge-piece-3{left:-4%;top:43%;width:150px;transform:rotate(18deg)}
+.edge-piece-4{left:-3%;bottom:3%;width:230px}
+.edge-piece-5{right:-3%;bottom:0;width:210px}
+.edge-piece-6{right:2%;top:49%;width:90px;transform:rotate(-14deg)}
+.edge-piece-7{left:39%;bottom:4%;width:130px;transform:rotate(12deg)}
+.about-bottom-art{position:relative;z-index:1}
+@media(max-width:1050px){.about-editorial{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:3%}.about-main-art{grid-row:1/3;min-height:750px}.about-editorial .about-symbols{grid-column:2;flex-direction:row;flex-wrap:wrap;gap:12px;width:100%;padding:0}.about-editorial .about-symbol{width:43px;height:43px}}
+@media(max-width:650px){.about-editorial{grid-template-columns:minmax(0,1fr)}.about-main-art{grid-row:auto;min-height:440px;height:65vh}.about-main-art img{mask-image:linear-gradient(#000 0%,#000 70%,transparent 100%);-webkit-mask-image:linear-gradient(#000 0%,#000 70%,transparent 100%)}.about-editorial .about-symbols{grid-column:1}.about-editorial-copy{padding-inline:5%}.about-edge-piece{opacity:.5;max-width:22%}.world-application-actions .colour-burst-button{min-width:0;width:100%;font-size:20px!important}.community-restored-support>.w-row>.w-col:has(img){min-height:360px}}
+
+/* Keep the first-load hint inside the viewport even before the sticky stage reaches its top. */
+.concept-intro-stage>.concept-scroll-cue{position:fixed;bottom:28px;left:calc(50% - 12px);z-index:5}
+.world-statement-list{display:grid;gap:clamp(48px,7vw,100px);margin:65px 0 80px}
+.world-statement{display:grid;grid-template-columns:minmax(100px,.7fr) minmax(0,3fr) minmax(100px,.7fr);align-items:center;gap:3%}
+.world-page .world-ideas .world-statement p{margin:0!important;font-size:clamp(26px,3.4vw,49px)!important;line-height:1.35!important;text-wrap:balance}
+.world-statement img{display:block;width:100%;height:clamp(110px,16vw,215px);object-fit:contain}
+.world-statement:nth-child(2) img{transform:rotate(-12deg)}
+@media(max-width:650px){.world-statement-list{gap:52px;margin-block:45px}.world-statement{grid-template-columns:50px minmax(0,1fr) 50px;gap:10px}.world-page .world-ideas .world-statement p{font-size:25px!important}.world-statement img{height:95px}}
+
+body.site-unified.page-found{background-color:#111!important}

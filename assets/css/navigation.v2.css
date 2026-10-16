@@ -69,3 +69,6 @@
 /* The vertical symbol dropdown hangs beneath the left edge of the ONCE mark. */
 .brand .symbol-menu{left:0!important;right:auto!important;align-items:flex-start!important;width:max-content!important;padding-left:0!important}
 .brand .symbol-menu .navbar-symbol{margin-left:0!important}
+
+.brand.symbol-menu-open .symbol-menu{opacity:1!important;visibility:visible;pointer-events:auto}
+.brand .symbol-menu{transition:opacity .45s ease,visibility .45s}
