@@ -314,3 +314,20 @@ body.nav-left-near>.navbar-wrapper .brand,body.nav-right-near>.navbar-wrapper .m
 body.nav-left-near>.navbar-wrapper,body.nav-right-near>.navbar-wrapper{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
 .community-restored-grid>img.image-17{width:100%!important;height:auto!important;align-self:start!important;margin:0!important;object-fit:contain!important}
 .about-natural-elements{overflow:clip}
+
+.found-vision-opening{width:100%;margin:0 0 30px}.found-vision-opening img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain}
+
+/* Final review: continuous reading column and explicit support-heading rows. */
+.found-vision-section{display:block!important;width:100%!important;left:auto!important;padding:30px 0 40px!important}
+.found-vision-copy{width:100%;max-width:1200px;margin-inline:auto}.found-vision-copy .heading-2{max-width:1100px;font-size:clamp(32px,3.8vw,56px)!important;text-wrap:balance}
+.found-vision-detail{margin-left:clamp(24px,5vw,80px);max-width:1030px}.found-vision-detail blockquote{padding-left:20px!important}.found-vision-detail .columns-6{max-width:100%}
+.community-restored-support>.block-quote-4{grid-row:1;align-self:start}
+.community-restored-support>.once-liquid{grid-row:1/3;width:100%!important;justify-self:end!important}
+.community-restored-support>h1.c2u{grid-column:1;grid-row:2}
+.community-restored-support>h1.c3u{grid-column:1/-1;grid-row:4;margin-block:30px!important;max-width:100%!important}
+.community-restored-support>.community-restored-grid:first-of-type{grid-row:auto}
+.brand .symbol-menu .navbar-symbol{background-image:url('/assets/symbols/nav-thick/star.svg')!important;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important}
+.brand .symbol-menu .navbar-symbol.ns-2{background-image:url('/assets/symbols/nav-thick/triangle.svg')!important}.brand .symbol-menu .navbar-symbol.ns-3{background-image:url('/assets/symbols/nav-thick/circle.svg')!important}.brand .symbol-menu .navbar-symbol.ns-4{background-image:url('/assets/symbols/nav-thick/square.svg')!important}.brand .symbol-menu .navbar-symbol.ns-5{background-image:url('/assets/symbols/nav-thick/root.svg')!important}
+@media(max-width:800px){.community-restored-support{grid-template-columns:minmax(0,1fr)}.community-restored-support>.block-quote-4,.community-restored-support>.once-liquid,.community-restored-support>h1.c2u,.community-restored-support>h1.c3u{grid-column:1!important;grid-row:auto!important}.found-vision-detail{margin-left:24px}.found-vision-detail blockquote{padding-left:12px!important}}
+
+.found-movement-line{display:block;margin-top:48px;text-wrap:balance;max-width:100%}
