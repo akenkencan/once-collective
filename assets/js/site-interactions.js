@@ -1,4 +1,13 @@
 (() => {
+ document.querySelectorAll('.application-body[id]').forEach(body=>{if(!body.querySelector('iframe'))return;for(const position of ['top','bottom']){const close=document.createElement('button');close.type='button';close.className='application-form-close form-close-'+position;close.dataset.closeApplication=body.id;close.textContent='Close −';position==='top'?body.prepend(close):body.append(close)}});
+ let tallyReady;
+ function setupTally(body){
+  const frames=[...body.querySelectorAll('iframe[data-lazy-form]')].filter(f=>f.dataset.lazyForm.startsWith('https://tally.so/'));
+  if(!frames.length)return;
+  frames.forEach(f=>{f.removeAttribute('data-tally-src');f.setAttribute('scrolling','no');const resize=()=>{const h=parseFloat(f.style.height);if(h>100&&f.style.getPropertyValue('--form-content-height')!==h+'px')f.style.setProperty('--form-content-height',h+'px')};new MutationObserver(resize).observe(f,{attributes:true,attributeFilter:['style']});resize()});
+  tallyReady??=window.Tally?Promise.resolve():new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/js/tally.embed.js';script.onload=resolve;script.onerror=reject;document.head.append(script)});
+  tallyReady.then(()=>window.Tally?.loadEmbeds()).catch(()=>{});
+ }
  const toggles=[...document.querySelectorAll('[data-open-application]')];
  const transitions=new WeakMap();
  async function setOpen(id,open){const body=document.getElementById(id);if(!body)return;
@@ -6,7 +15,7 @@
   toggles.filter(b=>b.dataset.openApplication===id).forEach(b=>b.setAttribute('aria-expanded',String(open)));
   const external=body.parentNode.querySelectorAll('.application-external');
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(open){body.hidden=false;external.forEach(p=>p.hidden=false);body.querySelectorAll('iframe[data-lazy-form]').forEach(f=>{if(!f.getAttribute('src'))f.src=f.dataset.lazyForm});
+  if(open){body.hidden=false;external.forEach(p=>p.hidden=false);setupTally(body);body.querySelectorAll('iframe[data-lazy-form]').forEach(f=>{if(!f.getAttribute('src'))f.src=f.dataset.lazyForm});
    const anim=body.animate([{opacity:0,transform:'translateY(-24px)'},{opacity:1,transform:'none'}],{duration:reduced?0:450,easing:'cubic-bezier(.22,1,.36,1)'});transitions.set(body,anim);return;
   }
   body.querySelectorAll('video').forEach(video=>video.pause());if(body.hidden)return;
@@ -70,3 +79,12 @@ document.querySelectorAll('video[data-unmute-on-interaction]').forEach(video=>{
 });
 
 document.querySelectorAll('[data-social-symbol]').forEach(el=>ONCEColourBurst.attach(el,el.querySelector('.social-burst')));
+
+// Email success is shown only after the configured receiver confirms storage.
+document.querySelectorAll('[data-contact-email]').forEach(form=>{
+ const status=form.querySelector('[role=status]'),submit=form.querySelector('[type=submit]');
+ form.addEventListener('submit',async event=>{event.preventDefault();if(!form.reportValidity())return;submit.disabled=true;status.textContent='Saving…';
+  const data=new FormData(form),mailingList=data.get('mailingList')==='on';
+  try{const response=await fetch('/api/email-capture',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:data.get('email'),mailingList,website:data.get('website'),source:form.dataset.contactEmail})});if(!response.ok)throw new Error('Submission failed');const result=await response.json();if(!result.saved)throw new Error('Not saved');const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;await form.animate([{opacity:1},{opacity:0}],{duration:reduced?0:300,fill:'forwards'}).finished;const message=document.createElement('p');message.className='contact-email-success';message.setAttribute('role','status');message.textContent=mailingList?'Look out for updates in your inbox.':'Thank you. Your email has been received.';form.replaceWith(message)}catch(error){status.textContent='We couldn’t save your email. Please try again later.';submit.disabled=false}
+ });
+});
