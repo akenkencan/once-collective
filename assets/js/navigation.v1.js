@@ -40,7 +40,7 @@
 // Keep the complete logo-to-symbol corridor open, including brief pointer departures.
 (() => {
  const brand=document.querySelector('body > .navbar-wrapper .brand'),menu=brand?.querySelector('.symbol-menu');
- if(!brand||!menu)return;
+ if(!brand)return;
  let timer;
  function open(){clearTimeout(timer);timer=undefined;brand.classList.add('symbol-menu-open')}
  function closeLater(){if(timer)return;timer=setTimeout(()=>{brand.classList.remove('symbol-menu-open');timer=undefined},850)}
@@ -53,7 +53,7 @@
   document.body.classList.toggle('nav-right-near',event.clientX>innerWidth-Math.min(300,innerWidth*.25)&&event.clientY<170);
   if(approaching)open();
   if(!brand.classList.contains('symbol-menu-open'))return;
-  const logo=brand.getBoundingClientRect(),symbols=menu.getBoundingClientRect();
+  const logo=brand.getBoundingClientRect(),symbols=menu?.getBoundingClientRect()||logo;
   const inside=event.clientX>=0&&event.clientX<=Math.max(360,logo.right,symbols.right)+60&&event.clientY>=0&&event.clientY<=Math.max(190,logo.bottom,symbols.bottom)+45;
   if(inside){clearTimeout(timer);timer=undefined}else closeLater();
  },{passive:true});

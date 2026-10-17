@@ -20,8 +20,28 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
  const preloadObserver=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){const preview=new Image();preview.src=slideURL(1);preloadObserver.disconnect()}},{rootMargin:'400px'});preloadObserver.observe(button);
  function expand(){if(dialog.open)return;const wasDocked=reader.dataset.mode==='docked',from=wasDocked?reader.getBoundingClientRect():null;dock.hidden=true;dialog.append(reader);reader.dataset.mode='expanded';dialog.showModal();button.setAttribute('aria-expanded','true');const to=reader.getBoundingClientRect();reader.animate(from?[{transformOrigin:'0 0',transform:`translate(${from.x-to.x}px,${from.y-to.y}px) scale(${from.width/to.width},${from.height/to.height})`,opacity:.65},{transformOrigin:'0 0',transform:'none',opacity:1}]:[{transform:'translateY(35px) scale(.96)',opacity:0},{transform:'none',opacity:1}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)'});render();reader.querySelector('[data-pitch-minimize]').focus({preventScroll:true})}
  function minimize(){if(!dialog.open)return;const from=reader.getBoundingClientRect();dialog.close();dock.hidden=false;dock.append(reader);reader.dataset.mode='docked';button.setAttribute('aria-expanded','false');const to=reader.getBoundingClientRect();reader.animate([{transformOrigin:'0 0',transform:`translate(${from.x-to.x}px,${from.y-to.y}px) scale(${from.width/to.width},${from.height/to.height})`,opacity:1},{transformOrigin:'0 0',transform:'none',opacity:1}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)'});render();stage.focus({preventScroll:true})}
- function dismiss(){if(dialog.open)dialog.close();dock.append(reader);dock.hidden=true;reader.dataset.mode='hidden';button.setAttribute('aria-expanded','false');++rendering;}
- button.addEventListener('click',expand);reader.querySelector('[data-pitch-expand]').addEventListener('click',expand);reader.querySelector('[data-pitch-minimize]').addEventListener('click',minimize);
+ function dismiss(){if(reader.dataset.mode!=='hidden')toggleDock(true)}
+ let dockAnimation,slideAnimation,dockRevision=0;
+ async function toggleDock(forceClose=false){
+  const revision=++dockRevision,closing=forceClose||reader.dataset.mode!=='hidden';
+  dockAnimation?.cancel();slideAnimation?.cancel();
+  if(dialog.open)dialog.close();dock.append(reader);
+  if(closing){
+   reader.dataset.mode='closing';button.setAttribute('aria-expanded','false');
+   const height=dock.getBoundingClientRect().height;
+   slideAnimation=reader.animate([{transform:'none',opacity:1},{transform:'translateY(-100%)',opacity:0}],{duration:duration(),easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'});
+   dockAnimation=dock.animate([{height:height+'px'},{height:'0px'}],{duration:duration(),easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'});
+   try{await dockAnimation.finished;if(revision!==dockRevision)return;dock.hidden=true;reader.dataset.mode='hidden';slideAnimation.cancel();dockAnimation.cancel();++rendering}catch(error){}
+  }else{
+   dock.hidden=false;reader.dataset.mode='docked';button.setAttribute('aria-expanded','true');render();
+   const height=reader.getBoundingClientRect().height;
+   window.scrollTo({top:window.scrollY+button.getBoundingClientRect().top-20,behavior:reduced()?'instant':'smooth'});
+   dockAnimation=dock.animate([{height:'0px'},{height:height+'px'}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
+   slideAnimation=reader.animate([{transform:'translateY(-100%)',opacity:0},{transform:'none',opacity:1}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
+   try{await dockAnimation.finished;if(revision===dockRevision){dockAnimation.cancel();slideAnimation.cancel()}}catch(error){}
+  }
+ }
+ button.addEventListener('click',()=>toggleDock());reader.querySelector('[data-pitch-expand]').addEventListener('click',expand);reader.querySelector('[data-pitch-minimize]').addEventListener('click',()=>dialog.open?minimize():toggleDock(true));
  stage.addEventListener('click',()=>{if(!dialog.open)expand()});stage.addEventListener('keydown',event=>{if(!dialog.open&&(event.key==='Enter'||event.key===' ')){event.preventDefault();expand()}});
  async function change(delta){await load();page=Math.max(1,Math.min(pdf.numPages,page+delta));render()}
  prev.addEventListener('click',()=>change(-1));next.addEventListener('click',()=>change(1));

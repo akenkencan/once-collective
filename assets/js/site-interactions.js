@@ -1,10 +1,12 @@
 (() => {
  document.querySelectorAll('.application-body[id]').forEach(body=>{if(!body.querySelector('iframe'))return;for(const position of ['top','bottom']){const close=document.createElement('button');close.type='button';close.className='application-form-close form-close-'+position;close.dataset.closeApplication=body.id;close.textContent='Close −';position==='top'?body.prepend(close):body.append(close)}});
- let tallyReady;
+ let tallyReady,scrollTarget,scrollTimer;
+ function alignApplication(body){scrollTarget=body;clearTimeout(scrollTimer);const align=()=>{if(scrollTarget===body&&!body.hidden)body.scrollIntoView({behavior:'smooth',block:'start'})};align();scrollTimer=setTimeout(align,1400)}
+ for(const type of ['wheel','touchstart','keydown'])document.addEventListener(type,()=>{scrollTarget=null;clearTimeout(scrollTimer)},{passive:true});
  function setupTally(body){
   const frames=[...body.querySelectorAll('iframe[data-lazy-form]')].filter(f=>f.dataset.lazyForm.startsWith('https://tally.so/'));
   if(!frames.length)return;
-  frames.forEach(f=>{f.removeAttribute('data-tally-src');f.setAttribute('scrolling','no');const resize=()=>{const h=parseFloat(f.style.height);if(h>100&&f.style.getPropertyValue('--form-content-height')!==h+'px')f.style.setProperty('--form-content-height',h+'px')};new MutationObserver(resize).observe(f,{attributes:true,attributeFilter:['style']});resize()});
+  frames.forEach(f=>{f.removeAttribute('data-tally-src');f.setAttribute('scrolling','no');const resize=()=>{const h=parseFloat(f.style.height);if(h>100&&f.style.getPropertyValue('--form-content-height')!==h+'px'){f.style.setProperty('--form-content-height',h+'px');if(scrollTarget===body)alignApplication(body)}};new MutationObserver(resize).observe(f,{attributes:true,attributeFilter:['style']});resize()});
   tallyReady??=window.Tally?Promise.resolve():new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/js/tally.embed.js';script.onload=resolve;script.onerror=reject;document.head.append(script)});
   tallyReady.then(()=>window.Tally?.loadEmbeds()).catch(()=>{});
  }
@@ -16,6 +18,7 @@
   const external=body.parentNode.querySelectorAll('.application-external');
   const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
   if(open){body.hidden=false;external.forEach(p=>p.hidden=false);setupTally(body);body.querySelectorAll('iframe[data-lazy-form]').forEach(f=>{if(!f.getAttribute('src'))f.src=f.dataset.lazyForm});
+   if(body.querySelector('iframe[data-lazy-form*="tally.so"]'))setTimeout(()=>alignApplication(body),480);
    const anim=body.animate([{opacity:0,transform:'translateY(-24px)'},{opacity:1,transform:'none'}],{duration:reduced?0:450,easing:'cubic-bezier(.22,1,.36,1)'});transitions.set(body,anim);return;
   }
   body.querySelectorAll('video').forEach(video=>video.pause());if(body.hidden)return;
@@ -27,7 +30,7 @@
   const opener=toggles.find(b=>b.dataset.openApplication===id);opener?.scrollIntoView({behavior:'smooth',block:'center'});opener?.focus({preventScroll:true});
  }));
  toggles.forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const body=document.getElementById(b.dataset.openApplication);setOpen(body.id,b.getAttribute('aria-expanded')!=='true')}));
- document.querySelectorAll('[data-scroll-application]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();document.getElementById(b.dataset.scrollApplication)?.scrollIntoView({behavior:'smooth',block:'center'})}));
+ document.querySelectorAll('[data-scroll-application]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const target=document.getElementById(b.dataset.scrollApplication),body=target?.querySelector('.application-body')||document.getElementById(b.getAttribute('aria-controls'));if(body)setOpen(body.id,true);else target?.scrollIntoView({behavior:'smooth',block:'start'})}));
  const options=[...document.querySelectorAll('[data-contribution-tier]')],checkout=document.getElementById('patron-checkout');
  options.forEach(b=>b.addEventListener('click',()=>{
   const same=b.getAttribute('aria-expanded')==='true',slug=b.dataset.contributionTier;
@@ -36,13 +39,13 @@
    if(frame.src!==src)frame.src=src;checkout.querySelector('a').href='https://opencollective.com/once-collective/contribute/'+slug+'/checkout'+params;}
  }));
 })();
-document.querySelectorAll('[data-ambient-video]').forEach(video=>{new IntersectionObserver(entries=>{if(entries[0].isIntersecting){video.preload='metadata';video.muted=true;video.play().catch(()=>{})}else video.pause()},{rootMargin:'100px'}).observe(video)});
+document.querySelectorAll('[data-ambient-video]').forEach(video=>{new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&video.dataset.userPaused!=='true'){video.preload='metadata';video.muted=true;video.play().catch(()=>{})}else video.pause()},{rootMargin:'100px'}).observe(video)});
 
 
 // Editorial films load on approach. Inline films have only click-to-pause and optional progress.
 document.querySelectorAll('[data-mux-film],[data-inline-film]').forEach(video=>{
  const inline=video.hasAttribute('data-inline-film');let userPaused=false,visible=false,hasStopped=false;
- async function play(){try{await ONCEMedia.ensure(video);if(visible&&!userPaused)await video.play()}catch(e){video.dataset.playbackError=e.message||e.name}}
+ async function play(){try{await ONCEMedia.ensure(video);if(visible&&!userPaused&&video.dataset.userPaused!=='true')await video.play()}catch(e){video.dataset.playbackError=e.message||e.name}}
  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible){if(inline)play();else ONCEMedia.ensure(video).catch(()=>{})}else video.pause()},{threshold:.12}).observe(video);
  if(inline){
   video.controls=false;video.muted=true;video.loop=true;video.setAttribute('disablepictureinpicture','');video.setAttribute('controlslist','nodownload nofullscreen noremoteplayback');

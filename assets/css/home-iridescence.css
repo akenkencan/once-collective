@@ -87,3 +87,14 @@ body.site-unified .home-reveal-word{font-family:var(--font-heading)!important}
 
 .icon-wrap.is-painted:not(.is-energized)>.oil-icon{opacity:1!important;transform:scale(.78)!important}
 .icon-wrap.is-painted>.rounded-symbol{opacity:0!important}
+
+/* White rest state; forward-flowing colour fades while the silhouette returns. */
+.icon-wrap:not(.is-energized)>.rounded-symbol{opacity:1!important}
+.icon-wrap>.rounded-symbol{transition:opacity .8s ease!important}
+.icon-wrap.is-energized>.rounded-symbol{opacity:.5!important}
+.icon-wrap>.oil-icon{transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .85s ease!important}
+.icon-wrap.is-colour-fading>.oil-icon{opacity:0!important;transform:scale(.78)!important}
+.icon-wrap.is-colour-fading>.rounded-symbol{opacity:1!important}
+body[data-keyboard-symbol] .text-row{animation-play-state:paused!important}
+
+.icon-wrap:not(.is-energized):not(.is-retreating)>.rounded-symbol{opacity:1!important}

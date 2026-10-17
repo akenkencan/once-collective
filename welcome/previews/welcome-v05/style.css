@@ -875,3 +875,14 @@ header{padding-right:76px}
 .joker-portrait.lens-active,.joker-portrait.lens-active *{cursor:none!important}
 @media(max-width:1050px){.symset-section .symset-heading>.symset-intro-copy{grid-column:1/2}.symset-section .symset-heading>.section-symbol{grid-column:2/3}}
 .symset-section>.corner-wisp{width:70px;height:280px;right:0;top:45px;overflow:hidden}
+
+/* Welcome ending CTA and Studio panel use their available space. */
+.what-ending{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:24px}.what-ending-copy .closing-line{font-size:clamp(21px,1.8vw,29px);line-height:1.4}.what-ending-copy .closing-line+p{margin-top:28px}.welcome-updates{margin-top:5px;background:transparent;color:inherit;border:1px solid currentColor;padding:13px 20px;font:inherit;cursor:pointer;white-space:nowrap}
+@media(min-width:1101px){.studio-heading>article.paper{align-self:stretch;aspect-ratio:auto;min-height:0;margin:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(65px,7vw,120px) clamp(40px,4.5vw,78px)}.studio-heading>article.paper>p{font-size:clamp(18px,1.4vw,25px)!important;line-height:1.65}.studio-heading>article.paper::before{inset:0;background-size:100% 100%}}
+@media(max-width:740px){.what-ending{grid-template-columns:1fr}.welcome-updates{justify-self:start}.what-ending-copy .closing-line{font-size:22px}}
+
+/* Keep the cards visible throughout their reverse slide, then hide them behind the frame. */
+.card-reveal[aria-hidden="true"]>.falling-card{opacity:0!important;visibility:hidden!important;transform:translate(var(--hidden-x),var(--hidden-y)) scale(.65) rotate(0deg)!important;transition:transform 1.15s cubic-bezier(.65,0,.35,1),opacity .3s ease .85s,visibility 0s 1.15s!important}
+.card-reveal[aria-hidden="false"]>.falling-card{opacity:1!important;visibility:visible!important;transition:transform 1.15s cubic-bezier(.16,.8,.2,1),opacity .35s,visibility 0s!important;transition-delay:var(--delay),var(--delay),0s!important}
+.card-reveal[aria-hidden="true"]{transition:height .5s ease 1.1s;overflow:visible;clip-path:none}.card-reveal[aria-hidden="false"]{transition:height 1s cubic-bezier(.22,.75,.2,1)}.framed-reveal>.joker-portrait{position:relative;z-index:3}.framed-reveal>.card-reveal{z-index:1}
+@media(prefers-reduced-motion:reduce){.card-reveal[aria-hidden],.card-reveal[aria-hidden]>.falling-card{transition:none!important}}

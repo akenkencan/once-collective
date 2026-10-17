@@ -369,3 +369,30 @@ body.nav-left-near>.navbar-wrapper,body.nav-right-near>.navbar-wrapper{opacity:1
 body:has(.pitch-dialog[open]){overflow:hidden!important}
 .community-identity .community-art{width:100%;aspect-ratio:1;min-height:200px}.community-identity .community-art img{height:100%!important;max-height:340px!important}
 body.page-found{margin-top:0!important}
+
+/* Supplied MailerLite form stays isolated and grows to its contents. */
+.once-signup-panel{width:min(100%,540px);margin:24px auto;color:white;background:#111;scroll-margin-top:90px}.once-signup-panel[hidden]{display:none}.once-signup-panel iframe{display:block;width:100%;height:240px;min-height:0!important;border:0}.signup-close{display:block;margin:0 0 0 auto;border:0;background:transparent;color:inherit;padding:12px;cursor:pointer}
+
+/* Latest review: larger artefact bullets, aligned navigation, quieter typography. */
+.application-body{scroll-margin-top:90px}
+.community-promises>li{grid-template-columns:90px minmax(0,1fr);gap:22px}.community-promises>li>img{width:90px;height:102px;object-fit:contain;margin:0}.community-promises>li:last-child{display:flex;align-items:center}.community-promises>li:last-child>img{flex:0 0 90px}
+.brand .symbol-menu{padding-top:2vh!important;left:-5px!important}.nav-menu .credit .small-link,.nav-menu .credit .acreditation-text{font-size:12px!important;line-height:1.5!important}.nav-menu .credit{display:flex;gap:4px;align-items:baseline;flex-wrap:wrap}
+body.site-unified .found-vision-copy h2,body.site-unified .found-readmore h2{font-size:clamp(28px,2.8vw,40px)}
+.page-found .found-vision-copy p,.community-content p,.connected-ending-copy p{font-size:clamp(17px,1.4vw,22px);line-height:1.65}
+@media(max-width:700px){.community-promises>li{gap:18px}.community-promises>li:last-child{align-items:flex-start}.nav-menu .credit{max-width:230px}}
+
+.motion-region{position:relative}.motion-toggle{position:absolute;right:4px;top:50%;transform:translateY(-50%);z-index:15;width:26px;height:26px;border:0;border-radius:50%;background:#121212b8;color:#eee;cursor:pointer;opacity:.65;display:grid;place-items:center;padding:5px}.motion-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6}.motion-toggle[aria-pressed="true"] svg{fill:currentColor;stroke:none}.motion-toggle:hover,.motion-toggle:focus-visible{opacity:1;background:#121212}.motion-toggle-global{position:fixed;top:50%;right:12px;z-index:90}.is-motion-paused,.is-motion-paused *{animation-play-state:paused!important}.motion-still{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;cursor:pointer}.community-art:has(img[src*=".gif"]){background:#121212}.community-art img[src*=".gif"],.community-art .motion-still{mix-blend-mode:lighten}
+
+/* Pitches open beneath their action; fullscreen remains an explicit choice. */
+.pitch-dock{overflow:hidden;position:relative}.pitch-dock>.pitch-reader{max-height:calc(100dvh - 110px);height:min(720px,calc(100dvh - 110px));display:grid;grid-template-rows:auto minmax(0,1fr) auto}.pitch-reader[data-mode=docked] .pitch-stage,.pitch-reader[data-mode=closing] .pitch-stage{aspect-ratio:auto;min-height:0;height:100%;overflow:hidden}.pitch-reader[data-mode=docked] .pitch-slide,.pitch-reader[data-mode=closing] .pitch-slide{height:100%;width:100%;object-fit:contain}.pitch-reader[data-mode=docked] [data-pitch-minimize]{display:inline-flex}
+
+.found-read-panel .heading-2{font-size:clamp(28px,2.7vw,40px)!important}.found-read-panel :is(.lowerpara,.paragraph-75,.lowerblock,.paragraph-73){font-size:clamp(17px,1.4vw,22px)!important}.page-found .great-attractor-title{font-size:clamp(30px,3.6vw,56px)!important}
+
+.pitch-dock>.pitch-reader{height:min(720px,calc(100dvh - 160px));max-height:calc(100dvh - 160px)}
+.motion-region>.motion-vector-still{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+body.is-motion-paused .text-row [style*="transform"]{transform:var(--paused-transform)!important}
+
+/* Reserve GIF dimensions before lazy loading on narrow screens. */
+.community-art:has(img[src*=".gif"]){aspect-ratio:1;min-height:220px;width:min(100%,400px);display:grid;place-items:center}.community-art img[src*=".gif"]{width:100%!important;height:100%!important;max-height:100%!important;object-fit:contain}
+
+.community-content .community-art.motion-region>img[src*=".gif"]{position:absolute;inset:0;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain}

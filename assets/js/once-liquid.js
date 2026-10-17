@@ -559,6 +559,6 @@ document.querySelectorAll('[data-once-liquid]').forEach((root,index)=>{
  const variant=Number(root.dataset.onceLiquid)||0,isAbout=root.dataset.liquidPreset==='about-new';
  const chosen=root.dataset.liquidPreset==='free-drift'?{...aboutPreset,...{aspect:'16:9',symmetry:1,home:.18,spread:.65,turbulence:1.88,mouseMode:'drag',mouseRadius:.9,mouseForce:4,contain:true,padding:.1}}:root.dataset.liquidPreset==='mandala'?spectrumPreset:((isAbout&&variant%3===2)?spectrumPreset:(isAbout?aboutPreset:latestPreset));
  const params={...spectrumPreset,...chosen,seed:1+variant*137,hue:(Number(chosen.hue)||0)+(isAbout?.04:.025)*variant,paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
- const effect=create(root.querySelector('canvas'),params);if(!effect.ok){root.querySelector('canvas').hidden=true;root.classList.add('liquid-fallback')}
+ const effect=create(root.querySelector('canvas'),params);root.addEventListener('once:motion',event=>effect.set?.({paused:event.detail.paused}));if(!effect.ok){root.querySelector('canvas').hidden=true;root.classList.add('liquid-fallback')}
 });
 })();
