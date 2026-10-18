@@ -41,6 +41,7 @@
 (() => {
  const brand=document.querySelector('body > .navbar-wrapper .brand'),menu=brand?.querySelector('.symbol-menu');
  if(!brand)return;
+ if(menu){const positionMenu=()=>{const logo=brand.querySelector('.logo-navbar')||brand;menu.style.setProperty('--symbol-menu-top',(logo.getBoundingClientRect().bottom-brand.getBoundingClientRect().top+4)+'px')};new ResizeObserver(positionMenu).observe(brand);positionMenu()}
  let timer;
  function open(){clearTimeout(timer);timer=undefined;brand.classList.add('symbol-menu-open')}
  function closeLater(){if(timer)return;timer=setTimeout(()=>{brand.classList.remove('symbol-menu-open');timer=undefined},850)}

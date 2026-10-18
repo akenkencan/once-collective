@@ -1,43 +1,42 @@
 (() => {
- document.querySelectorAll('.application-body[id]').forEach(body=>{if(!body.querySelector('iframe'))return;for(const position of ['top','bottom']){const close=document.createElement('button');close.type='button';close.className='application-form-close form-close-'+position;close.dataset.closeApplication=body.id;close.textContent='Close −';position==='top'?body.prepend(close):body.append(close)}});
  let tallyReady,scrollTarget,scrollTimer;
- function alignApplication(body){scrollTarget=body;clearTimeout(scrollTimer);const align=()=>{if(scrollTarget===body&&!body.hidden)body.scrollIntoView({behavior:'smooth',block:'start'})};align();scrollTimer=setTimeout(align,1400)}
+ const toggles=[...document.querySelectorAll('[data-open-application]')],transitions=new WeakMap(),clips=new WeakMap();
+ const reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
+ function alignApplication(body){
+  scrollTarget=body;clearTimeout(scrollTimer);
+  const align=()=>{if(scrollTarget!==body||body.hidden)return;const opener=toggles.find(b=>b.dataset.openApplication===body.id);let top;
+   if(body.id==='community-form-body')top=scrollY+body.getBoundingClientRect().top-innerHeight*.5;
+   else top=scrollY+(opener||body).getBoundingClientRect().top-innerHeight*.3;
+   window.scrollTo({top:Math.max(0,top),behavior:reduced()?'instant':'smooth'});
+  };align();scrollTimer=setTimeout(align,1300);
+ }
  for(const type of ['wheel','touchstart','keydown'])document.addEventListener(type,()=>{scrollTarget=null;clearTimeout(scrollTimer)},{passive:true});
  function setupTally(body){
-  const frames=[...body.querySelectorAll('iframe[data-lazy-form]')].filter(f=>f.dataset.lazyForm.startsWith('https://tally.so/'));
-  if(!frames.length)return;
-  frames.forEach(f=>{f.removeAttribute('data-tally-src');f.setAttribute('scrolling','no');const resize=()=>{const h=parseFloat(f.style.height);if(h>100&&f.style.getPropertyValue('--form-content-height')!==h+'px'){f.style.setProperty('--form-content-height',h+'px');if(scrollTarget===body)alignApplication(body)}};new MutationObserver(resize).observe(f,{attributes:true,attributeFilter:['style']});resize()});
-  tallyReady??=window.Tally?Promise.resolve():new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/js/tally.embed.js';script.onload=resolve;script.onerror=reject;document.head.append(script)});
-  tallyReady.then(()=>window.Tally?.loadEmbeds()).catch(()=>{});
+  const frames=[...body.querySelectorAll('iframe[data-lazy-form]')].filter(f=>f.dataset.lazyForm.startsWith('https://tally.so/'));if(!frames.length)return;
+  frames.forEach(f=>{f.removeAttribute('data-tally-src');f.setAttribute('scrolling','no');if(f.dataset.resizeReady)return;f.dataset.resizeReady='true';const resize=()=>{const h=parseFloat(f.style.height);if(h>100&&f.style.getPropertyValue('--form-content-height')!==h+'px'){f.style.setProperty('--form-content-height',h+'px');if(scrollTarget===body)alignApplication(body)}};new MutationObserver(resize).observe(f,{attributes:true,attributeFilter:['style']});resize()});
+  tallyReady??=window.Tally?Promise.resolve():new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/js/tally.embed.js';script.onload=resolve;script.onerror=reject;document.head.append(script)});tallyReady.then(()=>window.Tally?.loadEmbeds()).catch(()=>{});
  }
- const toggles=[...document.querySelectorAll('[data-open-application]')];
- const transitions=new WeakMap();
- async function setOpen(id,open){const body=document.getElementById(id);if(!body)return;
-  transitions.get(body)?.cancel();body.style.overflow='';
-  toggles.filter(b=>b.dataset.openApplication===id).forEach(b=>b.setAttribute('aria-expanded',String(open)));
-  const external=body.parentNode.querySelectorAll('.application-external');
-  const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(open){body.hidden=false;external.forEach(p=>p.hidden=false);setupTally(body);body.querySelectorAll('iframe[data-lazy-form]').forEach(f=>{if(!f.getAttribute('src'))f.src=f.dataset.lazyForm});
-   if(body.querySelector('iframe[data-lazy-form*="tally.so"]'))setTimeout(()=>alignApplication(body),480);
-   const anim=body.animate([{opacity:0,transform:'translateY(-24px)'},{opacity:1,transform:'none'}],{duration:reduced?0:450,easing:'cubic-bezier(.22,1,.36,1)'});transitions.set(body,anim);return;
-  }
-  body.querySelectorAll('video').forEach(video=>video.pause());if(body.hidden)return;
-  body.style.overflow='hidden';const anim=body.animate([{height:body.getBoundingClientRect().height+'px',opacity:1,transform:'translateY(0)'},{height:'0px',opacity:0,transform:'translateY(-65px)'}],{duration:reduced?0:600,easing:'cubic-bezier(.22,1,.36,1)'});transitions.set(body,anim);
-  try{await anim.finished;if(transitions.get(body)!==anim)return;body.hidden=true;body.style.overflow='';external.forEach(p=>p.hidden=true)}catch(e){}
+ function clipFor(body){if(clips.has(body))return clips.get(body);const clip=document.createElement('div');clip.className='application-reveal-clip';body.before(clip);clip.append(body);clips.set(body,clip);return clip}
+ async function setOpen(id,open){
+  const body=document.getElementById(id);if(!body)return;const clip=clipFor(body),previous=transitions.get(body),from=body.hidden?0:clip.getBoundingClientRect().height;previous?.forEach(a=>a.cancel());
+  toggles.filter(b=>b.dataset.openApplication===id).forEach(b=>b.setAttribute('aria-expanded',String(open)));body.dataset.disclosureOpen=String(open);
+  const external=clip.parentNode.querySelectorAll('.application-external');
+  if(open){body.hidden=false;external.forEach(p=>p.hidden=false);setupTally(body);body.querySelectorAll('iframe[data-lazy-form]').forEach(f=>{if(!f.getAttribute('src'))f.src=f.dataset.lazyForm})}
+  else{scrollTarget=null;clearTimeout(scrollTimer);body.querySelectorAll('video').forEach(v=>v.pause());if(body.hidden)return}
+  clip.style.overflow='hidden';const height=body.getBoundingClientRect().height,time=reduced()?0:700,easing=open?'cubic-bezier(.22,1,.36,1)':'cubic-bezier(.6,0,.35,1)';
+  const slide=body.animate([{transform:open?'translateY(-100%)':'none'},{transform:open?'none':'translateY(-100%)'}],{duration:time,easing,fill:'forwards'}),size=clip.animate([{height:from+'px'},{height:(open?height:0)+'px'}],{duration:time,easing,fill:'forwards'}),run=[slide,size];transitions.set(body,run);
+  document.dispatchEvent(new CustomEvent('once:contact-layout'));
+  if(open&&body.querySelector('iframe[data-lazy-form*="tally.so"]'))setTimeout(()=>{if(body.dataset.disclosureOpen==='true')alignApplication(body)},time);
+  try{await size.finished;if(transitions.get(body)!==run)return;if(!open){body.hidden=true;external.forEach(p=>p.hidden=true)}run.forEach(a=>a.cancel());clip.style.overflow='';document.dispatchEvent(new CustomEvent('once:contact-layout'))}catch(error){}
  }
- document.querySelectorAll('[data-close-application]').forEach(button=>button.addEventListener('click',async()=>{
-  const id=button.dataset.closeApplication,body=document.getElementById(id);body?.querySelectorAll('video').forEach(v=>v.pause());await setOpen(id,false);
-  const opener=toggles.find(b=>b.dataset.openApplication===id);opener?.scrollIntoView({behavior:'smooth',block:'center'});opener?.focus({preventScroll:true});
- }));
- toggles.forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const body=document.getElementById(b.dataset.openApplication);setOpen(body.id,b.getAttribute('aria-expanded')!=='true')}));
- document.querySelectorAll('[data-scroll-application]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const target=document.getElementById(b.dataset.scrollApplication),body=target?.querySelector('.application-body')||document.getElementById(b.getAttribute('aria-controls'));if(body)setOpen(body.id,true);else target?.scrollIntoView({behavior:'smooth',block:'start'})}));
+ document.querySelectorAll('[data-close-application]').forEach(button=>button.addEventListener('click',async()=>{const id=button.dataset.closeApplication;await setOpen(id,false);const opener=toggles.find(b=>b.dataset.openApplication===id)||document.querySelector('[data-contribution-tier][aria-expanded="true"]');if(id==='patron-checkout')document.querySelectorAll('[data-contribution-tier]').forEach(b=>b.setAttribute('aria-expanded','false'));opener?.focus({preventScroll:true});opener?.scrollIntoView({behavior:'smooth',block:'center'})}));
+ toggles.forEach(b=>b.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();setOpen(b.dataset.openApplication,b.getAttribute('aria-expanded')!=='true')}));
+ document.querySelectorAll('[data-scroll-application]').forEach(b=>b.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();const target=document.getElementById(b.dataset.scrollApplication),body=target?.querySelector('.application-body')||document.getElementById(b.getAttribute('aria-controls'));if(body)setOpen(body.id,true)}));
  const options=[...document.querySelectorAll('[data-contribution-tier]')],checkout=document.getElementById('patron-checkout');
- options.forEach(b=>b.addEventListener('click',()=>{
-  const same=b.getAttribute('aria-expanded')==='true',slug=b.dataset.contributionTier;
-  options.forEach(o=>o.setAttribute('aria-expanded','false'));setOpen('patron-checkout',!same);b.setAttribute('aria-expanded',String(!same));
-  if(!same){const frame=checkout.querySelector('iframe'),amount=slug.startsWith('deep-significance')?'2500':slug.startsWith('belief-bond')?'':'10',params='?useTheme=true'+(amount?'&amount='+amount:''),src='https://opencollective.com/embed/once-collective/contribute/'+slug+params;
-   if(frame.src!==src)frame.src=src;checkout.querySelector('a').href='https://opencollective.com/once-collective/contribute/'+slug+'/checkout'+params;}
- }));
+ options.forEach(b=>b.addEventListener('click',()=>{const same=b.getAttribute('aria-expanded')==='true',slug=b.dataset.contributionTier;options.forEach(o=>o.setAttribute('aria-expanded','false'));setOpen('patron-checkout',!same);b.setAttribute('aria-expanded',String(!same));if(!same){const frame=checkout.querySelector('iframe'),amount=slug.startsWith('deep-significance')?'2500':slug.startsWith('belief-bond')?'':'10',params='?useTheme=true'+(amount?'&amount='+amount:''),src='https://opencollective.com/embed/once-collective/contribute/'+slug+params;if(frame.src!==src)frame.src=src;checkout.querySelector('a').href='https://opencollective.com/once-collective/contribute/'+slug+'/checkout'+params}}));
+ const copy=document.querySelector('.about-editorial-copy'),art=document.querySelector('.about-main-art img');if(copy&&art){let height=copy.getBoundingClientRect().height;new ResizeObserver(()=>{const next=copy.getBoundingClientRect().height;if(Math.abs(next-height)>12){art.animate([{transform:'translateY('+Math.min(55,Math.abs(next-height)*.2)*(next>height?-1:1)+'px)'},{transform:'translateY(0)'}],{duration:reduced()?0:850,easing:'cubic-bezier(.22,1,.36,1)'});height=next}}).observe(copy)}
+ document.querySelectorAll('.about-stage-tape').forEach((tape,index)=>{const tile=()=>{const w=tape.clientWidth,h=tape.clientHeight;if(!w||!h)return;const scale=h/190,pw=1376*scale,id='about-tape-repeat-'+index;tape.setAttribute('viewBox','0 0 '+w+' '+h);tape.innerHTML='<defs><pattern id="'+id+'" patternUnits="userSpaceOnUse" width="'+pw+'" height="'+h+'"><image y="'+(-30*scale)+'" width="'+pw+'" height="'+(768*scale)+'" href="/assets/images/editorial/about-tape.webp"/></pattern></defs><rect width="100%" height="100%" fill="url(#'+id+')"/>'};new ResizeObserver(tile).observe(tape);tile()});
+ const surround=document.querySelector('.about-artefact-stage'),actions=document.querySelector('.about-contact .contact-actions');if(surround&&actions&&copy){const place=()=>surround.style.setProperty('--about-perimeter-top',Math.min(-45,actions.getBoundingClientRect().bottom-surround.getBoundingClientRect().top+10)+'px');new ResizeObserver(()=>requestAnimationFrame(place)).observe(copy);window.addEventListener('resize',place);requestAnimationFrame(place)}
 })();
 document.querySelectorAll('[data-ambient-video]').forEach(video=>{new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&video.dataset.userPaused!=='true'){video.preload='metadata';video.muted=true;video.play().catch(()=>{})}else video.pause()},{rootMargin:'100px'}).observe(video)});
 

@@ -35,7 +35,7 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
   }else{
    dock.hidden=false;reader.dataset.mode='docked';button.setAttribute('aria-expanded','true');render();
    const height=reader.getBoundingClientRect().height;
-   window.scrollTo({top:window.scrollY+button.getBoundingClientRect().top-20,behavior:reduced()?'instant':'smooth'});
+   const centrePitch=()=>window.scrollTo({top:Math.max(0,window.scrollY+dock.getBoundingClientRect().top-(innerHeight-reader.getBoundingClientRect().height)/2),behavior:reduced()?'instant':'smooth'});setTimeout(centrePitch,duration());
    dockAnimation=dock.animate([{height:'0px'},{height:height+'px'}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
    slideAnimation=reader.animate([{transform:'translateY(-100%)',opacity:0},{transform:'none',opacity:1}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
    try{await dockAnimation.finished;if(revision===dockRevision){dockAnimation.cancel();slideAnimation.cancel()}}catch(error){}

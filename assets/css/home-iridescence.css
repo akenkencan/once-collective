@@ -98,3 +98,16 @@ body.site-unified .home-reveal-word{font-family:var(--font-heading)!important}
 body[data-keyboard-symbol] .text-row{animation-play-state:paused!important}
 
 .icon-wrap:not(.is-energized):not(.is-retreating)>.rounded-symbol{opacity:1!important}
+
+/* October 18: the white and flowing material occupy one moving silhouette. */
+body .icon-wrap>.rounded-symbol{visibility:hidden!important;opacity:0!important}
+body .icon-wrap>.oil-icon{inset:0!important;padding:0!important;width:100%!important;height:100%!important;opacity:1!important;transform:scale(.78)!important;transform-origin:50% 50%;transition:transform .9s cubic-bezier(.12,1,.22,1)!important}
+body .icon-wrap.is-energized>.oil-icon{transform:scale(1.4)!important}
+body[data-word-symbol] .icon-wrap.is-energized>.oil-icon{transform:scale(1.05)!important}
+body .icon-wrap.is-colour-fading>.oil-icon{opacity:1!important;transform:scale(.78)!important}
+body .icon-wrap[data-oil-symbol="triangle"]>.oil-icon{transform-origin:50% 36%}
+body .icon-wrap .oil-face{position:absolute;inset:0!important;width:100%;height:100%;aspect-ratio:auto;transform:none!important;background:#fff;transition:background-color .85s ease}
+body .icon-wrap .oil-face .burst-canvas{opacity:0;transition:opacity .85s ease}
+body .icon-wrap.is-bursting:not(.is-colour-fading) .oil-face{background:transparent}
+body .icon-wrap.is-bursting:not(.is-colour-fading) .burst-canvas{opacity:1}
+@media(prefers-reduced-motion:reduce){body .icon-wrap>.oil-icon,body .icon-wrap .oil-face,body .icon-wrap .burst-canvas{transition:none!important}}

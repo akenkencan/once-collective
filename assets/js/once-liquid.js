@@ -519,7 +519,7 @@ void main() {
         raf = requestAnimationFrame(frame);
         var rdt = Math.min((now - last) / 1000, 1 / 30);
         last = now;
-        if (!visible) return;
+        if (!visible||canvas.closest('[data-motion-paused="true"]')) return;
         resize();
         cursorTick(rdt);
         if (P.paused) { if (dirty) { render(); dirty = false; } return; }
@@ -558,6 +558,7 @@ const latestPreset={"count": 14, "size": 0.085, "sizeVar": 0.5, "tension": 1, "w
 document.querySelectorAll('[data-once-liquid]').forEach((root,index)=>{
  const variant=Number(root.dataset.onceLiquid)||0,isAbout=root.dataset.liquidPreset==='about-new';
  const chosen=root.dataset.liquidPreset==='free-drift'?{...aboutPreset,...{aspect:'16:9',symmetry:1,home:.18,spread:.65,turbulence:1.88,mouseMode:'drag',mouseRadius:.9,mouseForce:4,contain:true,padding:.1}}:root.dataset.liquidPreset==='mandala'?spectrumPreset:((isAbout&&variant%3===2)?spectrumPreset:(isAbout?aboutPreset:latestPreset));
+ if(root.dataset.liquidPreset==='free-drift')Object.assign(chosen,{palette:'oil',c0:spectrumPreset.c0,c1:spectrumPreset.c1,c2:spectrumPreset.c2,c3:spectrumPreset.c3,c4:spectrumPreset.c4,c5:spectrumPreset.c5});
  const params={...spectrumPreset,...chosen,seed:1+variant*137,hue:(Number(chosen.hue)||0)+(isAbout?.04:.025)*variant,paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
  const effect=create(root.querySelector('canvas'),params);root.addEventListener('once:motion',event=>effect.set?.({paused:event.detail.paused}));if(!effect.ok){root.querySelector('canvas').hidden=true;root.classList.add('liquid-fallback')}
 });
