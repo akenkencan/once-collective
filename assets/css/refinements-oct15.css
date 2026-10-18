@@ -438,3 +438,9 @@ body.page-found .div-block-63{display:block;width:min(94%,1300px);margin:0 auto;
 
 .about-artefact-stage .about-natural-elements{top:var(--about-perimeter-top,-45px)}
 @media(max-width:800px){.about-artefact-stage .about-natural-piece{max-width:none;width:82.5px;height:105px}.about-artefact-stage .natural-piece-6{right:8%}.about-artefact-stage .natural-piece-11{left:74%}}
+
+/* Follow-up: spaced logo dropdown, top-edge reveals and larger centred Connected photo. */
+.brand .symbol-menu{left:-5px!important}
+.application-reveal-clip,.signup-reveal-clip{overflow:visible;clip-path:inset(0 -100vmax -100vmax -100vmax)}
+.signup-reveal-clip{position:relative;width:100%;min-width:0;z-index:1}.signup-reveal-clip>.once-signup-panel{margin:0 auto;padding-top:24px}.signup-reveal-clip[hidden]{display:none}
+.connected-closing-art{width:84vw!important;left:auto!important;transform:none!important;margin:30px auto 20px!important}.connected-copy .connected-closing-art>.editorial-image{margin-inline:auto!important}

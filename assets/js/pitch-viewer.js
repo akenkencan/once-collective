@@ -22,9 +22,20 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
  function minimize(){if(!dialog.open)return;const from=reader.getBoundingClientRect();dialog.close();dock.hidden=false;dock.append(reader);reader.dataset.mode='docked';button.setAttribute('aria-expanded','false');const to=reader.getBoundingClientRect();reader.animate([{transformOrigin:'0 0',transform:`translate(${from.x-to.x}px,${from.y-to.y}px) scale(${from.width/to.width},${from.height/to.height})`,opacity:1},{transformOrigin:'0 0',transform:'none',opacity:1}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)'});render();stage.focus({preventScroll:true})}
  function dismiss(){if(reader.dataset.mode!=='hidden')toggleDock(true)}
  let dockAnimation,slideAnimation,dockRevision=0;
+ async function fadeForApplication(){
+  if(reader.dataset.mode==='hidden')return;
+  const revision=++dockRevision;dockAnimation?.cancel();slideAnimation?.cancel();if(dialog.open)dialog.close();dock.append(reader);dock.hidden=false;reader.dataset.mode='closing';button.setAttribute('aria-expanded','false');
+  const time=reduced()?0:320,height=dock.getBoundingClientRect().height;
+  slideAnimation=reader.animate([{opacity:1},{opacity:0}],{duration:time,easing:'ease-out',fill:'forwards'});
+  dockAnimation=dock.animate([{height:height+'px'},{height:'0px'}],{duration:time,easing:'ease-out',fill:'forwards'});
+  try{await dockAnimation.finished;if(revision!==dockRevision)return;dock.hidden=true;reader.dataset.mode='hidden';slideAnimation.cancel();dockAnimation.cancel();++rendering}catch(error){}
+ }
+ document.addEventListener('once:application-opening',event=>{if(event.detail.id==='connected-application-body'&&reader.dataset.mode!=='hidden')event.detail.waits.push(fadeForApplication())});
+
  async function toggleDock(forceClose=false){
   const revision=++dockRevision,closing=forceClose||reader.dataset.mode!=='hidden';
   dockAnimation?.cancel();slideAnimation?.cancel();
+  if(!closing){const detail={waits:[]};document.dispatchEvent(new CustomEvent('once:pitch-opening',{detail}));await Promise.all(detail.waits);if(revision!==dockRevision)return;}
   if(dialog.open)dialog.close();dock.append(reader);
   if(closing){
    reader.dataset.mode='closing';button.setAttribute('aria-expanded','false');
@@ -35,7 +46,7 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
   }else{
    dock.hidden=false;reader.dataset.mode='docked';button.setAttribute('aria-expanded','true');render();
    const height=reader.getBoundingClientRect().height;
-   const centrePitch=()=>window.scrollTo({top:Math.max(0,window.scrollY+dock.getBoundingClientRect().top-(innerHeight-reader.getBoundingClientRect().height)/2),behavior:reduced()?'instant':'smooth'});setTimeout(centrePitch,duration());
+   const centrePitch=()=>{if(revision!==dockRevision||reader.dataset.mode==='hidden'||reader.dataset.mode==='closing')return;window.scrollTo({top:Math.max(0,window.scrollY+dock.getBoundingClientRect().top-(innerHeight-reader.getBoundingClientRect().height)/2),behavior:reduced()?'instant':'smooth'})};setTimeout(centrePitch,duration());
    dockAnimation=dock.animate([{height:'0px'},{height:height+'px'}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
    slideAnimation=reader.animate([{transform:'translateY(-100%)',opacity:0},{transform:'none',opacity:1}],{duration:duration(),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
    try{await dockAnimation.finished;if(revision===dockRevision){dockAnimation.cancel();slideAnimation.cancel()}}catch(error){}
@@ -47,6 +58,6 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
  prev.addEventListener('click',()=>change(-1));next.addEventListener('click',()=>change(1));
  dialog.addEventListener('cancel',event=>{event.preventDefault();minimize()});dialog.addEventListener('click',event=>{if(event.target===dialog)minimize()});
  dialog.addEventListener('keydown',event=>{if(event.key==='ArrowRight'){event.preventDefault();change(1)}if(event.key==='ArrowLeft'){event.preventDefault();change(-1)}});
- document.addEventListener('click',event=>{const action=event.target.closest('button,[data-open-application],[data-scroll-application]');if(action&&action!==button&&!reader.contains(action))dismiss()},true);
+ document.addEventListener('click',event=>{const action=event.target.closest('button,[data-open-application],[data-scroll-application]');if(action&&action!==button&&!reader.contains(action)&&action.dataset.openApplication!=='connected-application-body')dismiss()},true);
  let resize;new ResizeObserver(()=>{clearTimeout(resize);resize=setTimeout(()=>{if(reader.dataset.mode!=='hidden')render()},100)}).observe(stage);
 }
