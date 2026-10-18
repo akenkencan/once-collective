@@ -49,13 +49,16 @@
  brand.addEventListener('focusin',open);
  brand.addEventListener('focusout',event=>{if(!brand.contains(event.relatedTarget))closeLater()});
  document.addEventListener('pointermove',event=>{
-  const approaching=event.clientX<Math.min(360,innerWidth*.3)&&event.clientY<190;
+  const approaching=event.clientX<Math.min(432,innerWidth*.36)&&event.clientY<228;
   document.body.classList.toggle('nav-left-near',approaching);
-  document.body.classList.toggle('nav-right-near',event.clientX>innerWidth-Math.min(300,innerWidth*.25)&&event.clientY<170);
+  document.body.classList.toggle('nav-right-near',event.clientX>innerWidth-Math.min(360,innerWidth*.3)&&event.clientY<204);
   if(approaching)open();
   if(!brand.classList.contains('symbol-menu-open'))return;
   const logo=brand.getBoundingClientRect(),symbols=menu?.getBoundingClientRect()||logo;
-  const inside=event.clientX>=0&&event.clientX<=Math.max(360,logo.right,symbols.right)+60&&event.clientY>=0&&event.clientY<=Math.max(190,logo.bottom,symbols.bottom)+45;
+  const inside=event.clientX>=0&&event.clientX<=Math.max(432,logo.right,symbols.right)+72&&event.clientY>=0&&event.clientY<=Math.max(228,logo.bottom,symbols.bottom)+54;
   if(inside){clearTimeout(timer);timer=undefined}else closeLater();
  },{passive:true});
 })();
+
+// Returning from the Found footer exposes navigation until the next downward scroll.
+(()=>{let held=false,atTop=false,last=scrollY;document.querySelectorAll('[data-back-to-top]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();held=true;atTop=false;document.body.classList.add('nav-return-visible');window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'})}));window.addEventListener('scroll',()=>{if(held){if(scrollY<2)atTop=true;else if(atTop&&scrollY>last+1){held=false;document.body.classList.remove('nav-return-visible')}}last=scrollY},{passive:true});window.addEventListener('wheel',e=>{if(held&&e.deltaY>0){held=false;document.body.classList.remove('nav-return-visible')}},{passive:true})})();

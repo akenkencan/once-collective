@@ -117,3 +117,8 @@ body .icon-wrap>.oil-icon,body .icon-wrap.is-colour-fading>.oil-icon{transform:s
 body .icon-wrap.is-energized>.oil-icon{transform:scale(1.12)!important}
 body[data-word-symbol] .icon-wrap.is-energized>.oil-icon{transform:scale(.84)!important}
 .fullscreen-section .is-word-lifted{visibility:hidden!important}
+
+body .icon-wrap[data-oil-symbol="triangle"]>.oil-icon{transform-origin:50% 50%}
+body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:8%!important;bottom:-8%!important}
+body.home-words-in-flight .text-row{animation-play-state:paused!important}
+body[data-keyboard-symbol] .fullscreen-section:not(.overlay)>.text{opacity:1!important}

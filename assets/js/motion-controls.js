@@ -27,6 +27,6 @@
  document.querySelectorAll('[data-once-liquid]').forEach(region=>{if(!isAbout)add(region)});
  document.querySelectorAll('img[src*=".gif"]').forEach(gif=>{if(isCommunity&&gif.src.includes('CircleArray'))return;add(gif.closest('.community-art')||gif.parentElement,{gif})});
  if(!isCommunity)document.querySelectorAll('[data-animation-type="lottie"]').forEach(region=>{const vector=region.querySelector('svg');if(vector)add(region,{vector});else new MutationObserver((changes,observer)=>{const vector=region.querySelector('svg');if(vector){add(region,{vector});observer.disconnect()}}).observe(region,{childList:true,subtree:true})});
- document.querySelectorAll('video[loop]').forEach(video=>{if(isCommunity)return;add(video.closest('figure')||video.parentElement)});
+ document.querySelectorAll('video[loop]').forEach(video=>{if(isCommunity||video.hasAttribute('data-inline-film'))return;add(video.closest('figure')||video.parentElement)});
  if(document.querySelector('[data-oil-symbol]'))add(document.body,{global:true});
 })();

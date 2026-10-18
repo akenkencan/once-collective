@@ -886,3 +886,6 @@ header{padding-right:76px}
 .card-reveal[aria-hidden="false"]>.falling-card{opacity:1!important;visibility:visible!important;transition:transform 1.15s cubic-bezier(.16,.8,.2,1),opacity .35s,visibility 0s!important;transition-delay:var(--delay),var(--delay),0s!important}
 .card-reveal[aria-hidden="true"]{transition:height .5s ease 1.1s;overflow:visible;clip-path:none}.card-reveal[aria-hidden="false"]{transition:height 1s cubic-bezier(.22,.75,.2,1)}.framed-reveal>.joker-portrait{position:relative;z-index:3}.framed-reveal>.card-reveal{z-index:1}
 @media(prefers-reduced-motion:reduce){.card-reveal[aria-hidden],.card-reveal[aria-hidden]>.falling-card{transition:none!important}}
+
+.what-ending{display:block}.what-ending-copy .closing-line-updates{margin-bottom:0}.updates-ending{white-space:nowrap}.welcome-updates{display:inline-block;vertical-align:baseline;margin:0 0 0 10px;padding:10px 15px;font-size:16px;line-height:1.25}
+.updates-ending{display:inline-flex;align-items:flex-end;vertical-align:bottom}.updates-ending>.welcome-updates{flex:none}
