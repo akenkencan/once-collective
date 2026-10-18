@@ -469,3 +469,4 @@ body.page-found .div-block-63{display:block;width:min(94%,1300px);margin:0 auto;
 @media(max-width:800px){.community-digital-media>img,.community-trust-media>img{width:140%!important}}
 .page-community .community-restored-grid>.community-trust-media>img.c-grid-img{width:200%!important;max-width:none!important;height:auto!important;max-height:none!important;flex:none!important}
 @media(max-width:800px){.page-community .community-restored-grid>.community-trust-media>img.c-grid-img{width:140%!important}}
+.about-artefact-stage{left:auto;transform:none;margin-left:calc(50% - 50vw)!important;margin-right:calc(50% - 50vw)!important}
