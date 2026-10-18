@@ -58,6 +58,6 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
  prev.addEventListener('click',()=>change(-1));next.addEventListener('click',()=>change(1));
  dialog.addEventListener('cancel',event=>{event.preventDefault();minimize()});dialog.addEventListener('click',event=>{if(event.target===dialog)minimize()});
  dialog.addEventListener('keydown',event=>{if(event.key==='ArrowRight'){event.preventDefault();change(1)}if(event.key==='ArrowLeft'){event.preventDefault();change(-1)}});
- document.addEventListener('click',event=>{const action=event.target.closest('button,[data-open-application],[data-scroll-application]');if(action&&action!==button&&!reader.contains(action)&&action.dataset.openApplication!=='connected-application-body')dismiss()},true);
+ document.addEventListener('click',event=>{if(reader.contains(event.target)||button.contains(event.target))return;const action=event.target.closest('[data-open-application]');if(action?.dataset.openApplication==='connected-application-body')return;if(dialog.open)minimize();else if(reader.dataset.mode==='docked')dismiss()},true);
  let resize;new ResizeObserver(()=>{clearTimeout(resize);resize=setTimeout(()=>{if(reader.dataset.mode!=='hidden')render()},100)}).observe(stage);
 }

@@ -10,7 +10,7 @@
    animation.onfinish=()=>{animation=null};
   }
   document.querySelector('.found-read-close')?.addEventListener('click',()=>{setOpen(false);toggle.scrollIntoView({behavior:'smooth',block:'center'});toggle.focus({preventScroll:true})});
-  panel.inert=true;toggle.addEventListener('click',()=>setOpen(!open));toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
+  if(location.hash==='#found-read-panel'){setOpen(true);requestAnimationFrame(()=>panel.scrollIntoView({block:'start'}))}else panel.inert=true;toggle.addEventListener('click',()=>setOpen(!open));toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
  }
 
  const films=[...document.querySelectorAll('[data-proximity-film]')].map(box=>{

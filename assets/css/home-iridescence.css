@@ -122,3 +122,6 @@ body .icon-wrap[data-oil-symbol="triangle"]>.oil-icon{transform-origin:50% 50%}
 body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:8%!important;bottom:-8%!important}
 body.home-words-in-flight .text-row{animation-play-state:paused!important}
 body[data-keyboard-symbol] .fullscreen-section:not(.overlay)>.text{opacity:1!important}
+
+body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:16%!important;bottom:-16%!important}
+body.home-words-in-flight .text-row{animation-play-state:running!important}

@@ -1,6 +1,6 @@
 /* Controls belong to their visual; Community controls share one margin rail. */
 (()=>{
- const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,isCommunity=document.body.classList.contains('page-community'),isAbout=document.body.classList.contains('page-about'),isWelcome=!!document.querySelector('.studio-heading');
+ const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,isCommunity=document.body.classList.contains('page-community'),isAbout=document.body.classList.contains('page-about'),isWelcome=!!document.querySelector('.studio-heading'),isWorld=document.body.classList.contains('page-world');
  if(isWelcome)return;
  const rails=[];let queued=false;
  function position(){queued=false;for(const {region,button} of rails){const r=region.getBoundingClientRect(),shown=region.getClientRects().length&&r.height>0&&r.bottom>0&&r.top<innerHeight;button.hidden=!shown;button.style.top=(r.top+r.height/2)+'px'}}
@@ -8,11 +8,11 @@
  for(const event of ['scroll','resize'])window.addEventListener(event,requestPosition,{passive:true});
  function add(region,{gif,vector,global=false}={}){
   if(!region||region.hasAttribute('data-motion-control'))return;region.dataset.motionControl='';region.classList.add('motion-region');
-  const button=document.createElement('button');button.type='button';button.className='motion-toggle'+(global?' motion-toggle-global':'')+(isCommunity?' motion-toggle-rail':'');
+  const button=document.createElement('button');button.type='button';button.className='motion-toggle'+(global?' motion-toggle-global':'')+(isCommunity?' motion-toggle-rail':'')+(isWorld?' motion-toggle-world':'');
   let paused=false,still,held=[],vectorStill;
   function reflect(){button.setAttribute('aria-label',paused?'Play animation':'Pause animation');button.setAttribute('aria-pressed',String(paused));button.innerHTML=paused?'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6Z"/></svg>':'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5v10M13 5v10"/></svg>'}
   reflect();
-  if(isCommunity){document.body.append(button);rails.push({region,button});new ResizeObserver(requestPosition).observe(region);requestPosition()}else region.append(button);
+  if(isCommunity||isWorld){document.body.append(button);rails.push({region,button});new ResizeObserver(requestPosition).observe(region);requestPosition()}else region.append(button);
   function toggle(){
    paused=!paused;reflect();if(global&&paused)region.querySelectorAll('.text-row [style*="transform"]').forEach(el=>el.style.setProperty('--paused-transform',getComputedStyle(el).transform));region.classList.toggle('is-motion-paused',paused);
    [region,...region.querySelectorAll('[data-once-liquid],[data-oil-symbol],[data-about-symbol],[data-colour-burst]')].forEach(el=>{el.dataset.motionPaused=String(paused);el.dispatchEvent(new CustomEvent('once:motion',{detail:{paused}}))});

@@ -562,6 +562,7 @@ document.querySelectorAll('[data-once-liquid]').forEach((root,index)=>{
  for(const key of ['palette','c0','c1','c2','c3','c4','c5','bands','sharpness','colorFlow','colorScale','hue','saturation','brightness','pools','poolScale','poolColor','crust','crustWidth','crustColor','crustGrain','rings','ringGap','ringColor','softness','depth','specular','lightAngle','viewShift','grain','opacity'])sharedMaterial[key]=latestPreset[key];
  const useShared=root.dataset.liquidPreset==='mandala'||root.dataset.liquidPreset==='free-drift'||document.body.classList.contains('world-page');
  const params={...spectrumPreset,...chosen,...(useShared?sharedMaterial:{}),seed:1+variant*137,hue:useShared?latestPreset.hue:(Number(chosen.hue)||0)+(isAbout?.04:.025)*variant,paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
+ if(document.body.classList.contains('page-world'))Object.assign(params,{colorScale:2.1,bands:2.05});
  root.dataset.liquidMaterial=useShared?'friends':'original';
  const effect=create(root.querySelector('canvas'),params);root.addEventListener('once:motion',event=>effect.set?.({paused:event.detail.paused}));if(!effect.ok){root.querySelector('canvas').hidden=true;root.classList.add('liquid-fallback')}
 });
