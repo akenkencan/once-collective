@@ -5,11 +5,11 @@
  let current=null,revealing=false,exitTimer,sequence=0,words=[];
  function retire(){
   const batch=words;words=[];const run=++sequence;
-  for(const item of batch){const css=getComputedStyle(item.word),start={opacity:css.opacity,filter:css.filter,transform:css.transform};item.word.getAnimations().forEach(a=>a.cancel());const animation=item.word.animate([start,{opacity:0,filter:'blur(30px)',transform:item.from}],{duration:reduced()?0:800,easing:'cubic-bezier(.55,0,.8,.4)',fill:'forwards'});animation.finished.then(()=>item.word.remove()).catch(()=>{})}
+  for(const item of batch){const css=getComputedStyle(item.word),start={opacity:css.opacity,filter:css.filter,transform:css.transform};item.word.getAnimations().forEach(a=>a.cancel());const animation=item.word.animate([start,{opacity:0,filter:'blur(30px)',transform:item.from}],{duration:reduced()?0:800,easing:'cubic-bezier(.55,0,.8,.4)',fill:'forwards'});animation.finished.then(()=>{item.source.classList.remove("is-word-lifted");item.word.remove()}).catch(()=>{})}
   setTimeout(()=>{if(run===sequence&&!words.length)plane.classList.remove('is-visible')},reduced()?0:820);
  }
  function show(name){
-  ++sequence;plane.replaceChildren();words=[];const rows=['first','second','third','fourth','fifth','sixth'];
+  ++sequence;words.forEach(item=>item.source.classList.remove("is-word-lifted"));plane.replaceChildren();words=[];const rows=['first','second','third','fourth','fifth','sixth'];
   const margin=Math.max(16,innerWidth*.018),centre=innerWidth/2,clearance=Math.max(72,innerHeight*.115),lane=centre-clearance-margin;
   rows.forEach((rowName,rowIndex)=>{
    const all=[...document.querySelectorAll('.fullscreen-section:not(.overlay) .text-row.'+rowName+' [data-symbol-word="'+name+'"]')],unique=new Map();
@@ -20,7 +20,7 @@
     const x=(side?centre+clearance:margin)+(lane-width)*(((hash*13+i*29)%101)/100),y=Math.max(12,Math.min(innerHeight-height-12,rect.y));
     const word=document.createElement('span');word.className='home-reveal-word';word.textContent=source.textContent;
     Object.assign(word.style,{fontFamily:css.fontFamily,fontWeight:css.fontWeight,fontSize:parseFloat(css.fontSize)*factor+'px',lineHeight:(parseFloat(css.lineHeight)||parseFloat(css.fontSize)*1.2)*factor+'px',letterSpacing:(parseFloat(css.letterSpacing)||0)*factor+'px',left:x+'px',top:y+'px',width:width+'px',height:height+'px',transformOrigin:'0 0'});
-    const from=`translate(${rect.x-x}px,${rect.y-y}px) scale(.8)`;plane.append(word);words.push({word,from});
+    const from=`translate(${rect.x-x}px,${rect.y-y}px) scale(.8)`;plane.append(word);source.classList.add("is-word-lifted");words.push({word,from,source});
     word.animate([{opacity:0,filter:'blur(30px)',transform:from},{opacity:1,filter:'blur(0px)',transform:'translate(0,0) scale(1)'}],{duration:reduced()?0:1700,delay:Math.min(rowIndex,5-rowIndex)*55,easing:'cubic-bezier(.12,1,.22,1)',fill:'both'});
    });
   });plane.classList.add('is-visible');

@@ -18,7 +18,7 @@
  }
  function clipFor(body){if(clips.has(body))return clips.get(body);const clip=document.createElement('div');clip.className='application-reveal-clip';body.before(clip);clip.append(body);clips.set(body,clip);return clip}
  async function setOpen(id,open){
-  const body=document.getElementById(id);if(!body)return;const request=(requests.get(body)||0)+1;requests.set(body,request);if(open&&id==='connected-application-body'){const detail={id,waits:[]};document.dispatchEvent(new CustomEvent('once:application-opening',{detail}));await Promise.all(detail.waits);if(requests.get(body)!==request)return;}const clip=clipFor(body),previous=transitions.get(body),from=body.hidden?0:clip.getBoundingClientRect().height;previous?.forEach(a=>a.cancel());
+  const body=document.getElementById(id);if(!body)return;if(open&&body.classList.contains('contact-socials'))document.dispatchEvent(new CustomEvent('once:social-opening'));const request=(requests.get(body)||0)+1;requests.set(body,request);if(open&&id==='connected-application-body'){const detail={id,waits:[]};document.dispatchEvent(new CustomEvent('once:application-opening',{detail}));await Promise.all(detail.waits);if(requests.get(body)!==request)return;}const clip=clipFor(body),previous=transitions.get(body),from=body.hidden?0:clip.getBoundingClientRect().height;previous?.forEach(a=>a.cancel());
   toggles.filter(b=>b.dataset.openApplication===id).forEach(b=>b.setAttribute('aria-expanded',String(open)));body.dataset.disclosureOpen=String(open);
   const external=clip.parentNode.querySelectorAll('.application-external');
   if(open){body.hidden=false;external.forEach(p=>p.hidden=false);setupTally(body);body.querySelectorAll('iframe[data-lazy-form]').forEach(f=>{if(!f.getAttribute('src'))f.src=f.dataset.lazyForm})}
@@ -29,6 +29,7 @@
   if(open&&body.querySelector('iframe[data-lazy-form*="tally.so"]'))setTimeout(()=>{if(body.dataset.disclosureOpen==='true')alignApplication(body)},time);
   try{await size.finished;if(transitions.get(body)!==run)return;if(!open){body.hidden=true;external.forEach(p=>p.hidden=true)}run.forEach(a=>a.cancel());clip.style.overflow='';document.dispatchEvent(new CustomEvent('once:contact-layout'))}catch(error){}
  }
+ document.addEventListener('once:email-opening',()=>{document.querySelectorAll('.contact-socials').forEach(body=>{if(!body.hidden)setOpen(body.id,false)})});
  document.addEventListener('once:pitch-opening',event=>{const body=document.getElementById('connected-application-body');if(body&&!body.hidden)event.detail.waits.push(setOpen(body.id,false))});
  document.querySelectorAll('[data-close-application]').forEach(button=>button.addEventListener('click',async()=>{const id=button.dataset.closeApplication;await setOpen(id,false);const opener=toggles.find(b=>b.dataset.openApplication===id)||document.querySelector('[data-contribution-tier][aria-expanded="true"]');if(id==='patron-checkout')document.querySelectorAll('[data-contribution-tier]').forEach(b=>b.setAttribute('aria-expanded','false'));opener?.focus({preventScroll:true});opener?.scrollIntoView({behavior:'smooth',block:'center'})}));
  toggles.forEach(b=>b.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();setOpen(b.dataset.openApplication,b.getAttribute('aria-expanded')!=='true')}));
@@ -36,7 +37,6 @@
  const options=[...document.querySelectorAll('[data-contribution-tier]')],checkout=document.getElementById('patron-checkout');
  options.forEach(b=>b.addEventListener('click',()=>{const same=b.getAttribute('aria-expanded')==='true',slug=b.dataset.contributionTier;options.forEach(o=>o.setAttribute('aria-expanded','false'));setOpen('patron-checkout',!same);b.setAttribute('aria-expanded',String(!same));if(!same){const frame=checkout.querySelector('iframe'),amount=slug.startsWith('deep-significance')?'2500':slug.startsWith('belief-bond')?'':'10',params='?useTheme=true'+(amount?'&amount='+amount:''),src='https://opencollective.com/embed/once-collective/contribute/'+slug+params;if(frame.src!==src)frame.src=src;checkout.querySelector('a').href='https://opencollective.com/once-collective/contribute/'+slug+'/checkout'+params}}));
  const copy=document.querySelector('.about-editorial-copy'),art=document.querySelector('.about-main-art img');if(copy&&art){let height=copy.getBoundingClientRect().height;new ResizeObserver(()=>{const next=copy.getBoundingClientRect().height;if(Math.abs(next-height)>12){art.animate([{transform:'translateY('+Math.min(55,Math.abs(next-height)*.2)*(next>height?-1:1)+'px)'},{transform:'translateY(0)'}],{duration:reduced()?0:850,easing:'cubic-bezier(.22,1,.36,1)'});height=next}}).observe(copy)}
- const surround=document.querySelector('.about-artefact-stage'),actions=document.querySelector('.about-contact .contact-actions');if(surround&&actions&&copy){const place=()=>surround.style.setProperty('--about-perimeter-top',Math.min(-45,actions.getBoundingClientRect().bottom-surround.getBoundingClientRect().top+10)+'px');new ResizeObserver(()=>requestAnimationFrame(place)).observe(copy);window.addEventListener('resize',place);requestAnimationFrame(place)}
 })();
 document.querySelectorAll('[data-ambient-video]').forEach(video=>{new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&video.dataset.userPaused!=='true'){video.preload='metadata';video.muted=true;video.play().catch(()=>{})}else video.pause()},{rootMargin:'100px'}).observe(video)});
 
@@ -73,11 +73,6 @@ document.querySelectorAll('video').forEach(video=>{
  video.addEventListener('playing',()=>video.dataset.playbackState='playing');
  video.addEventListener('pause',()=>video.dataset.playbackState='paused');
  video.addEventListener('volumechange',()=>video.dataset.audioState=video.muted||video.volume===0?'muted':'enabled');
-});
-
-// The Circle application film starts silently and gains audio on the first page click.
-document.querySelectorAll('video[data-unmute-on-interaction]').forEach(video=>{
- document.addEventListener('click',event=>{video.muted=false;video.volume=1;video.dataset.audioState='enabled';if(event.target===video){event.preventDefault();event.stopPropagation();ONCEMedia.ensure(video).then(()=>video.play()).catch(error=>video.dataset.playbackError=error.message)}},{capture:true,once:true});
 });
 
 document.querySelectorAll('[data-social-symbol]').forEach(el=>ONCEColourBurst.attach(el,el.querySelector('.social-burst')));

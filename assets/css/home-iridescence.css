@@ -111,3 +111,9 @@ body .icon-wrap .oil-face .burst-canvas{opacity:0;transition:opacity .85s ease}
 body .icon-wrap.is-bursting:not(.is-colour-fading) .oil-face{background:transparent}
 body .icon-wrap.is-bursting:not(.is-colour-fading) .burst-canvas{opacity:1}
 @media(prefers-reduced-motion:reduce){body .icon-wrap>.oil-icon,body .icon-wrap .oil-face,body .icon-wrap .burst-canvas{transition:none!important}}
+
+/* Smaller home silhouettes, with original words leaving a gap in their row. */
+body .icon-wrap>.oil-icon,body .icon-wrap.is-colour-fading>.oil-icon{transform:scale(.624)!important}
+body .icon-wrap.is-energized>.oil-icon{transform:scale(1.12)!important}
+body[data-word-symbol] .icon-wrap.is-energized>.oil-icon{transform:scale(.84)!important}
+.fullscreen-section .is-word-lifted{visibility:hidden!important}

@@ -444,3 +444,28 @@ body.page-found .div-block-63{display:block;width:min(94%,1300px);margin:0 auto;
 .application-reveal-clip,.signup-reveal-clip{overflow:visible;clip-path:inset(0 -100vmax -100vmax -100vmax)}
 .signup-reveal-clip{position:relative;width:100%;min-width:0;z-index:1}.signup-reveal-clip>.once-signup-panel{margin:0 auto;padding-top:24px}.signup-reveal-clip[hidden]{display:none}
 .connected-closing-art{width:84vw!important;left:auto!important;transform:none!important;margin:30px auto 20px!important}.connected-copy .connected-closing-art>.editorial-image{margin-inline:auto!important}
+
+/* October 18 materials, alignment and contact follow-up. */
+.found-main-heading{display:grid;gap:.32em;width:100%;max-width:none;margin:45px auto 0;padding:0;text-align:center;font:400 clamp(38px,5.5vw,80px)/1.2 var(--font-heading);letter-spacing:normal;text-indent:0}
+.found-main-heading>span{display:block;margin:0;padding:0;text-align:center}
+.page-community .motion-toggle-rail svg{width:33.6px;height:33.6px}.page-community .motion-toggle-rail{display:flex;align-items:center;justify-content:center;border-radius:50%}
+.arkhive-social-links a{color:#bfbfbf!important}
+.connected-oracle-row>.connected-iridescent-element{align-self:stretch;aspect-ratio:auto;height:auto!important;border:2px solid #b7a078;padding:8px;box-sizing:border-box;background:#121212;display:flex;align-items:stretch}
+.connected-oracle-row>.connected-iridescent-element img{height:100%;object-fit:fill}
+.about-artefact-stage{width:100vw;max-width:none;left:50%;transform:translateX(-50%);margin:80px 0 0!important;min-height:800px;padding:155px 180px 170px!important;background:url('/assets/images/editorial/about-paper.webp') center/cover;overflow:hidden;box-sizing:border-box}
+.about-artefact-stage .about-natural-elements{inset:0!important;overflow:hidden;opacity:1}.about-artefact-stage .about-natural-piece{opacity:1!important;filter:none!important;width:140px;height:150px;max-width:14%;transform:translateX(-50%)}
+.about-artefact-stage :is(.natural-piece-1,.natural-piece-2,.natural-piece-3,.natural-piece-4){top:20px!important;bottom:auto!important;right:auto!important}
+.about-artefact-stage :is(.natural-piece-7,.natural-piece-8,.natural-piece-9,.natural-piece-10){top:auto!important;bottom:20px!important;right:auto!important}
+.about-artefact-stage :is(.natural-piece-1,.natural-piece-7){left:12.5%!important}.about-artefact-stage :is(.natural-piece-2,.natural-piece-8){left:37.5%!important}.about-artefact-stage :is(.natural-piece-3,.natural-piece-9){left:62.5%!important}.about-artefact-stage :is(.natural-piece-4,.natural-piece-10){left:87.5%!important}
+.about-artefact-stage :is(.natural-piece-6,.natural-piece-11){top:calc(50% - 75px)!important;bottom:auto!important;right:auto!important}.about-artefact-stage .natural-piece-6{left:8%!important}.about-artefact-stage .natural-piece-11{left:92%!important}
+.community-restored-grid>.community-digital-media,.community-restored-grid>.community-trust-media{align-self:center;justify-self:center;margin:100px 0 0!important;width:100%;min-width:0;display:flex;justify-content:center;align-items:center;overflow:visible}
+.community-digital-media>img{width:200%!important;max-width:none!important;height:auto!important;max-height:none!important}.community-trust-media>img{width:100%!important;max-width:none!important;height:auto!important;max-height:none!important}
+[data-contribution-tier]>.burst-surface{top:-4px!important;bottom:4px!important}
+@media(max-width:800px){.found-main-heading{font-size:clamp(28px,5.5vw,44px);gap:.45em}.about-artefact-stage{padding:120px 65px!important;min-height:640px}.about-artefact-stage .about-natural-piece{width:70px;height:85px;max-width:18%}.about-artefact-stage :is(.natural-piece-6,.natural-piece-11){top:calc(50% - 42px)!important}.community-restored-grid>.community-digital-media,.community-restored-grid>.community-trust-media{margin:45px 0 0!important}.community-digital-media>img{width:100%!important}.community-trust-media>img{width:70%!important}}
+
+/* Preserve the doubled artwork size inside its own column, including transparent image margins. */
+.community-restored-grid>.community-digital-media,.community-restored-grid>.community-trust-media{overflow:hidden}
+.community-digital-media>img,.community-trust-media>img{width:200%!important;flex:0 0 auto!important}
+@media(max-width:800px){.community-digital-media>img,.community-trust-media>img{width:140%!important}}
+.page-community .community-restored-grid>.community-trust-media>img.c-grid-img{width:200%!important;max-width:none!important;height:auto!important;max-height:none!important;flex:none!important}
+@media(max-width:800px){.page-community .community-restored-grid>.community-trust-media>img.c-grid-img{width:140%!important}}
