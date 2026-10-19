@@ -1,0 +1,6 @@
+(()=>{
+ const stage=document.querySelector('.about-artefact-stage'),cards=[...document.querySelectorAll('.foil-card')];if(!stage||!cards.length)return;
+ let point,queued=false;const reduced=matchMedia('(prefers-reduced-motion:reduce)');
+ function draw(){queued=false;if(!point||reduced.matches)return;for(const card of cards){const r=card.getBoundingClientRect(),x=Math.max(0,Math.min(1,(point.x-r.x)/r.width)),y=Math.max(0,Math.min(1,(point.y-r.y)/r.height));card.style.setProperty('--foil-x',x*100+'%');card.style.setProperty('--foil-y',y*100+'%');card.style.setProperty('--foil-rx',(y-.5)*-5+'deg');card.style.setProperty('--foil-ry',(x-.5)*5+'deg')}}
+ stage.addEventListener('pointermove',event=>{point={x:event.clientX,y:event.clientY};if(!queued){queued=true;requestAnimationFrame(draw)}},{passive:true});stage.addEventListener('pointerleave',()=>{point=null;cards.forEach(card=>{card.style.setProperty('--foil-rx','0deg');card.style.setProperty('--foil-ry','0deg')})});
+})();

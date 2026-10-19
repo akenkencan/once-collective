@@ -125,3 +125,8 @@ body[data-keyboard-symbol] .fullscreen-section:not(.overlay)>.text{opacity:1!imp
 
 body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:16%!important;bottom:-16%!important}
 body.home-words-in-flight .text-row{animation-play-state:running!important}
+
+/* One visible owner through lift, return, and the final source handoff. */
+.home-reveal-plane{opacity:1!important;transition:none!important}
+.fullscreen-section .is-word-lifted{visibility:hidden!important;transition-property:transform,opacity,filter!important}
+body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:calc(16% - 5px)!important;bottom:calc(-16% + 5px)!important}

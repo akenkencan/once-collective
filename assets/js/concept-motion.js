@@ -3,10 +3,22 @@
  if(motion&&window.lottie){
   const animation=lottie.loadAnimation({container:motion.querySelector('.concept-triangle-film'),renderer:'svg',loop:false,autoplay:false,path:'/assets/animations/concept-evolution.json',rendererSettings:{preserveAspectRatio:'xMidYMid meet'}});
   let scheduled=false,ready=false;
+  // Keep a bounded decoded window. The displayed image only changes after its replacement loads.
+  const films=[...motion.querySelectorAll('[data-scroll-frames]')].map(el=>({el,count:Number(el.dataset.frameCount),cache:new Map(),wanted:0,shown:-1}));
+  const mobile=matchMedia('(max-width:600px)').matches;
+  function requestFilm(film,index,show=false){
+   const cached=film.cache.get(index);if(cached){if(show&&cached.complete&&cached.naturalWidth){film.el.src=cached.src;film.shown=index;film.el.dataset.frame=String(index)}return}
+   const image=new Image();image.decoding='async';image.fetchPriority=show?'high':'low';film.cache.set(index,image);
+   image.onload=()=>{if(film.wanted===index){film.el.src=image.src;film.shown=index;film.el.dataset.frame=String(index)}};
+   image.src='/assets/animations/'+film.el.dataset.scrollFrames+(mobile?'/mobile':'')+'/frame-'+String(index+1).padStart(3,'0')+'.webp';
+   if(film.cache.size>24){for(const [key,value] of film.cache){if(Math.abs(key-film.wanted)>5){value.onload=null;film.cache.delete(key);break}}}
+  }
+  function seekFilms(progress){for(const film of films){const index=Math.round(progress*(film.count-1));film.wanted=index;requestFilm(film,index,true);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)requestFilm(film,next)}}}
   function update(){scheduled=false;const target=dock.getBoundingClientRect(),box=story.getBoundingClientRect();
    const start=scrollY+box.top,end=scrollY+target.top+target.height/2-innerHeight/2,p=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start)));
    const docked=target.top+target.height/2<=innerHeight/2+1;const travelling=!docked&&box.top<innerHeight;motion.classList.toggle('is-travelling',travelling);motion.classList.toggle('is-docked',docked);
    motion.style.visibility=box.bottom<0||box.top>innerHeight?'hidden':'visible';
+   seekFilms(docked?1:p);
    if(ready){const frame=Math.min(animation.totalFrames-1,Math.round((docked?1:p)*(animation.totalFrames-1)));animation.goToAndStop(frame,true);motion.dataset.frame=String(frame)}
   }
   function request(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}

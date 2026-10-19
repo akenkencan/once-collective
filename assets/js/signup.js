@@ -16,8 +16,9 @@
   event.preventDefault();event.stopImmediatePropagation();if(opener===button&&panel&&!panel.hidden&&button.getAttribute('aria-expanded')==='true'){close();return}
   document.dispatchEvent(new CustomEvent('once:email-opening'));opener?.setAttribute('aria-expanded','false');opener=button;
   if(!panel){clip=document.createElement('div');clip.className='signup-reveal-clip';clip.hidden=true;panel=document.createElement('section');panel.id='once-signup-panel';panel.className='once-signup-panel';panel.hidden=true;panel.innerHTML='<iframe title="Get ONCE updates" scrolling="no"></iframe>';panel.querySelector('iframe').src=location.hostname==='127.0.0.1'||location.hostname==='localhost'?'/signup.html':'/signup';clip.append(panel)}
-  const anchor=button.closest('.contact-actions,.application-actions,.what-ending')||button.parentElement;anchor.after(clip);button.setAttribute('aria-controls',panel.id);reveal(true);
+  const anchor=button.closest('.updates-carpet,.frame-updates-slot,.contact-actions,.application-actions,.what-ending')||button.parentElement;anchor.after(clip);button.setAttribute('aria-controls',panel.id);reveal(true);
  },true);
+ document.addEventListener('once:signup-close',()=>{if(panel&&!panel.hidden)reveal(false)});
  document.addEventListener('once:social-opening',()=>{if(panel&&!panel.hidden)reveal(false)});
  window.addEventListener('message',event=>{if(event.origin!==location.origin||event.source!==panel?.querySelector('iframe').contentWindow||event.data?.type!=='once-signup-height')return;const height=Number(event.data.height);if(height>0&&height<2000)panel.querySelector('iframe').style.height=height+'px'});
 })();

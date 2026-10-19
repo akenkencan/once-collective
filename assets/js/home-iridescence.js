@@ -9,15 +9,15 @@
   const batch=words;words=[];++sequence;
   for(const item of batch){
    const css=getComputedStyle(item.word),matrix=new DOMMatrixReadOnly(css.transform==='none'?undefined:css.transform),start={x:matrix.m41,y:matrix.m42,sx:matrix.a,sy:matrix.d,opacity:Number(css.opacity),blur:blurRadius(css.filter)};
-   item.word.getAnimations().forEach(a=>a.cancel());const began=performance.now(),time=reduced()?0:1100;
-   function finish(){item.source.classList.remove('is-word-lifted');item.word.remove();if(!plane.childElementCount){plane.classList.remove('is-visible');document.body.classList.remove('home-words-in-flight')}}
+   Object.assign(item.word.style,{transform:css.transform,opacity:css.opacity,filter:css.filter});item.word.getAnimations().forEach(a=>a.cancel());const began=performance.now(),time=reduced()?0:1100,settle=reduced()?0:320;
+   function finish(){item.sources.forEach(source=>source.classList.remove('is-word-lifted'));item.word.remove();if(!plane.childElementCount){plane.classList.remove('is-visible');document.body.classList.remove('home-words-in-flight')}}
    function frame(now){
     if(!item.word.isConnected)return;
     const t=time?Math.min(1,(now-began)/time):1,ease=1-Math.pow(1-t,4),rect=item.source.getBoundingClientRect(),base=sourceStyle(item.source),mix=(a,b)=>a+(b-a)*ease;
     item.word.style.transform=`translate(${mix(start.x,rect.x-item.x)}px,${mix(start.y,rect.y-item.y)}px) scale(${mix(start.sx,rect.width/item.width)},${mix(start.sy,rect.height/item.height)})`;
     item.word.style.opacity=String(mix(start.opacity,base.opacity));item.word.style.filter=`blur(${mix(start.blur,blurRadius(base.filter))}px)`;
     item.word.dataset.returnProgress=t.toFixed(3);
-    if(t<1)requestAnimationFrame(frame);else finish();
+    if(now-began<time+settle)requestAnimationFrame(frame);else finish();
    }
    requestAnimationFrame(frame);
   }
@@ -34,8 +34,8 @@
     const x=(side?centre+clearance:margin)+(lane-width)*(((hash*13+i*29)%101)/100),y=Math.max(12,Math.min(innerHeight-height-12,rect.y));
     const word=document.createElement('span');word.className='home-reveal-word';word.textContent=source.textContent;
     Object.assign(word.style,{fontFamily:css.fontFamily,fontWeight:css.fontWeight,fontSize:parseFloat(css.fontSize)*factor+'px',lineHeight:(parseFloat(css.lineHeight)||parseFloat(css.fontSize)*1.2)*factor+'px',letterSpacing:(parseFloat(css.letterSpacing)||0)*factor+'px',left:x+'px',top:y+'px',width:width+'px',height:height+'px',transformOrigin:'0 0'});
-    const from=`translate(${rect.x-x}px,${rect.y-y}px) scale(.8)`;plane.append(word);source.classList.add("is-word-lifted");words.push({word,from,source,x,y,width,height});
-    word.animate([{opacity:0,filter:'blur(30px)',transform:from},{opacity:1,filter:'blur(0px)',transform:'translate(0,0) scale(1)'}],{duration:reduced()?0:1700,delay:Math.min(rowIndex,5-rowIndex)*55,easing:'cubic-bezier(.12,1,.22,1)',fill:'both'});
+    const base=sourceStyle(source),sources=all.filter(e=>e.textContent.trim()===source.textContent.trim());const from=`translate(${rect.x-x}px,${rect.y-y}px) scale(.8)`;sources.forEach(e=>e.classList.add('is-word-lifted'));word.style.color=css.color;plane.append(word);words.push({word,from,source,sources,x,y,width,height});
+    word.animate([{opacity:base.opacity,filter:base.filter,transform:from},{opacity:1,filter:'blur(0px)',transform:'translate(0,0) scale(1)'}],{duration:reduced()?0:1700,delay:Math.min(rowIndex,5-rowIndex)*55,easing:'cubic-bezier(.12,1,.22,1)',fill:'both'});
    });
   });plane.classList.add('is-visible');
  }

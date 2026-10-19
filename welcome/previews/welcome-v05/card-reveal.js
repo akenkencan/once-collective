@@ -24,7 +24,7 @@
   collapse.tabIndex=expanded?0:-1;tray.style.height=expanded?(Math.max(0,...heights)+24)+'px':'0px';
  }
  function queue(){cancelAnimationFrame(frame);frame=requestAnimationFrame(layout)}
- function sync(){portrait.setAttribute('aria-expanded',String(expanded));paperTray.classList.toggle('is-open',expanded);paperTray.setAttribute('aria-hidden',String(!expanded));group.classList.toggle('is-open',expanded);tray.classList.toggle('is-open',expanded);paperStack.classList.toggle('is-open',expanded);tray.setAttribute('aria-hidden',String(!expanded));layout()}
+ function sync(){const updates=group.querySelector('.frame-updates-slot');updates.inert=expanded;updates.setAttribute('aria-hidden',String(expanded));if(expanded&&updates.querySelector('button')?.getAttribute('aria-expanded')==='true')document.dispatchEvent(new CustomEvent('once:signup-close'));portrait.setAttribute('aria-expanded',String(expanded));paperTray.classList.toggle('is-open',expanded);paperTray.setAttribute('aria-hidden',String(!expanded));group.classList.toggle('is-open',expanded);tray.classList.toggle('is-open',expanded);paperStack.classList.toggle('is-open',expanded);tray.setAttribute('aria-hidden',String(!expanded));layout()}
  details.querySelector('summary').addEventListener('click',e=>{
   e.preventDefault();expanded=!expanded;
   const from=details.open?body.getBoundingClientRect().height:0;if(anim)anim.cancel();details.open=true;sync();

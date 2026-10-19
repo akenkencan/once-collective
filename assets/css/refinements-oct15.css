@@ -493,3 +493,49 @@ body.nav-return-visible>.navbar-wrapper,body.nav-return-visible>.navbar-wrapper 
 .pitch-reader:is([data-mode=docked],[data-mode=expanded],[data-mode=closing]) .pitch-slide{width:100%!important;height:auto!important;max-height:none!important;object-fit:contain;display:block}
 .pitch-toolbar,.pitch-pagination{margin:0;padding-block:2px;min-height:0}.pitch-dialog{display:flex;align-items:center;justify-content:center}.pitch-dialog:not([open]){display:none}.pitch-dock{margin-block:10px}
 .world-themes-art .once-liquid{pointer-events:auto!important}.motion-toggle.motion-toggle-world{position:fixed;right:12px;left:auto;width:32px;height:32px;padding:6px;z-index:100;pointer-events:auto}.motion-toggle-world svg{width:19.2px;height:19.2px}.motion-toggle-world[hidden]{display:none!important}
+
+/* October 19: shared triangle mask and layered scroll film. */
+.concept-triangle-composite{position:absolute;inset:0;isolation:isolate;overflow:hidden;clip-path:polygon(50% 4%,96% 92%,4% 92%)}
+.concept-triangle-base{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1}
+.concept-triangle-composite>.concept-triangle-film{clip-path:none;opacity:.4;mix-blend-mode:color}
+/* Rounded glass sits over the carpet; its signup occupies normal flow below it. */
+.updates-carpet{position:relative;display:grid;place-items:center;isolation:isolate;overflow:visible!important;z-index:2}
+.updates-carpet>img{grid-area:1/1}
+.updates-carpet>.glass-updates{grid-area:1/1;position:relative;z-index:2;margin:0;border:1px solid #ffffff85;border-radius:22px;padding:18px 32px;color:#fff;background:linear-gradient(135deg,#ffffff24,#ffffff08 48%,#ffffff20);backdrop-filter:blur(3px) saturate(1.5) contrast(1.08);-webkit-backdrop-filter:blur(3px) saturate(1.5) contrast(1.08);box-shadow:inset 0 2px 2px #ffffff70,inset 0 -2px 4px #ffffff28,0 8px 24px #0004;font-size:clamp(18px,2vw,25px);overflow:hidden}
+.glass-updates:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:3px;background:conic-gradient(from 20deg,#d7bd75,#8ed7ca,#b099e3,#e6a6b3,#d7bd75);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;opacity:0;transition:opacity .5s;pointer-events:none}
+.glass-updates:hover:before,.glass-updates:focus-visible:before{opacity:.5}
+.updates-carpet+.signup-reveal-clip{grid-column:1/-1;z-index:1;margin-top:-1px}
+.framed-reveal{position:relative}
+.frame-updates-slot{position:relative;z-index:0;display:grid;place-items:center;padding:20px 0;opacity:1;transform:translateY(0);transition:transform .18s ease-in,opacity .18s ease-in}
+.frame-updates-slot>.frame-updates{margin:0}
+.framed-reveal.is-open>.frame-updates-slot{opacity:0;transform:translateY(28px);pointer-events:none}
+.framed-reveal:not(.is-open)>.frame-updates-slot{transition-delay:.8s}
+.framed-reveal.is-open>.card-reveal .falling-card{transition-delay:calc(220ms + var(--delay,0ms))}
+@media(prefers-reduced-motion:reduce){.frame-updates-slot{transition:none!important}}
+
+.updates-carpet>img{width:100%!important;margin:0!important}
+.updates-carpet+.signup-reveal-clip{margin-top:calc(-1 * clamp(24px,4vw,64px));clip-path:inset(0 -100vmax -100vmax -100vmax)}
+.framed-reveal.is-open>.card-reveal[aria-hidden="false"]>.falling-card{transition-delay:calc(220ms + var(--delay,0ms)),calc(220ms + var(--delay,0ms)),220ms!important}
+.found-read-toggle{transform:translateY(-30px)}
+/* Restore the unfiltered original dropdown artwork. */
+.brand .symbol-menu .navbar-symbol{background-image:url('/assets/symbols/white/star.png')!important;filter:none!important}
+.brand .symbol-menu .navbar-symbol.ns-2{background-image:url('/assets/symbols/white/triangle.png')!important}
+.brand .symbol-menu .navbar-symbol.ns-3{background-image:url('/assets/symbols/white/circle.png')!important}
+.brand .symbol-menu .navbar-symbol.ns-4{background-image:url('/assets/symbols/white/square.png')!important}
+.brand .symbol-menu .navbar-symbol.ns-5{background-image:url('/assets/symbols/white/root.png')!important}
+/* Printed foil: the colours and blend layers supplied in the card reference. */
+.about-paper-prints>.foil-card{position:relative;display:block;width:33%;max-width:250px;max-height:300px;isolation:isolate;overflow:hidden;border-radius:5px;transform:perspective(1300px) rotateX(var(--foil-rx,0deg)) rotateY(var(--foil-ry,0deg));transition:transform .55s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.about-paper-prints>.foil-card.about-joker-print{width:23%;max-width:160px;max-height:340px;border-radius:18px}
+.about-paper-prints>.foil-card>img{display:block;width:100%;height:auto;max-height:inherit;object-fit:contain}
+.foil-card:before,.foil-card:after,.foil-gloss{content:"";position:absolute;inset:0;pointer-events:none}
+.foil-card:before{background:repeating-linear-gradient(118deg,#ff6aa8 0%,#ffd36a 6%,#8dff9e 12%,#62d6ff 18%,#b186ff 24%,#ff6aa8 30%);background-size:320% 320%;background-position:var(--foil-x,50%) var(--foil-y,50%);mask-image:radial-gradient(circle at var(--foil-x,50%) var(--foil-y,50%),#000, #0006 45%,#0002 85%);mix-blend-mode:color-dodge;opacity:.34}
+.foil-card:after{background:repeating-linear-gradient(28deg,#62d6ff 0%,#b186ff 5%,#ff6aa8 10%,#ffd36a 15%,#8dff9e 20%,#62d6ff 25%);background-size:260% 260%;background-position:calc(100% - var(--foil-x,50%)) calc(100% - var(--foil-y,50%));mix-blend-mode:overlay;opacity:.2}
+.foil-gloss{background:radial-gradient(circle at var(--foil-x,50%) var(--foil-y,50%),#fff9 0%,#fff3 35%,#fff0 70%);mix-blend-mode:soft-light;opacity:.3}
+@media(max-width:800px){.about-paper-prints>.foil-card{width:38%;max-height:160px}.about-paper-prints>.foil-card.about-joker-print{width:22%;max-height:190px}}
+@media(prefers-reduced-motion:reduce){.foil-card{transform:none!important;transition:none!important}}
+
+/* Sample the footage 7% higher; its luminous base now meets the mask baseline. */
+.concept-triangle-base{height:108%!important;object-fit:fill!important;max-width:none!important;max-height:none!important}
+.concept-triangle-secondary{opacity:.5!important}
+
+.updates-carpet>.glass-updates{justify-self:center!important;align-self:center!important}
