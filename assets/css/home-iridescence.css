@@ -136,3 +136,6 @@ body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:calc(16% - 5px)!import
 .fullscreen-section:not(.overlay) .large-word,.fullscreen-section:not(.overlay) .large-word:hover{opacity:.6!important;filter:blur(14px)!important}
 .fullscreen-section:not(.overlay) .med-word,.fullscreen-section:not(.overlay) .med-word:hover{opacity:.6!important;filter:blur(10px)!important}
 .fullscreen-section:not(.overlay) .small-word,.fullscreen-section:not(.overlay) .small-word:hover{opacity:.6!important;filter:blur(8px)!important}
+
+/* Sources retain their hit areas; their persistent rendered owners never swap out. */
+.fullscreen-section:not(.overlay) [data-symbol-word].is-word-lifted{visibility:visible!important;opacity:0!important;filter:none!important}

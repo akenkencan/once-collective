@@ -1,51 +1,38 @@
-/* Source-position reveals with monotonic zoom and the same return path. */
+/* A word keeps one rendered owner through lift, return and rest. */
 (()=>{
- const symbols=new Map(),plane=document.createElement('div'),reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches||document.body.classList.contains('is-motion-paused');
+ const symbols=new Map(),groups=new Map(),plane=document.createElement('div'),reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches||document.body.classList.contains('is-motion-paused');
  plane.className='home-reveal-plane';plane.setAttribute('aria-hidden','true');document.body.append(plane);
- let current=null,revealing=false,exitTimer,sequence=0,words=[];
- function sourceStyle(source){let opacity=1,filters=[];for(let e=source;e&&e!==document.body;e=e.parentElement){const css=getComputedStyle(e);opacity*=Number(css.opacity);if(css.filter!=='none')filters.push(css.filter)}return{opacity,filter:filters.join(' ')||'none'}}
- function blurRadius(filter){let sum=0;for(const m of filter.matchAll(/blur\(([\d.]+)px\)/g))sum+=Number(m[1])**2;return Math.sqrt(sum)}
- function retire(){
-  const batch=words;words=[];++sequence;
-  for(const item of batch){
-   const css=getComputedStyle(item.word),matrix=new DOMMatrixReadOnly(css.transform==='none'?undefined:css.transform),start={x:matrix.m41,y:matrix.m42,sx:matrix.a,sy:matrix.d,opacity:Number(css.opacity),blur:blurRadius(css.filter)};
-   Object.assign(item.word.style,{transform:css.transform,opacity:css.opacity,filter:css.filter});item.word.getAnimations().forEach(a=>a.cancel());const began=performance.now(),time=reduced()?0:1100,settle=reduced()?0:320;
-   function finish(){item.sources.forEach(source=>source.classList.remove('is-word-lifted'));item.word.remove();if(!plane.childElementCount){plane.classList.remove('is-visible');document.body.classList.remove('home-words-in-flight')}}
-   function frame(now){
-    if(!item.word.isConnected)return;
-    const t=time?Math.min(1,(now-began)/time):1,ease=1-Math.pow(1-t,4),rect=item.source.getBoundingClientRect(),base=sourceStyle(item.source),mix=(a,b)=>a+(b-a)*ease;
-    item.word.style.transform=`translate(${mix(start.x,rect.x-item.x)}px,${mix(start.y,rect.y-item.y)}px) scale(${mix(start.sx,rect.width/item.width)},${mix(start.sy,rect.height/item.height)})`;
-    item.word.style.opacity=String(mix(start.opacity,base.opacity));item.word.style.filter=`blur(${mix(start.blur,blurRadius(base.filter))}px)`;
-    item.word.dataset.returnProgress=t.toFixed(3);
-    if(now-began<time+settle)requestAnimationFrame(frame);else finish();
-   }
-   requestAnimationFrame(frame);
-  }
- }
- function show(name){
-  if(words.length)retire();++sequence;words=[];document.body.classList.add("home-words-in-flight");const rows=['first','second','third','fourth','fifth','sixth'];
-  const margin=Math.max(16,innerWidth*.018),centre=innerWidth/2,clearance=Math.max(72,innerHeight*.115),lane=centre-clearance-margin;
-  rows.forEach((rowName,rowIndex)=>{
-   const all=[...document.querySelectorAll('.fullscreen-section:not(.overlay) .text-row.'+rowName+' [data-symbol-word="'+name+'"]')],unique=new Map();
-   all.sort((a,b)=>{const score=e=>{const r=e.getBoundingClientRect();return r.right>0&&r.left<innerWidth?0:1};return score(a)-score(b)}).forEach(e=>{if(!e.classList.contains('is-word-lifted')&&!unique.has(e.textContent.trim()))unique.set(e.textContent.trim(),e)});
-   const selected=[...unique.values()].slice(0,innerWidth<800?1:2).sort((a,b)=>a.getBoundingClientRect().x-b.getBoundingClientRect().x),hash=[...name].reduce((v,c)=>v+c.charCodeAt(0),0)+rowIndex*17;
-   selected.forEach((source,i)=>{
-    const rect=source.getBoundingClientRect(),css=getComputedStyle(source),factor=Math.min(1,lane/Math.max(1,rect.width)),width=rect.width*factor,height=rect.height*factor,side=selected.length>1?i:hash%2;
-    const x=(side?centre+clearance:margin)+(lane-width)*(((hash*13+i*29)%101)/100),y=Math.max(12,Math.min(innerHeight-height-12,rect.y));
-    const word=document.createElement('span');word.className='home-reveal-word';word.textContent=source.textContent;
-    Object.assign(word.style,{fontFamily:css.fontFamily,fontWeight:css.fontWeight,fontSize:parseFloat(css.fontSize)*factor+'px',lineHeight:(parseFloat(css.lineHeight)||parseFloat(css.fontSize)*1.2)*factor+'px',letterSpacing:(parseFloat(css.letterSpacing)||0)*factor+'px',left:x+'px',top:y+'px',width:width+'px',height:height+'px',transformOrigin:'0 0'});
-    const base=sourceStyle(source),sources=all.filter(e=>e.textContent.trim()===source.textContent.trim());const from=`translate(${rect.x-x}px,${rect.y-y}px) scale(.8)`;sources.forEach(e=>e.classList.add('is-word-lifted'));word.style.color=css.color;plane.append(word);words.push({word,from,source,sources,x,y,width,height});
-    word.animate([{opacity:base.opacity,filter:base.filter,transform:from},{opacity:1,filter:'blur(0px)',transform:'translate(0,0) scale(1)'}],{duration:reduced()?0:1700,delay:Math.min(rowIndex,5-rowIndex)*55,easing:'cubic-bezier(.12,1,.22,1)',fill:'both'});
+ let current=null,revealing=false,exitTimer,raf=0;
+ const lerp=(a,b,t)=>a+(b-a)*t;
+ function typography(item){const r=item.source.getBoundingClientRect(),css=getComputedStyle(item.source);Object.assign(item.word.style,{fontFamily:css.fontFamily,fontWeight:css.fontWeight,fontSize:css.fontSize,lineHeight:css.lineHeight,letterSpacing:css.letterSpacing,color:css.color,width:r.width+'px',height:r.height+'px'});item.width=r.width;item.height=r.height}
+ function own(source){const word=document.createElement('span'),r=source.getBoundingClientRect(),css=getComputedStyle(source),blur=Number((css.filter.match(/blur\(([\d.]+)/)||[])[1]||0),base={opacity:Number(css.opacity),blur};word.className='home-reveal-word';word.textContent=source.textContent;Object.assign(word.style,{left:'0px',top:'0px',transformOrigin:'0 0'});const item={source,word,base,width:r.width,height:r.height,draw:{x:r.x,y:r.y,scale:1,...base}};typography(item);plane.append(word);source.classList.add('is-word-lifted');return item}
+ function transition(group,phase){group.phase=phase;group.began=performance.now();group.items.forEach(item=>{if(phase==='out'&&item!==group.representative){item.draw.opacity=0;item.word.style.opacity='0'}item.start={...item.draw}});schedule()}
+ function retire(){for(const group of groups.values())if(group.phase==='out')transition(group,'return')}
+ function show(name){retire();const margin=Math.max(16,innerWidth*.018),centre=innerWidth/2,clearance=Math.max(72,innerHeight*.115),lane=centre-clearance-margin;
+  ['first','second','third','fourth','fifth','sixth'].forEach((row,rowIndex)=>{
+   const all=[...document.querySelectorAll('.fullscreen-section:not(.overlay) .text-row.'+row+' [data-symbol-word="'+name+'"]')],unique=new Map();
+   for(const source of all){const key=source.textContent.trim();if(!unique.has(key))unique.set(key,[]);unique.get(key).push(source)}
+   [...unique.entries()].slice(0,innerWidth<800?1:2).forEach(([text,sources],i)=>{
+    const key=row+'|'+name+'|'+text;let group=groups.get(key);if(!group){group={items:sources.map(own),phase:'rest'};groups.set(key,group)}
+    group.representative=group.items.reduce((best,item)=>{const score=e=>{const r=e.source.getBoundingClientRect();return Math.abs((r.left+r.right)/2-centre)+(r.right<0||r.left>innerWidth?innerWidth*4:0)};return score(item)<score(best)?item:best},group.items[0]);
+    const r=group.representative.source.getBoundingClientRect(),scale=Math.min(1,lane/Math.max(1,r.width)),width=r.width*scale,height=r.height*scale,hash=[...name].reduce((v,c)=>v+c.charCodeAt(0),0)+rowIndex*17,side=unique.size>1?i:hash%2;
+    group.target={x:(side?centre+clearance:margin)+(lane-width)*(((hash*13+i*29)%101)/100),y:Math.max(12,Math.min(innerHeight-height-12,r.y)),scale,opacity:1,blur:0};transition(group,'out');
    });
   });plane.classList.add('is-visible');
  }
+ function paint(now){raf=0;const rectangles=new Map();for(const group of groups.values())for(const item of group.items)rectangles.set(item,item.source.getBoundingClientRect());for(const group of groups.values()){
+   const duration=reduced()?0:group.phase==='out'?1500:1250,t=group.phase==='rest'?1:duration?Math.min(1,(now-group.began)/duration):1,ease=1-Math.pow(1-t,4);
+   for(const item of group.items){const r=rectangles.get(item),home={x:r.x,y:r.y,scale:1,...item.base};let target=home;
+    if(group.phase==='out')target=item===group.representative?group.target:{...home,opacity:0};
+    const from=item.start||home;item.draw=Object.fromEntries(Object.keys(home).map(key=>[key,group.phase==='rest'?home[key]:lerp(from[key],target[key],ease)]));const d=item.draw;
+    item.word.style.transform=`translate(${d.x}px,${d.y}px) scale(${d.scale})`;item.word.style.opacity=String(d.opacity);item.word.style.filter=`blur(${d.blur}px)`;item.word.dataset.phase=group.phase;
+   }
+   if(group.phase==='return'&&t===1)group.phase='rest';
+  }schedule()}
+ function schedule(){if(!raf&&groups.size&&!document.hidden)raf=requestAnimationFrame(paint)}
+ document.addEventListener('visibilitychange',schedule);window.addEventListener('resize',()=>{groups.forEach(group=>group.items.forEach(typography));schedule()});
  function reset(name){const item=symbols.get(name);if(!item)return;item.link.classList.remove('is-energized');item.link.classList.add('is-retreating');item.api.off();setTimeout(()=>{if(current!==name)item.link.classList.remove('is-retreating')},950)}
- function enter(name,reveal){
-  clearTimeout(exitTimer);if(current===name&&revealing===reveal)return;if(current&&current!==name)reset(current);current=name;revealing=reveal;
-  delete document.body.dataset.keyboardSymbol;delete document.body.dataset.wordSymbol;
-  if(reveal){document.body.dataset.keyboardSymbol=name;show(name)}else{document.body.dataset.wordSymbol=name;retire()}
-  const item=symbols.get(name);if(item){item.link.classList.remove('is-retreating');item.link.classList.add('is-energized');item.api.on()}
- }
+ function enter(name,reveal){clearTimeout(exitTimer);if(current===name&&revealing===reveal)return;if(current&&current!==name)reset(current);current=name;revealing=reveal;delete document.body.dataset.keyboardSymbol;delete document.body.dataset.wordSymbol;if(reveal){document.body.dataset.keyboardSymbol=name;show(name)}else{document.body.dataset.wordSymbol=name;retire()}const item=symbols.get(name);if(item){item.link.classList.remove('is-retreating');item.link.classList.add('is-energized');item.api.on()}}
  function leave(){clearTimeout(exitTimer);exitTimer=setTimeout(()=>{const old=current;current=null;revealing=false;delete document.body.dataset.keyboardSymbol;delete document.body.dataset.wordSymbol;retire();if(old)reset(old)},90)}
  document.querySelectorAll('[data-oil-symbol]').forEach(link=>{const api=ONCEColourBurst.attach(link,link.querySelector('.oil-face'));symbols.set(link.dataset.oilSymbol,{link,api});link.addEventListener('pointerenter',()=>enter(link.dataset.oilSymbol,true));link.addEventListener('pointerleave',leave);link.addEventListener('focus',()=>enter(link.dataset.oilSymbol,true));link.addEventListener('blur',leave)});
  document.querySelectorAll('[data-symbol-word]').forEach(word=>{word.addEventListener('pointerenter',()=>enter(word.dataset.symbolWord,false));word.addEventListener('pointerleave',leave)});
