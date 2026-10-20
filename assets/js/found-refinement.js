@@ -1,13 +1,14 @@
 (() => {
  const toggle=document.querySelector('.found-read-toggle'),panel=document.querySelector('.found-read-panel');
  if(toggle&&panel){
-  let animation=null,open=false;
-  function setOpen(next){
-   animation?.cancel();animation=null;open=next;toggle.setAttribute('aria-expanded',String(open));panel.inert=!open;
-   if(!open){panel.hidden=true;return}
-   panel.hidden=false;const height=panel.scrollHeight;
-   animation=panel.animate([{height:'0px',opacity:0},{height:height+'px',opacity:1}],{duration:matchMedia('(prefers-reduced-motion:reduce)').matches?0:650,easing:'cubic-bezier(.22,1,.36,1)'});
-   animation.onfinish=()=>{animation=null};
+  let animation=null,open=false,revision=0;
+  const clip=document.createElement('div');clip.className='found-read-clip';panel.before(clip);clip.append(panel);
+  const opening=panel.querySelector('.found-vision-opening img');if(opening){opening.loading='eager';opening.fetchPriority='high';opening.decode?.().catch(()=>{})}
+  async function setOpen(next){
+   const run=++revision,from=panel.hidden?0:clip.getBoundingClientRect().height;animation?.forEach(a=>a.cancel());open=next;toggle.setAttribute('aria-expanded',String(open));panel.inert=!open;
+   panel.hidden=false;const height=panel.scrollHeight,time=matchMedia('(prefers-reduced-motion:reduce)').matches?0:700,easing='cubic-bezier(.22,1,.36,1)';
+   const size=clip.animate([{height:from+'px'},{height:(open?height:0)+'px'}],{duration:time,easing,fill:'forwards'}),slide=panel.animate([{transform:open?'translateY(-50px)':'none',opacity:open?0:1},{transform:open?'none':'translateY(-50px)',opacity:open?1:0}],{duration:time,easing,fill:'forwards'});animation=[size,slide];
+   try{await size.finished;if(run!==revision)return;panel.hidden=!open;animation.forEach(a=>a.cancel());animation=null}catch(error){}
   }
   document.querySelector('.found-read-close')?.addEventListener('click',()=>{setOpen(false);toggle.scrollIntoView({behavior:'smooth',block:'center'});toggle.focus({preventScroll:true})});
   if(location.hash==='#found-read-panel'){setOpen(true);requestAnimationFrame(()=>panel.scrollIntoView({block:'start'}))}else panel.inert=true;toggle.addEventListener('click',()=>setOpen(!open));toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});

@@ -10,7 +10,7 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
  reader.innerHTML='<header class="pitch-toolbar"><strong></strong><div class="pitch-tools"><button type="button" data-pitch-expand aria-label="Expand pitch">⤢</button><a class="pitch-download" download aria-label="Download '+title+'" title="Download PDF">'+downloadIcon+'</a><button type="button" data-pitch-minimize aria-label="Minimise pitch">−</button></div></header><div class="pitch-stage" tabindex="0" role="button" aria-label="Expand pitch preview"><img class="pitch-slide" alt="" decoding="async"/><p class="pitch-status" role="status">Loading pitch…</p></div><footer class="pitch-pagination"><button type="button" data-pitch-prev aria-label="Previous slide">←</button><span aria-live="polite">1</span><button type="button" data-pitch-next aria-label="Next slide">→</button></footer>';
  reader.querySelector('strong').textContent=title;reader.querySelector('a').href=button.dataset.pitchSrc;dock.append(reader);
  const stage=reader.querySelector('.pitch-stage'),image=reader.querySelector('.pitch-slide'),status=reader.querySelector('.pitch-status'),counter=reader.querySelector('.pitch-pagination span'),prev=reader.querySelector('[data-pitch-prev]'),next=reader.querySelector('[data-pitch-next]');
- const deck=button.dataset.pitchSrc.includes('arkhive')?'arkhive':'patronage',pdf={numPages:deck==='arkhive'?15:21};
+ const deck=button.dataset.pitchDeck||(button.dataset.pitchSrc.includes('arkhive')?'arkhive':'patronage'),pdf={numPages:Number(button.dataset.pitchPages)||(deck==='arkhive'?15:21)};
  let page=1,rendering=0;reader.dataset.pages=String(pdf.numPages);
  const slideURL=n=>'/assets/pitches/slides/'+deck+'/slide-'+String(n).padStart(2,'0')+'.webp';
  async function load(){return pdf}
@@ -30,12 +30,14 @@ for(const button of document.querySelectorAll('[data-pitch-src]')){
   dockAnimation=dock.animate([{height:height+'px'},{height:'0px'}],{duration:time,easing:'ease-out',fill:'forwards'});
   try{await dockAnimation.finished;if(revision!==dockRevision)return;dock.hidden=true;reader.dataset.mode='hidden';slideAnimation.cancel();dockAnimation.cancel();++rendering}catch(error){}
  }
+ document.addEventListener('once:gallery-opening',event=>{if(reader.dataset.mode!=='hidden')event.detail.waits.push(fadeForApplication())});
+ document.addEventListener('once:pitch-opening',event=>{if(event.detail.opener!==button&&reader.dataset.mode!=='hidden')event.detail.waits.push(fadeForApplication())});
  document.addEventListener('once:application-opening',event=>{if(event.detail.id==='connected-application-body'&&reader.dataset.mode!=='hidden')event.detail.waits.push(fadeForApplication())});
 
  async function toggleDock(forceClose=false){
   const revision=++dockRevision,closing=forceClose||reader.dataset.mode!=='hidden';
   dockAnimation?.cancel();slideAnimation?.cancel();
-  if(!closing){const detail={waits:[]};document.dispatchEvent(new CustomEvent('once:pitch-opening',{detail}));await Promise.all(detail.waits);if(revision!==dockRevision)return;}
+  if(!closing){const detail={waits:[],opener:button};document.dispatchEvent(new CustomEvent('once:pitch-opening',{detail}));await Promise.all(detail.waits);if(revision!==dockRevision)return;}
   if(dialog.open)dialog.close();dock.append(reader);
   if(closing){
    reader.dataset.mode='closing';button.setAttribute('aria-expanded','false');

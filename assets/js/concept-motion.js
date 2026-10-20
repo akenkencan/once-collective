@@ -1,30 +1,23 @@
-(() => {
- const dock=document.querySelector('.concept-triangle-dock'),motion=dock?.querySelector('.concept-triangle-motion'),story=document.querySelector('.concept-story');
- if(motion&&window.lottie){
-  const animation=lottie.loadAnimation({container:motion.querySelector('.concept-triangle-film'),renderer:'svg',loop:false,autoplay:false,path:'/assets/animations/concept-evolution.json',rendererSettings:{preserveAspectRatio:'xMidYMid meet'}});
-  let scheduled=false,ready=false;
-  // Keep a bounded decoded window. The displayed image only changes after its replacement loads.
-  const films=[...motion.querySelectorAll('[data-scroll-frames]')].map(el=>({el,count:Number(el.dataset.frameCount),cache:new Map(),wanted:0,shown:-1}));
-  const mobile=matchMedia('(max-width:600px)').matches;
-  function requestFilm(film,index,show=false){
-   const cached=film.cache.get(index);if(cached){if(show&&cached.complete&&cached.naturalWidth){film.el.src=cached.src;film.shown=index;film.el.dataset.frame=String(index)}return}
-   const image=new Image();image.decoding='async';image.fetchPriority=show?'high':'low';film.cache.set(index,image);
-   image.onload=()=>{if(film.wanted===index){film.el.src=image.src;film.shown=index;film.el.dataset.frame=String(index)}};
-   image.src='/assets/animations/'+film.el.dataset.scrollFrames+(mobile?'/mobile':'')+'/frame-'+String(index+1).padStart(3,'0')+'.webp';
-   if(film.cache.size>24){for(const [key,value] of film.cache){if(Math.abs(key-film.wanted)>5){value.onload=null;film.cache.delete(key);break}}}
-  }
-  function seekFilms(progress){for(const film of films){const index=Math.round(progress*(film.count-1));film.wanted=index;requestFilm(film,index,true);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)requestFilm(film,next)}}}
-  function update(){scheduled=false;const target=dock.getBoundingClientRect(),box=story.getBoundingClientRect();
-   const start=scrollY+box.top,end=scrollY+target.top+target.height/2-innerHeight/2,p=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start)));
-   const docked=target.top+target.height/2<=innerHeight/2+1;const travelling=!docked&&box.top<innerHeight;motion.classList.toggle('is-travelling',travelling);motion.classList.toggle('is-docked',docked);
-   motion.style.visibility=box.bottom<0||box.top>innerHeight?'hidden':'visible';
-   seekFilms(docked?1:p);
-   if(ready){const frame=Math.min(animation.totalFrames-1,Math.round((docked?1:p)*(animation.totalFrames-1)));animation.goToAndStop(frame,true);motion.dataset.frame=String(frame)}
-  }
-  function request(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}
-  animation.addEventListener('DOMLoaded',()=>{ready=true;update()});animation.addEventListener('loaded_images',()=>{ready=true;update()});window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);new ResizeObserver(request).observe(story);update();
+(()=>{
+ const dock=document.querySelector('.concept-triangle-dock'),motion=dock?.querySelector('.concept-triangle-motion'),story=document.querySelector('.concept-story');if(!motion||!story)return;
+ const mobile=matchMedia('(max-width:600px)').matches,size=mobile?360:640;
+ const films=[...motion.querySelectorAll('canvas[data-scroll-frames]')].map(el=>{el.width=size;el.height=size;return {el,context:el.getContext('2d',{alpha:false}),count:Number(el.dataset.frameCount),cache:new Map(),wanted:0,shown:-1}});
+ let scheduled=false;
+ function paint(film,index,image){if(film.wanted!==index||film.shown===index)return;film.context.drawImage(image,0,0,size,size);film.shown=index;film.el.dataset.frame=String(index)}
+ function frame(film,index,show=false){
+  const cached=film.cache.get(index);if(cached){if(show&&cached.ready)paint(film,index,cached.image);return}
+  const image=new Image(),entry={image,ready:false};image.decoding='async';image.fetchPriority=show?'high':'low';film.cache.set(index,entry);
+  image.src='/assets/animations/'+film.el.dataset.scrollFrames+(mobile?'/mobile':'')+'/frame-'+String(index+1).padStart(3,'0')+'.webp';
+  image.decode().then(()=>{entry.ready=true;paint(film,index,image)}).catch(()=>{});
+  if(film.cache.size>28){for(const key of film.cache.keys()){if(Math.abs(key-film.wanted)>7){film.cache.delete(key);break}}}
  }
-
+ function update(){scheduled=false;const target=dock.getBoundingClientRect(),box=story.getBoundingClientRect(),start=scrollY+box.top,end=scrollY+target.top+target.height/2-innerHeight/2;
+  const p=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start))),docked=target.top+target.height/2<=innerHeight/2+1;
+  motion.classList.toggle('is-travelling',!docked&&box.top<innerHeight);motion.classList.toggle('is-docked',docked);motion.style.visibility=box.bottom<0||box.top>innerHeight?'hidden':'visible';motion.dataset.scrollProgress=p.toFixed(4);
+  const fade=Math.max(0,Math.min(1,(p-.32)/.18));for(const film of films){film.el.style.opacity=film.el.classList.contains('concept-triangle-older')?String(.5*(1-fade*fade*(3-2*fade))):'1';const index=Math.round((docked?1:p)*(film.count-1));film.wanted=index;frame(film,index,true);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)frame(film,next)}}
+ }
+ function request(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}
+ window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);new ResizeObserver(request).observe(story);update();
 })();
 
 (() => {

@@ -30,6 +30,7 @@
   try{await size.finished;if(transitions.get(body)!==run)return;if(!open){body.hidden=true;external.forEach(p=>p.hidden=true)}run.forEach(a=>a.cancel());clip.style.overflow='';document.dispatchEvent(new CustomEvent('once:contact-layout'))}catch(error){}
  }
  document.addEventListener('once:email-opening',()=>{document.querySelectorAll('.contact-socials').forEach(body=>{if(!body.hidden)setOpen(body.id,false)})});
+ document.addEventListener('once:gallery-opening',event=>{const body=document.getElementById('connected-application-body');if(body&&!body.hidden)event.detail.waits.push(setOpen(body.id,false))});
  document.addEventListener('once:pitch-opening',event=>{const body=document.getElementById('connected-application-body');if(body&&!body.hidden)event.detail.waits.push(setOpen(body.id,false))});
  document.querySelectorAll('[data-close-application]').forEach(button=>button.addEventListener('click',async()=>{const id=button.dataset.closeApplication;await setOpen(id,false);const opener=toggles.find(b=>b.dataset.openApplication===id)||document.querySelector('[data-contribution-tier][aria-expanded="true"]');if(id==='patron-checkout')document.querySelectorAll('[data-contribution-tier]').forEach(b=>b.setAttribute('aria-expanded','false'));opener?.focus({preventScroll:true});opener?.scrollIntoView({behavior:'smooth',block:'center'})}));
  toggles.forEach(b=>b.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();setOpen(b.dataset.openApplication,b.getAttribute('aria-expanded')!=='true')}));

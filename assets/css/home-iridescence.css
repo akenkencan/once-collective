@@ -130,3 +130,9 @@ body.home-words-in-flight .text-row{animation-play-state:running!important}
 .home-reveal-plane{opacity:1!important;transition:none!important}
 .fullscreen-section .is-word-lifted{visibility:hidden!important;transition-property:transform,opacity,filter!important}
 body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:calc(16% - 5px)!important;bottom:calc(-16% + 5px)!important}
+
+/* Legacy hover opacity/filter mutations must not run alongside source-word lifting. */
+.fullscreen-section:not(.overlay) .text-row{opacity:1!important}
+.fullscreen-section:not(.overlay) .large-word,.fullscreen-section:not(.overlay) .large-word:hover{opacity:.6!important;filter:blur(14px)!important}
+.fullscreen-section:not(.overlay) .med-word,.fullscreen-section:not(.overlay) .med-word:hover{opacity:.6!important;filter:blur(10px)!important}
+.fullscreen-section:not(.overlay) .small-word,.fullscreen-section:not(.overlay) .small-word:hover{opacity:.6!important;filter:blur(8px)!important}

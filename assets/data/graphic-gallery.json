@@ -1,0 +1,37 @@
+[
+  {
+    "title": "The Renaissance",
+    "src": "/assets/images/gallery/ParadigmCircle-preview.webp",
+    "full": "/assets/images/gallery/ParadigmCircle.webp",
+    "width": 1024,
+    "height": 1536
+  },
+  {
+    "title": "Europic Orbis Arena",
+    "src": "/assets/images/gallery/EuropicOrbisBinaries-preview.webp",
+    "full": "/assets/images/gallery/EuropicOrbisBinaries.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "title": "The Evolutionary Commonwealth",
+    "src": "/assets/images/gallery/EvolutionaryCommonwealth-preview.webp",
+    "full": "/assets/images/gallery/EvolutionaryCommonwealth.webp",
+    "width": 1024,
+    "height": 1536
+  },
+  {
+    "title": "The Gift Boundary",
+    "src": "/assets/images/gallery/GiftBoundary-preview.webp",
+    "full": "/assets/images/gallery/GiftBoundary.webp",
+    "width": 1055,
+    "height": 1491
+  },
+  {
+    "title": "The Political Recombination",
+    "src": "/assets/images/gallery/PoliticalRecombination-preview.webp",
+    "full": "/assets/images/gallery/PoliticalRecombination.webp",
+    "width": 1536,
+    "height": 1024
+  }
+]
