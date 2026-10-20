@@ -554,7 +554,7 @@ body.nav-return-visible>.navbar-wrapper,body.nav-return-visible>.navbar-wrapper 
 .form-panel .form-body #tally-mount iframe{height:var(--arkhive-form-height,1100px)!important;max-height:none!important;min-height:0!important;display:block;overflow:hidden!important}
 .page-community .community-content{width:min(1480px,calc(100% - 96px))!important;max-width:1480px!important;margin-inline:auto!important;padding-inline:0!important;box-sizing:border-box}
 .connected-copy>.connected-closing-art{grid-column:1/-1!important;width:min(50vw,900px)!important;max-width:100%!important;justify-self:center!important;left:auto!important;transform:none!important;margin:30px auto 20px!important}
-.about-paper-prints{justify-content:space-between!important;gap:clamp(20px,3.5vw,60px)!important;inset-inline:16%!important}
+.about-paper-prints{z-index:2;justify-content:space-between!important;gap:clamp(20px,3.5vw,60px)!important;inset-inline:16%!important}
 .about-paper-prints>.foil-card{flex-shrink:1;min-width:0}
 .about-joker-print:before,.about-joker-print:after{display:none!important}
 .about-paper-prints>.about-joker-print{transform:none!important}
