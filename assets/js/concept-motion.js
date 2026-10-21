@@ -34,4 +34,4 @@
 })();
 
 // Show the cue after one second, then retire it as the opening text comes into view.
-(()=>{const cue=document.querySelector('.concept-scroll-cue');if(!cue)return;let dismissed=false;const reveal=setTimeout(()=>{if(!dismissed)cue.style.opacity='.5'},150);function retire(){requestAnimationFrame(()=>{const first=document.querySelector('.concept-intro .fader');if(!dismissed&&scrollY>4&&Number(first?.style.getPropertyValue('--intro-opacity'))>.01){dismissed=true;clearTimeout(reveal);cue.style.opacity='0';cue.style.pointerEvents='none'}})}window.addEventListener('scroll',retire,{passive:true});retire()})();
+(()=>{const cue=document.querySelector('.concept-scroll-cue');if(!cue)return;let dismissed=false;const reveal=setTimeout(()=>{if(!dismissed)cue.style.opacity='.5'},150);function retire(){requestAnimationFrame(()=>{const first=document.querySelector('.concept-intro .fader');if(!dismissed&&scrollY>4&&(Number(first?.style.getPropertyValue('--intro-opacity'))>.01||scrollY>innerHeight*.25)){dismissed=true;clearTimeout(reveal);cue.style.opacity='0';cue.style.pointerEvents='none'}})}window.addEventListener('scroll',retire,{passive:true});retire()})();
