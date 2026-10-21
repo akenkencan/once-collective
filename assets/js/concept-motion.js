@@ -29,7 +29,7 @@
  const tracks=[['.fader',[[0,0],[11,1],[24,1],[34,0]]],['.fade1',[[6,0],[17,1],[29,1],[37,0]]],['.fade2',[[10,0],[23,1],[29,1],[37,0]]],['.fade3',[[24,0],[32,1],[37,1]]]];
  const items=tracks.map(([selector,points])=>({el:intro.querySelector(selector),points}));let pending=false;
  function interpolate(points,p){if(p<=points[0][0])return points[0][1];for(let i=1;i<points.length;i++){if(p<=points[i][0]){const [x,a]=points[i-1],[y,b]=points[i],t=(p-x)/(y-x),smooth=t*t*(3-2*t);return a+(b-a)*smooth}}return points.at(-1)[1]}
- function update(){pending=false;const r=intro.getBoundingClientRect(),p=Math.max(0,Math.min(37,-r.top/Math.max(1,r.height-innerHeight*.35)*37));items.forEach(({el,points})=>{if(el)el.style.setProperty('--intro-opacity',matchMedia('(prefers-reduced-motion:reduce)').matches?'1':String(interpolate(points,p)))});intro.dataset.scrollProgress=p.toFixed(2)}
+ function update(){pending=false;const r=intro.getBoundingClientRect(),p=Math.max(0,Math.min(37,-r.top/Math.max(1,r.height-innerHeight*.35)*37));items.forEach(({el,points})=>{if(el){const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,opacity=reduced?1:interpolate(points,p);el.style.setProperty('--intro-opacity',String(opacity));el.style.setProperty('--intro-lift',(reduced?0:24*(1-opacity))+'px')}});intro.dataset.scrollProgress=p.toFixed(2)}
  function request(){if(!pending){pending=true;requestAnimationFrame(update)}}window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);update();
 })();
 

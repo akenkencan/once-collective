@@ -37,17 +37,22 @@
   });
 })();
 
-// Nearby navigation follows distance; the final 20% clears on the logo itself.
+// The logo resolves first, then the symbols clear inside their shared corridor.
 (()=>{
  const wrapper=document.querySelector('body>.navbar-wrapper'),brand=wrapper?.querySelector('.brand'),logo=brand?.querySelector('.logo-navbar')||brand,menu=brand?.querySelector('.symbol-menu'),right=wrapper?.querySelector('.menu-icon-wrap');if(!wrapper||!logo||!right)return;
- const clamp=n=>Math.max(0,Math.min(1,n));let point={x:-9999,y:-9999},queued=false;
- function proximity(rect,rx,ry){const dx=Math.max(rect.left-point.x,0,point.x-rect.right),dy=Math.max(rect.top-point.y,0,point.y-rect.bottom);return {inside:dx===0&&dy===0,p:clamp(1-Math.hypot(dx/rx,dy/ry))}}
- function update(){queued=false;const l=proximity(logo.getBoundingClientRect(),Math.min(432,innerWidth*.36),228),r=proximity(right.getBoundingClientRect(),Math.min(324,innerWidth*.27),184),keyboard=brand.contains(document.activeElement)&&document.activeElement.matches(':focus-visible'),left=keyboard?1:l.p,symbols=keyboard||l.inside?1:l.p*.8;
-  wrapper.style.setProperty('--nav-left',left);wrapper.style.setProperty('--nav-right',r.p);wrapper.style.setProperty('--nav-symbols',symbols);wrapper.style.setProperty('--nav-symbol-blur',(1-symbols)*9+'px');wrapper.style.setProperty('--nav-symbol-brightness',.25+.75*symbols);
-  document.body.classList.toggle('nav-left-near',left>0);document.body.classList.toggle('nav-right-near',r.p>0);brand.classList.toggle('symbol-menu-open',symbols>0);
-  if(menu)menu.style.setProperty('--symbol-menu-top',(logo.getBoundingClientRect().bottom-brand.getBoundingClientRect().top+24)+'px');
+ const clamp=n=>Math.max(0,Math.min(1,n));let point={x:-9999,y:9999},queued=false;
+ function distance(rect,rx,ry){return Math.hypot(Math.max(rect.left-point.x,0,point.x-rect.right)/rx,Math.max(rect.top-point.y,0,point.y-rect.bottom)/ry)}
+ function update(){
+  queued=false;const lr=logo.getBoundingClientRect(),mr=menu?.getBoundingClientRect()||lr,pad=Math.min(44,Math.max(24,innerWidth*.028));
+  if(menu)menu.style.setProperty('--symbol-menu-top',(lr.bottom-brand.getBoundingClientRect().top+24)+'px');
+  const corridor={left:Math.max(0,Math.min(lr.left,mr.left)-pad),right:Math.max(lr.right,mr.right)+pad,top:0,bottom:Math.max(lr.bottom,mr.bottom)+pad};
+  const near=clamp(1-distance(corridor,Math.min(475.2,innerWidth*.396),250.8)),top=clamp((innerHeight*.2-point.y)/(innerHeight*.1)),keyboard=brand.contains(document.activeElement)&&document.activeElement.matches(':focus-visible'),touch=matchMedia('(hover:none)').matches;
+  const clarity=keyboard?1:clamp((near-.5)*2),ghost=clamp((near-.25)*4)*.28,symbols=keyboard?1:touch?0:Math.max(ghost+.72*clarity,.28*top),left=keyboard||touch?1:Math.max(clamp(near*2),top),rightNear=clamp(1-distance(right.getBoundingClientRect(),Math.min(356.4,innerWidth*.297),202.4));
+  wrapper.style.setProperty('--nav-left',left);wrapper.style.setProperty('--nav-right',touch?1:Math.max(rightNear,top));wrapper.style.setProperty('--nav-symbols',symbols);wrapper.style.setProperty('--nav-symbol-blur',(1-clarity)*9+'px');wrapper.style.setProperty('--nav-symbol-brightness',.25+.75*clarity);
+  document.body.classList.toggle('nav-left-near',left>0);document.body.classList.toggle('nav-right-near',rightNear>0||top>0);brand.classList.toggle('symbol-menu-open',symbols>0);if(menu)menu.style.pointerEvents=symbols>.05?'auto':'none';
  }
- function queue(){if(!queued){queued=true;requestAnimationFrame(update)}}document.addEventListener('pointermove',event=>{point={x:event.clientX,y:event.clientY};queue()},{passive:true});brand.addEventListener('focusin',queue);brand.addEventListener('focusout',queue);window.addEventListener('resize',queue);new ResizeObserver(queue).observe(logo);update();
+ function queue(){if(!queued){queued=true;requestAnimationFrame(update)}}
+ document.addEventListener('pointermove',event=>{point={x:event.clientX,y:event.clientY};queue()},{passive:true});document.addEventListener('pointerleave',()=>{point={x:-9999,y:9999};queue()});brand.addEventListener('focusin',queue);brand.addEventListener('focusout',queue);window.addEventListener('resize',queue);new ResizeObserver(queue).observe(logo);update();
 })();
 
 // Returning from the Found footer exposes navigation until the next downward scroll.
