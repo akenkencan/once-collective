@@ -2,7 +2,7 @@
  const dock=document.querySelector('.concept-triangle-dock'),motion=dock?.querySelector('.concept-triangle-motion'),story=document.querySelector('.concept-story');if(!motion||!story)return;
  const mobile=matchMedia('(max-width:600px)').matches,size=mobile?360:640;
  const films=[...motion.querySelectorAll('canvas[data-scroll-frames]')].map(el=>{el.width=size;el.height=size;return {el,context:el.getContext('2d',{alpha:false}),count:Number(el.dataset.frameCount),cache:new Map(),wanted:0,shown:-1}});
- let scheduled=false,last=0,position=null,progress=null,previousScroll=scrollY;
+ let scheduled=false,last=0,position=null,progress=null,previousScroll=scrollY,mode="travelling",spring=0,velocity=0;
  function paint(film,index,image){if(film.wanted!==index||film.shown===index)return;film.context.drawImage(image,0,0,size,size);film.shown=index;film.el.dataset.frame=String(index)}
  function frame(film,index,show=false){
   const cached=film.cache.get(index);if(cached){if(show&&cached.ready)paint(film,index,cached.image);return}
@@ -11,14 +11,20 @@
   image.decode().then(()=>{entry.ready=true;paint(film,index,image)}).catch(()=>{});
   if(film.cache.size>28){for(const key of film.cache.keys()){if(Math.abs(key-film.wanted)>7){film.cache.delete(key);break}}}
  }
- function update(now){scheduled=false;const target=dock.getBoundingClientRect(),box=story.getBoundingClientRect(),start=scrollY+box.top,end=scrollY+target.top+target.height/2-innerHeight/2;
-  const raw=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start))),goal=Math.min(innerHeight/2,target.top+target.height/2),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,dt=Math.min(64,Math.max(1,now-(last||now-16))),down=scrollY>=previousScroll,blend=reduced||down?1:1-Math.exp(-dt/35);last=now;previousScroll=scrollY;
-  if(position===null){position=goal;progress=raw}else{position+=(goal-position)*blend;position=Math.max(goal-3,Math.min(goal+3,position));progress+=(raw-progress)*blend}if(Math.abs(position-goal)<.05)position=goal;if(Math.abs(progress-raw)<.0001)progress=raw;
-  if(raw===1){position=goal;progress=1}const p=progress,docked=raw===1;
-  motion.classList.remove('is-travelling','is-docked');Object.assign(motion.style,{position:'fixed',inset:'auto',left:(target.left+target.width/2)+'px',top:position+'px',width:target.width+'px',transform:'translate(-50%,-50%)',opacity:'1',visibility:box.bottom<0||box.top>innerHeight?'hidden':'visible'});motion.dataset.scrollProgress=p.toFixed(4);
-  const grade=Math.max(0,Math.min(1,p/.3)),smooth=grade*grade*(3-2*grade);motion.style.filter='brightness('+(.7+.3*smooth)+')';motion.style.setProperty('--intro-vignette',String(1-smooth));
+ function update(now){
+  scheduled=false;const target=dock.getBoundingClientRect(),box=story.getBoundingClientRect(),center=target.top+target.height/2,rest=innerHeight/2,start=scrollY+box.top,end=scrollY+center-rest;
+  const raw=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start))),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,dt=Math.min(.032,Math.max(.001,(now-(last||now-16))/1000)),delta=scrollY-previousScroll,docked=center<=rest;last=now;previousScroll=scrollY;
+  if(docked){mode='docked';spring=0;velocity=0;position=center;progress=1;Object.assign(motion.style,{position:'absolute',inset:'0px',left:'0px',top:'0px',width:'100%',height:'100%',transform:'none'})}
+  else{
+   if(mode==='docked'&&delta<=0&&!reduced){spring=Math.min(14,Math.max(0,center-rest));velocity=0;mode='release'}
+   if(delta>0||reduced){spring=0;velocity=0;mode='travelling'}
+   if(mode==='release'){velocity+=(-360*spring-32*velocity)*dt;spring+=velocity*dt;if(Math.abs(spring)<.03&&Math.abs(velocity)<.3){spring=0;velocity=0;mode='travelling'}}
+   position=rest+spring;progress=raw;Object.assign(motion.style,{position:'fixed',inset:'auto',left:(target.left+target.width/2)+'px',top:position+'px',width:target.width+'px',height:target.height+'px',transform:'translate(-50%,-50%)'});
+  }
+  motion.classList.remove('is-travelling','is-docked');Object.assign(motion.style,{opacity:'1',visibility:box.bottom<0||box.top>innerHeight?'hidden':'visible'});motion.dataset.scrollProgress=progress.toFixed(4);motion.dataset.docked=String(docked);
+  const p=progress,grade=Math.max(0,Math.min(1,p/.3)),smooth=grade*grade*(3-2*grade);motion.style.filter='brightness('+(.7+.3*smooth)+')';motion.style.setProperty('--intro-vignette',String(1-smooth));
   const fade=Math.max(0,Math.min(1,(p-.32)/.18));for(const film of films){film.el.style.opacity=film.el.classList.contains('concept-triangle-older')?String(.5*(1-fade*fade*(3-2*fade))):'1';const index=Math.round(p*(film.count-1));film.wanted=index;frame(film,index,true);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)frame(film,next)}}
-  if(position!==goal||progress!==raw)request();
+  if(mode==='release')request();
  }
  function request(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}
  window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);new ResizeObserver(request).observe(story);request();

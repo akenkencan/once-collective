@@ -47,7 +47,8 @@
   if(menu)menu.style.setProperty('--symbol-menu-top',(lr.bottom-brand.getBoundingClientRect().top+24)+'px');
   const corridor={left:Math.max(0,Math.min(lr.left,mr.left)-pad),right:Math.max(lr.right,mr.right)+pad,top:0,bottom:Math.max(lr.bottom,mr.bottom)+pad};
   const near=clamp(1-distance(corridor,Math.min(475.2,innerWidth*.396),250.8)),top=clamp((innerHeight*.2-point.y)/(innerHeight*.1)),keyboard=brand.contains(document.activeElement)&&document.activeElement.matches(':focus-visible'),touch=matchMedia('(hover:none)').matches;
-  const clarity=keyboard?1:clamp((near-.5)*2),ghost=clamp((near-.25)*4)*.28,symbols=keyboard?1:touch?0:Math.max(ghost+.72*clarity,.28*top),left=keyboard||touch?1:Math.max(clamp(near*2),top),rightNear=clamp(1-distance(right.getBoundingClientRect(),Math.min(356.4,innerWidth*.297),202.4));
+  const logoNear=clamp(1-distance(corridor,Math.min(403.92,innerWidth*.3366),213.18)),logoTop=clamp((innerHeight*.17-point.y)/(innerHeight*.085)),ease=n=>n*n*(3-2*n);
+  const clarity=keyboard?1:clamp((near-.5)*2),ghost=clamp((near-.25)*4)*.28,symbols=keyboard?1:touch?0:Math.max(ghost+.72*clarity,.28*top),left=keyboard||touch?1:Math.max(ease(clamp(logoNear*2)),ease(logoTop)),rightNear=clamp(1-distance(right.getBoundingClientRect(),Math.min(356.4,innerWidth*.297),202.4));
   wrapper.style.setProperty('--nav-left',left);wrapper.style.setProperty('--nav-right',touch?1:Math.max(rightNear,top));wrapper.style.setProperty('--nav-symbols',symbols);wrapper.style.setProperty('--nav-symbol-blur',(1-clarity)*9+'px');wrapper.style.setProperty('--nav-symbol-brightness',.25+.75*clarity);
   document.body.classList.toggle('nav-left-near',left>0);document.body.classList.toggle('nav-right-near',rightNear>0||top>0);brand.classList.toggle('symbol-menu-open',symbols>0);if(menu)menu.style.pointerEvents=symbols>.05?'auto':'none';
  }
