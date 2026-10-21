@@ -139,3 +139,6 @@ body .icon-wrap[data-oil-symbol="triangle"] .oil-face{top:calc(16% - 5px)!import
 
 /* Sources retain their hit areas; their persistent rendered owners never swap out. */
 .fullscreen-section:not(.overlay) [data-symbol-word].is-word-lifted{visibility:visible!important;opacity:0!important;filter:none!important}
+
+/* Direct word focus belongs to the same owner as symbol reveals. */
+.fullscreen-section:not(.overlay) [data-symbol-word]:not(.is-word-lifted).home-word-direct-focus{filter:blur(0)!important;opacity:1!important;transform:scale(1.08)!important;position:relative;z-index:3;transition:filter .12s,opacity .12s,transform .12s!important}

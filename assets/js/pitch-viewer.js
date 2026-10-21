@@ -4,6 +4,7 @@ const reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
 const duration=()=>reduced()?0:550;
 const downloadIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>';
 for(const button of document.querySelectorAll('[data-pitch-src]')){
+ if(button.dataset.pitchDisabled==='true')continue;
  const dock=document.getElementById(button.dataset.pitchDock),title=button.dataset.pitchTitle;
  const dialog=document.createElement('dialog');dialog.className='pitch-dialog';if(button.dataset.pitchDeck==='orbital-ark'||button.dataset.pitchSrc.includes('arkhive'))dialog.classList.add('pitch-dialog-inset');dialog.setAttribute('aria-label',title);document.body.append(dialog);
  const reader=document.createElement('section');reader.className='pitch-reader';reader.setAttribute('aria-label',title);reader.dataset.mode='hidden';

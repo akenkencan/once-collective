@@ -1,7 +1,7 @@
 /* Controls belong to their visual; Community controls share one margin rail. */
 (()=>{
  const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,isCommunity=document.body.classList.contains('page-community'),isAbout=document.body.classList.contains('page-about'),isWelcome=!!document.querySelector('.studio-heading'),isWorld=document.body.classList.contains('page-world');
- if(isWelcome)return;
+ if(isWelcome||document.querySelector('[data-oil-symbol]'))return;
  const rails=[];let queued=false;
  function position(){queued=false;for(const {region,button} of rails){const r=region.getBoundingClientRect(),shown=region.getClientRects().length&&r.height>0&&r.bottom>0&&r.top<innerHeight;button.hidden=!shown;button.style.top=(r.top+r.height/2)+'px'}}
  function requestPosition(){if(!queued){queued=true;requestAnimationFrame(position)}}
@@ -28,5 +28,5 @@
  document.querySelectorAll('img[src*=".gif"]').forEach(gif=>{if(isCommunity&&gif.src.includes('CircleArray'))return;add(gif.closest('.community-art')||gif.parentElement,{gif})});
  if(!isCommunity)document.querySelectorAll('[data-animation-type="lottie"]').forEach(region=>{const vector=region.querySelector('svg');if(vector)add(region,{vector});else new MutationObserver((changes,observer)=>{const vector=region.querySelector('svg');if(vector){add(region,{vector});observer.disconnect()}}).observe(region,{childList:true,subtree:true})});
  document.querySelectorAll('video[loop]').forEach(video=>{if(isCommunity||video.hasAttribute('data-inline-film')||video.hasAttribute('data-ambient-video'))return;add(video.closest('figure')||video.parentElement)});
- if(document.querySelector('[data-oil-symbol]'))add(document.body,{global:true});
+
 })();

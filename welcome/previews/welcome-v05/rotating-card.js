@@ -1,6 +1,1 @@
-(() => {
- document.querySelectorAll('.rotating-card').forEach(card=>{let angle=0;
- const rotate=()=>{angle-=90;card.style.setProperty('--card-angle',angle+'deg');card.setAttribute('aria-label','Rotate card 90 degrees counterclockwise. Current rotation '+Math.abs(angle%360)+' degrees')};
- card.addEventListener('click',rotate);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();rotate()}});
- });
-})();
+(()=>{document.querySelectorAll('.rotating-card').forEach(card=>{let angle=0,raf=0;const slot=card.closest('.welcome-card-clearance');function size(){if(slot)slot.style.height=card.getBoundingClientRect().height+'px'}function rotate(){angle-=90;card.style.setProperty('--card-angle',angle+'deg');card.setAttribute('aria-label','Rotate card 90 degrees counterclockwise. Current rotation '+Math.abs(angle%360)+' degrees');cancelAnimationFrame(raf);const start=performance.now();function follow(now){size();if(now-start<1000)raf=requestAnimationFrame(follow)}raf=requestAnimationFrame(follow)}card.addEventListener('click',rotate);card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();rotate()}});if(slot){new ResizeObserver(size).observe(card);card.querySelector('img')?.addEventListener('load',size);window.addEventListener('resize',size);size()}})})();

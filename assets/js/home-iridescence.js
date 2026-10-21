@@ -25,7 +25,7 @@
    for(const item of group.items){const r=rectangles.get(item),home={x:r.x,y:r.y,scale:1,...item.base};let target=home;
     if(group.phase==='out')target=item===group.representative?group.target:{...home,opacity:0};
     const from=item.start||home;item.draw=Object.fromEntries(Object.keys(home).map(key=>[key,group.phase==='rest'?home[key]:lerp(from[key],target[key],ease)]));const d=item.draw;
-    item.word.style.transform=`translate(${d.x}px,${d.y}px) scale(${d.scale})`;item.word.style.opacity=String(d.opacity);item.word.style.filter=`blur(${d.blur}px)`;item.word.dataset.phase=group.phase;
+    item.word.style.transform=`translate(${d.x}px,${d.y}px) scale(${d.scale})`;item.word.style.opacity=String(d.opacity);const focus=item.source.classList.contains('home-word-direct-focus');item.focus=(item.focus||0)+((focus?1:0)-(item.focus||0))*.3;item.word.style.transform=`translate(${d.x}px,${d.y}px) scale(${d.scale*(1+.08*item.focus)})`;item.word.style.opacity=String(d.opacity+(1-d.opacity)*item.focus);item.word.style.filter=`blur(${d.blur*(1-item.focus)}px)`;item.word.dataset.phase=group.phase;
    }
    if(group.phase==='return'&&t===1)group.phase='rest';
   }schedule()}
@@ -35,5 +35,5 @@
  function enter(name,reveal){clearTimeout(exitTimer);if(current===name&&revealing===reveal)return;if(current&&current!==name)reset(current);current=name;revealing=reveal;delete document.body.dataset.keyboardSymbol;delete document.body.dataset.wordSymbol;if(reveal){document.body.dataset.keyboardSymbol=name;show(name)}else{document.body.dataset.wordSymbol=name;retire()}const item=symbols.get(name);if(item){item.link.classList.remove('is-retreating');item.link.classList.add('is-energized');item.api.on()}}
  function leave(){clearTimeout(exitTimer);exitTimer=setTimeout(()=>{const old=current;current=null;revealing=false;delete document.body.dataset.keyboardSymbol;delete document.body.dataset.wordSymbol;retire();if(old)reset(old)},90)}
  document.querySelectorAll('[data-oil-symbol]').forEach(link=>{const api=ONCEColourBurst.attach(link,link.querySelector('.oil-face'));symbols.set(link.dataset.oilSymbol,{link,api});link.addEventListener('pointerenter',()=>enter(link.dataset.oilSymbol,true));link.addEventListener('pointerleave',leave);link.addEventListener('focus',()=>enter(link.dataset.oilSymbol,true));link.addEventListener('blur',leave)});
- document.querySelectorAll('[data-symbol-word]').forEach(word=>{word.addEventListener('pointerenter',()=>enter(word.dataset.symbolWord,false));word.addEventListener('pointerleave',leave)});
+ document.querySelectorAll('[data-symbol-word]').forEach(word=>{word.addEventListener('pointerenter',()=>{word.classList.add('home-word-direct-focus');enter(word.dataset.symbolWord,false)});word.addEventListener('pointerleave',()=>{word.classList.remove('home-word-direct-focus');leave()})});
 })();

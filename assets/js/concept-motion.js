@@ -2,7 +2,7 @@
  const dock=document.querySelector('.concept-triangle-dock'),motion=dock?.querySelector('.concept-triangle-motion'),story=document.querySelector('.concept-story');if(!motion||!story)return;
  const mobile=matchMedia('(max-width:600px)').matches,size=mobile?360:640;
  const films=[...motion.querySelectorAll('canvas[data-scroll-frames]')].map(el=>{el.width=size;el.height=size;return {el,context:el.getContext('2d',{alpha:false}),count:Number(el.dataset.frameCount),cache:new Map(),wanted:0,shown:-1}});
- let scheduled=false,last=0,position=null,progress=null;
+ let scheduled=false,last=0,position=null,progress=null,previousScroll=scrollY;
  function paint(film,index,image){if(film.wanted!==index||film.shown===index)return;film.context.drawImage(image,0,0,size,size);film.shown=index;film.el.dataset.frame=String(index)}
  function frame(film,index,show=false){
   const cached=film.cache.get(index);if(cached){if(show&&cached.ready)paint(film,index,cached.image);return}
@@ -12,9 +12,9 @@
   if(film.cache.size>28){for(const key of film.cache.keys()){if(Math.abs(key-film.wanted)>7){film.cache.delete(key);break}}}
  }
  function update(now){scheduled=false;const target=dock.getBoundingClientRect(),box=story.getBoundingClientRect(),start=scrollY+box.top,end=scrollY+target.top+target.height/2-innerHeight/2;
-  const raw=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start))),goal=Math.min(innerHeight/2,target.top+target.height/2),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,dt=Math.min(64,Math.max(1,now-(last||now-16))),blend=reduced?1:1-Math.exp(-dt/145);last=now;
-  if(position===null){position=goal;progress=raw}else{position+=(goal-position)*blend;progress+=(raw-progress)*blend}if(Math.abs(position-goal)<.05)position=goal;if(Math.abs(progress-raw)<.0001)progress=raw;
-  const p=progress,docked=raw===1&&Math.abs(position-goal)<.5;
+  const raw=Math.max(0,Math.min(1,(scrollY-start)/Math.max(1,end-start))),goal=Math.min(innerHeight/2,target.top+target.height/2),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches,dt=Math.min(64,Math.max(1,now-(last||now-16))),down=scrollY>=previousScroll,blend=reduced||down?1:1-Math.exp(-dt/35);last=now;previousScroll=scrollY;
+  if(position===null){position=goal;progress=raw}else{position+=(goal-position)*blend;position=Math.max(goal-3,Math.min(goal+3,position));progress+=(raw-progress)*blend}if(Math.abs(position-goal)<.05)position=goal;if(Math.abs(progress-raw)<.0001)progress=raw;
+  if(raw===1){position=goal;progress=1}const p=progress,docked=raw===1;
   motion.classList.remove('is-travelling','is-docked');Object.assign(motion.style,{position:'fixed',inset:'auto',left:(target.left+target.width/2)+'px',top:position+'px',width:target.width+'px',transform:'translate(-50%,-50%)',opacity:'1',visibility:box.bottom<0||box.top>innerHeight?'hidden':'visible'});motion.dataset.scrollProgress=p.toFixed(4);
   const grade=Math.max(0,Math.min(1,p/.3)),smooth=grade*grade*(3-2*grade);motion.style.filter='brightness('+(.7+.3*smooth)+')';motion.style.setProperty('--intro-vignette',String(1-smooth));
   const fade=Math.max(0,Math.min(1,(p-.32)/.18));for(const film of films){film.el.style.opacity=film.el.classList.contains('concept-triangle-older')?String(.5*(1-fade*fade*(3-2*fade))):'1';const index=Math.round(p*(film.count-1));film.wanted=index;frame(film,index,true);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)frame(film,next)}}

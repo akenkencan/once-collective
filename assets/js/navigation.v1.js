@@ -37,27 +37,17 @@
   });
 })();
 
-// Keep the complete logo-to-symbol corridor open, including brief pointer departures.
-(() => {
- const brand=document.querySelector('body > .navbar-wrapper .brand'),menu=brand?.querySelector('.symbol-menu');
- if(!brand)return;
- if(menu){const positionMenu=()=>{const logo=brand.querySelector('.logo-navbar')||brand;menu.style.setProperty('--symbol-menu-top',(logo.getBoundingClientRect().bottom-brand.getBoundingClientRect().top+24)+'px')};new ResizeObserver(positionMenu).observe(brand);positionMenu()}
- let timer;
- function open(){clearTimeout(timer);timer=undefined;brand.classList.add('symbol-menu-open')}
- function closeLater(){if(timer)return;timer=setTimeout(()=>{brand.classList.remove('symbol-menu-open');timer=undefined},850)}
- brand.addEventListener('pointerenter',open);
- brand.addEventListener('focusin',open);
- brand.addEventListener('focusout',event=>{if(!brand.contains(event.relatedTarget))closeLater()});
- document.addEventListener('pointermove',event=>{
-  const approaching=event.clientX<Math.min(432,innerWidth*.36)&&event.clientY<228;
-  document.body.classList.toggle('nav-left-near',approaching);
-  document.body.classList.toggle('nav-right-near',event.clientX>innerWidth-Math.min(360,innerWidth*.3)&&event.clientY<204);
-  if(approaching)open();
-  if(!brand.classList.contains('symbol-menu-open'))return;
-  const logo=brand.getBoundingClientRect(),symbols=menu?.getBoundingClientRect()||logo;
-  const inside=event.clientX>=0&&event.clientX<=Math.max(432,logo.right,symbols.right)+72&&event.clientY>=0&&event.clientY<=Math.max(228,logo.bottom,symbols.bottom)+54;
-  if(inside){clearTimeout(timer);timer=undefined}else closeLater();
- },{passive:true});
+// Nearby navigation follows distance; the final 20% clears on the logo itself.
+(()=>{
+ const wrapper=document.querySelector('body>.navbar-wrapper'),brand=wrapper?.querySelector('.brand'),logo=brand?.querySelector('.logo-navbar')||brand,menu=brand?.querySelector('.symbol-menu'),right=wrapper?.querySelector('.menu-icon-wrap');if(!wrapper||!logo||!right)return;
+ const clamp=n=>Math.max(0,Math.min(1,n));let point={x:-9999,y:-9999},queued=false;
+ function proximity(rect,rx,ry){const dx=Math.max(rect.left-point.x,0,point.x-rect.right),dy=Math.max(rect.top-point.y,0,point.y-rect.bottom);return {inside:dx===0&&dy===0,p:clamp(1-Math.hypot(dx/rx,dy/ry))}}
+ function update(){queued=false;const l=proximity(logo.getBoundingClientRect(),Math.min(432,innerWidth*.36),228),r=proximity(right.getBoundingClientRect(),Math.min(324,innerWidth*.27),184),keyboard=brand.contains(document.activeElement)&&document.activeElement.matches(':focus-visible'),left=keyboard?1:l.p,symbols=keyboard||l.inside?1:l.p*.8;
+  wrapper.style.setProperty('--nav-left',left);wrapper.style.setProperty('--nav-right',r.p);wrapper.style.setProperty('--nav-symbols',symbols);wrapper.style.setProperty('--nav-symbol-blur',(1-symbols)*9+'px');wrapper.style.setProperty('--nav-symbol-brightness',.25+.75*symbols);
+  document.body.classList.toggle('nav-left-near',left>0);document.body.classList.toggle('nav-right-near',r.p>0);brand.classList.toggle('symbol-menu-open',symbols>0);
+  if(menu)menu.style.setProperty('--symbol-menu-top',(logo.getBoundingClientRect().bottom-brand.getBoundingClientRect().top+24)+'px');
+ }
+ function queue(){if(!queued){queued=true;requestAnimationFrame(update)}}document.addEventListener('pointermove',event=>{point={x:event.clientX,y:event.clientY};queue()},{passive:true});brand.addEventListener('focusin',queue);brand.addEventListener('focusout',queue);window.addEventListener('resize',queue);new ResizeObserver(queue).observe(logo);update();
 })();
 
 // Returning from the Found footer exposes navigation until the next downward scroll.
