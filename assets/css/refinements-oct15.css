@@ -629,3 +629,7 @@ body>.navbar-wrapper{opacity:1!important;visibility:visible!important;pointer-ev
 .cards-context .welcome-card-clearance{transition:none!important}
 .cards-context .welcome-card-clearance>.rotating-card{aspect-ratio:2098/1498!important;height:auto!important}
 .signup-reveal-clip>.once-signup-panel{margin:0 auto!important}
+
+/* Paired Concept artworks retain their full compositions at one shared height. */
+.concept-art-pair{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,4fr);gap:clamp(12px,2vw,32px);width:min(70vw,1400px);aspect-ratio:7/6;margin:60px auto 0}.concept-paired-art{min-width:0;min-height:0;height:100%;margin:0;box-sizing:border-box;border:7px double #b9a37b;padding:8px;background:#111;overflow:hidden}.concept-paired-art>img{display:block;width:100%;height:100%;max-height:none;object-fit:contain}.page-concept .concept-added-art{width:min(calc(70vw / 3),calc(1400px / 3));margin:55px auto 75px;border:7px double #b9a37b!important;border-image:none;padding:8px;background:#111;box-shadow:none}
+@media(max-width:740px){.concept-art-pair{width:92vw;gap:12px}.concept-paired-art{border-width:4px;padding:3px}.page-concept .concept-added-art{width:calc(92vw / 3);border-width:4px!important;padding:3px}}
