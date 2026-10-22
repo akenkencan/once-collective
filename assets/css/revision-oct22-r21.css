@@ -1,0 +1,18 @@
+/* Keep opening and settled Home on the same charcoal surface. */
+html.home-gravity-opening body.page-home,body.page-home{background-color:#121212!important}
+body.page-home .fullscreen-section:not(.overlay)>.icon-row{opacity:1!important}
+body.page-home .fullscreen-section:not(.overlay) [data-oil-symbol]{transform:translate3d(0,var(--opening-y,0px),0)!important}
+.home-gravity-opening body.page-home:not(.home-opening-ready) .fullscreen-section:not(.overlay)>.icon-row{visibility:hidden}
+body.page-home .fullscreen-section:not(.overlay)>.text{padding:0!important;justify-content:initial!important}
+body.page-home .home-depth-row{position:absolute;left:0;width:100%;flex:none;transform-origin:50% 50%;box-sizing:border-box}
+body.page-home .home-depth-row>.text-row{height:100%!important;align-items:center}
+body.page-home .fullscreen-section:not(.overlay)>.text>.div-block-6{display:none}
+/* A quiet spectral material around the central zoom pair. */
+.graphic-zoom-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px}
+.graphic-zoom-title{grid-column:1;grid-row:1;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;padding-right:12px}
+.graphic-zoom-tools{grid-column:2;grid-row:1;display:flex;gap:8px;justify-content:center}
+.graphic-zoom-actions{grid-column:3;grid-row:1;display:flex;gap:8px;justify-content:flex-end;min-width:0}
+.graphic-zoom-tools button{border-color:#a298b347;background:linear-gradient(125deg,#2e2637cc,#1e3030bb);color:#c2adbd;text-shadow:0 0 7px #9b709c66,1px 0 9px #6b9b9b55;box-shadow:inset 0 0 8px #90758b18,0 0 8px #84769416;transition:background .3s,border-color .3s,box-shadow .3s,color .3s}
+.graphic-zoom-tools button:not(:disabled):is(:hover,:focus-visible){background:linear-gradient(125deg,#3a2d43,#253d3c);color:#e0cdd9;border-color:#b0a1bc80;box-shadow:inset 0 0 10px #a08c9c25,0 0 10px #967b9b30}
+@media(max-width:740px){.graphic-zoom-toolbar{gap:4px}.graphic-zoom-tools,.graphic-zoom-actions{gap:4px}.graphic-zoom-title{grid-column:1/-1;grid-row:2;padding:3px 4px 1px;text-align:left;font-size:12px}.graphic-zoom-tools{grid-row:1}.graphic-zoom-actions{grid-row:1}}
+@media(prefers-reduced-motion:reduce){.graphic-zoom-tools button{transition:none}}
