@@ -11,7 +11,7 @@ body .nav-menu .nav-link.colour-burst-button:is(:hover,:focus-visible){transform
 body .nav-menu .symbol-menu-mobile,#welcome-site-menu .welcome-menu-symbols{flex:none!important;grid-template-rows:repeat(5,auto)!important;min-height:0!important;gap:6px!important;margin-top:18px!important}
 body .nav-engine-row{grid-template-columns:103.68px minmax(0,1fr);min-height:82.08px;--engine-height:82.08px;gap:14px}
 body .nav-engine-row>a,body .nav-engine-row>a>img{width:103.68px!important;height:82.08px!important}
-.nav-menu .credit{position:static!important;inset:auto!important;margin:24px 28px 0!important;padding:0;flex:none;width:auto;max-width:none}
+.nav-menu .credit{order:1;position:static!important;inset:auto!important;margin:24px 28px 0!important;padding:0;flex:none;width:auto;max-width:none}
 body .nav-cylinder-word{text-align:left;font-size:clamp(17px,1.4vw,22px)}
 #welcome-site-menu{width:clamp(310px,28vw,400px)!important;max-width:100vw;padding:calc(var(--site-logo-centre,37.5px) + 69px) 28px 18px!important}
 #welcome-site-menu nav{height:auto;gap:0}
