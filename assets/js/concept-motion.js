@@ -3,12 +3,12 @@
  const mobile=matchMedia('(max-width:600px)').matches,size=mobile?360:640;
  const films=[...motion.querySelectorAll('canvas[data-scroll-frames]')].map(el=>{el.width=size;el.height=size;return {el,context:el.getContext('2d',{alpha:false}),count:Number(el.dataset.frameCount),cache:new Map(),wanted:0,shown:-1}});
  let scheduled=false,last=0,position=null,progress=null,previousScroll=scrollY,mode="travelling",spring=0,velocity=0;
- function paint(film,index,image){if(film.wanted!==index||film.shown===index)return;film.context.drawImage(image,0,0,size,size);film.shown=index;film.el.dataset.frame=String(index)}
+ function paint(film){const low=film.cache.get(film.wanted),high=film.cache.get(film.next);if(!low?.ready)return;film.context.globalAlpha=1;film.context.drawImage(low.image,0,0,size,size);if(high?.ready&&film.mix>0){film.context.globalAlpha=film.mix;film.context.drawImage(high.image,0,0,size,size);film.context.globalAlpha=1}film.el.dataset.frame=String(film.wanted);film.el.dataset.frameNext=String(film.next);film.el.dataset.frameMix=film.mix.toFixed(4)}
  function frame(film,index,show=false){
-  const cached=film.cache.get(index);if(cached){if(show&&cached.ready)paint(film,index,cached.image);return}
+  if(film.cache.has(index))return;
   const image=new Image(),entry={image,ready:false};image.decoding='async';image.fetchPriority=show?'high':'low';film.cache.set(index,entry);
   image.src='/assets/animations/'+film.el.dataset.scrollFrames+(mobile?'/mobile':'')+'/frame-'+String(index+1).padStart(3,'0')+'.webp';
-  image.decode().then(()=>{entry.ready=true;paint(film,index,image)}).catch(()=>{});
+  image.decode().then(()=>{entry.ready=true;if(index===film.wanted||index===film.next)paint(film)}).catch(()=>{});
   if(film.cache.size>28){for(const key of film.cache.keys()){if(Math.abs(key-film.wanted)>7){film.cache.delete(key);break}}}
  }
  function update(now){
@@ -23,7 +23,7 @@
   }
   motion.classList.remove('is-travelling','is-docked');Object.assign(motion.style,{opacity:'1',visibility:box.bottom<0||box.top>innerHeight?'hidden':'visible'});motion.dataset.scrollProgress=progress.toFixed(4);motion.dataset.docked=String(docked);
   const p=progress,grade=Math.max(0,Math.min(1,p/.3)),smooth=grade*grade*(3-2*grade);motion.style.filter='brightness('+(.7+.3*smooth)+')';motion.style.setProperty('--intro-vignette',String(1-smooth));
-  const fade=Math.max(0,Math.min(1,(p-.32)/.18));for(const film of films){film.el.style.opacity=film.el.classList.contains('concept-triangle-older')?String(.5*(1-fade*fade*(3-2*fade))):'1';const index=Math.round(p*(film.count-1));film.wanted=index;frame(film,index,true);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)frame(film,next)}}
+  const fade=Math.max(0,Math.min(1,(p-.32)/.18));for(const film of films){film.el.style.opacity=film.el.classList.contains('concept-triangle-older')?String(.5*(1-fade*fade*(3-2*fade))):'1';const position=docked?film.count-1:Math.min(film.count-1-.00001,p*(film.count-1)),index=Math.floor(position);film.wanted=index;film.next=Math.min(film.count-1,index+1);film.mix=position-index;frame(film,index,true);frame(film,film.next,true);paint(film);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)frame(film,next)}}
   if(mode==='release')request();
  }
  function request(){if(!scheduled){scheduled=true;requestAnimationFrame(update)}}

@@ -25,7 +25,7 @@
   if(reduced)toggle();
  }
  document.querySelectorAll('[data-once-liquid]').forEach(region=>{if(!isAbout)add(region)});
- document.querySelectorAll('img[src*=".gif"]').forEach(gif=>{if(isCommunity&&gif.src.includes('CircleArray'))return;add(gif.closest('.community-art')||gif.parentElement,{gif})});
+ document.querySelectorAll('img[src*=".gif"]').forEach(gif=>{if(gif.closest('[data-decorative-animation]'))return;if(isCommunity&&gif.src.includes('CircleArray'))return;add(gif.closest('.community-art')||gif.parentElement,{gif})});
  if(!isCommunity)document.querySelectorAll('[data-animation-type="lottie"]').forEach(region=>{const vector=region.querySelector('svg');if(vector)add(region,{vector});else new MutationObserver((changes,observer)=>{const vector=region.querySelector('svg');if(vector){add(region,{vector});observer.disconnect()}}).observe(region,{childList:true,subtree:true})});
  document.querySelectorAll('video[loop]').forEach(video=>{if(isCommunity||video.hasAttribute('data-inline-film')||video.hasAttribute('data-ambient-video'))return;add(video.closest('figure')||video.parentElement)});
 
