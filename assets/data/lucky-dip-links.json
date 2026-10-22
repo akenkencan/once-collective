@@ -1,17 +1,28 @@
 {
   "updatedAt": "2026-10-22",
   "dateBasis": "Notion Created",
-  "createdOnOrAfter": "2022-01-01",
+  "createdOnOrAfter": "2021-01-01",
+  "selectedWeight": 1.35,
   "entries": [
     {
       "url": "https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/",
-      "createdAt": "2026-08-06T22:08:00.000Z",
+      "createdAt": "2026-08-26T22:44:00.000Z",
       "selected": true
     },
     {
       "url": "https://laymanpascal.substack.com/p/metashamanics-ii-free-version",
       "createdAt": "2026-07-18T01:30:00.000Z",
       "selected": true
+    },
+    {
+      "url": "https://tim.blog/2017/05/15/fear-setting/",
+      "createdAt": "2026-07-10T00:52:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://sceneswithsimon.com/p/the-ai-dreamcore-meme-extended-universe",
+      "createdAt": "2026-06-18T00:30:00.000Z",
+      "selected": false
     },
     {
       "url": "https://www.octopusyarn.com/p/a-dynamic-map-of-hell-from-mammon",
@@ -24,9 +35,24 @@
       "selected": true
     },
     {
+      "url": "https://37signals.com/group-chat-problems",
+      "createdAt": "2026-06-05T22:27:00.000Z",
+      "selected": false
+    },
+    {
       "url": "https://medium.com/@joshuakauffman/animism-ai-and-the-encounter-with-unrevealed-minds-cbbb7e54e5d1",
       "createdAt": "2026-05-05T00:10:00.000Z",
       "selected": true
+    },
+    {
+      "url": "https://www.internetculture.co/p/thesocialrenaissance",
+      "createdAt": "2026-04-09T00:59:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://camelot.wiki/citadel/camelot.wiki/about/index",
+      "createdAt": "2026-04-04T17:45:00.000Z",
+      "selected": false
     },
     {
       "url": "https://philiprosedale.substack.com/p/awakening-the-angels",
@@ -34,9 +60,209 @@
       "selected": true
     },
     {
+      "url": "https://substack.com/home/post/p-174365360",
+      "createdAt": "2026-03-03T22:28:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.citriniresearch.com/p/2028gic",
+      "createdAt": "2026-02-26T23:28:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://substack.com/home/post/p-177005341",
+      "createdAt": "2026-02-20T04:09:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://octopusyarn.substack.com/p/why-you-are-probably-working-for",
+      "createdAt": "2026-01-12T17:14:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://meansinfinity.substack.com/p/how-to-foster-coherence-in-co-created",
+      "createdAt": "2025-06-18T01:35:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://longreads.com/2015/09/24/we-value-experience-can-a-secret-society-become-a-business-2/",
+      "createdAt": "2025-06-14T14:55:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.theawl.com/2013/02/san-franciscos-baffling-jejune-institute-gets-a-documentary/",
+      "createdAt": "2025-05-30T17:49:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.theblock.co/post/355133/circles-v2-launches-martin-koppelmann-gnosis-dao",
+      "createdAt": "2025-05-23T15:13:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://arcove.substack.com/p/null-call",
+      "createdAt": "2025-03-19T01:04:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.frontiermag.net/consumption-must-flow/",
+      "createdAt": "2025-03-06T09:59:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.alexhyett.com/automate-twitter-with-notion-and-n8n/",
+      "createdAt": "2025-02-25T17:20:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://daveshap.substack.com/p/how-to-use-epistemic-tribal-theory",
+      "createdAt": "2025-02-25T11:21:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://creatoreconomy.so/p/24-ai-tools-ranked-from-essential-to-forgettable",
+      "createdAt": "2025-01-30T23:32:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://quantumgravityresearch.org/portfolio/a-deep-link-between-3d-and-8d/",
+      "createdAt": "2025-01-13T14:49:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.theatlantic.com/magazine/archive/2025/02/american-loneliness-personality-politics/681091/",
+      "createdAt": "2025-01-08T18:35:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/@hanzifreinacht/the-6-hidden-patterns-chapter-1-4ed7bec011f3",
+      "createdAt": "2024-12-20T18:55:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/@beenius/anyone-can-be-an-architect-3fa71181705e",
+      "createdAt": "2024-06-07T13:43:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/rtM3jFaoQn3eoAiPh/explaining-the-twitter-postrat-scene",
+      "createdAt": "2024-05-29T17:06:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://innerwilds.blog/p/the-one-essential-quality",
+      "createdAt": "2024-05-27T21:43:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://atmos.earth/why-doesnt-hollywood-make-more-mass-extinction-films/",
+      "createdAt": "2024-05-26T12:28:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://quillette.com/2024/04/11/beware-cultural-drift/",
+      "createdAt": "2024-05-08T00:23:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://subpixel.space/entries/moral-ecosystems",
+      "createdAt": "2024-03-14T12:41:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://disconnect.blog/how-artists-are-fighting-generative-ai/",
+      "createdAt": "2024-02-24T02:26:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://rootsofprogress.org/technological-stagnation",
+      "createdAt": "2024-02-04T00:33:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://malcolmocean.com/2022/05/100x-vision/",
+      "createdAt": "2024-01-28T11:40:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://innerwilds.blog/p/infranarrative-or-story-is-everything",
+      "createdAt": "2024-01-19T01:49:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://blog.samaltman.com/what-i-wish-someone-had-told-me",
+      "createdAt": "2023-12-24T12:51:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://vitalik.eth.limo/general/2023/11/27/techno_optimism.html",
+      "createdAt": "2023-12-09T01:30:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://blog.interintellect.com/offline-is-the-new-online-by-rachel-haywire/",
+      "createdAt": "2023-11-15T13:51:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://provocations.darkmatterlabs.org/radicle-civics-building-proofs-of-possibilities-for-a-civic-economy-and-society-ee28baeeec70",
+      "createdAt": "2023-11-14T01:50:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://a16z.com/the-techno-optimist-manifesto/",
+      "createdAt": "2023-11-02T01:55:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.neatprompts.com/p/make-chatgpt-write-like-you",
+      "createdAt": "2023-05-06T05:22:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://mirror.xyz/hypercerts.eth/kpu2vewrOVCCVNFf78Y1ui0D091XS6-ZgPoEKc0rkp0",
+      "createdAt": "2023-04-17T09:40:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.greaterthan.works/resources/organizations-without-hierarchy-dont-exist",
+      "createdAt": "2023-04-14T01:44:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://blog.oceanprotocol.com/nature-2-0-27bdf8238071",
+      "createdAt": "2023-03-27T20:47:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/@kapildevkhatik2/mastering-gpt-3-a-comprehensive-guide-to-fine-tuning-with-openai-complete-with-examples-e28515c22d92",
+      "createdAt": "2023-03-23T12:56:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://thestoa.substack.com/p/meme-to-vibe-a-philosophical-report",
+      "createdAt": "2023-03-16T13:05:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.width.ai/post/gpt3-summarizer",
+      "createdAt": "2023-02-10T23:41:00.000Z",
+      "selected": false
+    },
+    {
       "url": "https://prigoose.substack.com/p/how-to-live-near-your-friends",
       "createdAt": "2023-02-06T20:29:00.000Z",
       "selected": true
+    },
+    {
+      "url": "https://yakcollective.mirror.xyz/aJdO_SO3gw34cLtwBwNC2OD3s0YT3us9C-C2NNPQ_us",
+      "createdAt": "2023-02-06T13:12:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/mlearning-ai/use-this-prompting-trick-to-improve-chatgpts-performance-aefd5d9ba0e3",
+      "createdAt": "2023-01-15T19:54:00.000Z",
+      "selected": false
     },
     {
       "url": "https://stephanango.com/synthography",
@@ -49,14 +275,34 @@
       "selected": true
     },
     {
+      "url": "https://tasshin.com/blog/feeds-an-anthropological-report-on-a-powerful-online-social-technology/",
+      "createdAt": "2022-12-07T23:39:00.000Z",
+      "selected": false
+    },
+    {
       "url": "https://brendangrahamdempsey.substack.com/p/emergentism-from-religion-to-reduction",
       "createdAt": "2022-12-07T17:39:00.000Z",
       "selected": true
     },
     {
+      "url": "https://www.ungatedcreative.com/p/substack-lol-wtf",
+      "createdAt": "2022-11-18T12:01:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.vox.com/the-goods/2022/9/11/23340917/launch-house-sexual-assault-web3-community",
+      "createdAt": "2022-09-22T08:43:00.000Z",
+      "selected": false
+    },
+    {
       "url": "https://www.whatisemerging.com/opinions/now-that-you-ve-found-the-others-what-are-you-going-to-do-e352cb2a-e681-4e05-90ce-2cd9aa9112f6",
       "createdAt": "2022-06-22T10:01:00.000Z",
       "selected": true
+    },
+    {
+      "url": "https://medium.com/swlh/the-apogee-of-a-hemisphere-54bf050df220",
+      "createdAt": "2022-06-09T16:06:00.000Z",
+      "selected": false
     },
     {
       "url": "https://every.to/divinations/dall-e-2-and-the-origin-of-vibe-shifts",
@@ -79,9 +325,49 @@
       "selected": true
     },
     {
+      "url": "https://jods.mitpress.mit.edu/pub/ageofentanglement/release/1",
+      "createdAt": "2022-03-15T22:42:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://yukaichou.com/gamification-examples/octalysis-complete-gamification-framework/",
+      "createdAt": "2022-02-21T18:23:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://nathanieltravis.com/2022/01/17/is-human-behavior-just-elaborate-running-and-tumbling/",
+      "createdAt": "2022-02-21T13:56:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://tasshin.com/blog/the-art-of-collaboration/",
+      "createdAt": "2022-02-16T15:54:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/swlh/data-slavery-and-decentralized-emancipation-ec9cc1265608",
+      "createdAt": "2022-02-03T18:56:00.000Z",
+      "selected": false
+    },
+    {
       "url": "https://interintellect.medium.com/were-a-niche-we-just-didn-t-know-9561f662e127",
       "createdAt": "2022-01-28T01:47:00.000Z",
       "selected": true
+    },
+    {
+      "url": "https://www.theguardian.com/commentisfree/2021/nov/12/artists-climate-crisis-write-creativity-imagination",
+      "createdAt": "2022-01-26T14:56:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://zine.zora.co/speculation-is-a-superpower",
+      "createdAt": "2022-01-20T01:19:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/microsolidarity/people-practices-place-55fb33761c35",
+      "createdAt": "2022-01-15T22:36:00.000Z",
+      "selected": false
     },
     {
       "url": "https://paulkingsnorth.substack.com/p/intermission-the-machine-stops",
@@ -92,6 +378,416 @@
       "url": "https://www.fwb.help/wip/what-co-ops-and-daos-can-learn-from-each-other",
       "createdAt": "2022-01-14T14:52:00.000Z",
       "selected": true
+    },
+    {
+      "url": "https://station.mirror.xyz/NDGEJB_SUCUVr9ixDwby4D0p_hhwVK3IF0jlixI9B1w",
+      "createdAt": "2022-01-04T18:07:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.theguardian.com/technology/2014/oct/07/god-internet-alexander-bard-syntheism-new-elite",
+      "createdAt": "2021-12-27T17:18:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.nfx.com/post/network-bonding-theory/",
+      "createdAt": "2021-12-20T12:59:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.sloww.co/synthesizers/",
+      "createdAt": "2021-12-09T11:45:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://davidphelps.substack.com/p/the-currency-of-community",
+      "createdAt": "2021-12-02T00:16:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.coindesk.com/policy/2021/02/22/how-to-win-a-bitcoin-street-fight-without-mortal-combat/",
+      "createdAt": "2021-11-29T14:02:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://roamstack.com/automate-your-roam-workflows-with-smartblocks/",
+      "createdAt": "2021-11-25T17:50:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://web.archive.org/web/20101012105003/http://blog.bumblebeelabs.com/social-software-sundays-2-the-evaporative-cooling-effect/",
+      "createdAt": "2021-11-21T11:16:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://medium.com/moral-imaginations/the-great-unflattening-f29adec8b88",
+      "createdAt": "2021-11-16T19:42:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://aeon.co/essays/imagination-isnt-the-icing-on-the-cake-of-human-cognition",
+      "createdAt": "2021-11-04T17:20:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.consciouscoliving.com/2021/10/26/cop26-and-how-coliving-can-help-mitigate-the-climate-crisis/",
+      "createdAt": "2021-11-02T09:04:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://sariazout.mirror.xyz/7gSSTJ96SEyvXeljymglO3zN4H6DCgVnrNZq8_2NX1A",
+      "createdAt": "2021-11-01T22:58:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://parallax-media.eu/andrew-sweeny/emerge-in-berlin",
+      "createdAt": "2021-10-26T23:55:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://psyche.co/ideas/youre-not-a-computer-youre-a-tiny-stone-in-a-beautiful-mosaic",
+      "createdAt": "2021-10-20T08:39:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://decrypt.co/81610/early-nft-opensea-investor-nick-tomaino-belief-equals-value",
+      "createdAt": "2021-10-05T11:07:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.ourmachine.net/writing/eight-qualities-daos/",
+      "createdAt": "2021-09-16T17:19:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://ff.mirror.xyz/UJa9qpbbYftlN4xMOD9W3TBgeJS3gxK8ec4FKUJFhuM",
+      "createdAt": "2021-09-10T21:44:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.bloomberg.com/opinion/articles/2021-09-04/how-gaming-will-change-humanity-as-we-know-it",
+      "createdAt": "2021-09-07T22:43:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://darkstar.mirror.xyz/aXm3OTVTK26hN2QKu82s8NjLQYPKCOMiVD2zIioCOVU",
+      "createdAt": "2021-09-06T14:17:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.thefuturescentre.org/the-big-emergency-that-isnt-registering/",
+      "createdAt": "2021-08-16T13:40:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://dailystoic.com/stoicism-buddhism/",
+      "createdAt": "2021-08-05T21:22:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.peterjthomson.com/2019/10/agile-branding/",
+      "createdAt": "2021-08-05T09:25:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://slatestarcodex.com/2015/04/21/universal-love-said-the-cactus-person/",
+      "createdAt": "2021-08-04T13:44:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://techcrunch.com/2021/08/03/demand-curve-tested-tactics-for-growing-newsletters/?tpcc=ECTW2020&guccounter=1&guce_referrer=aHR0cHM6Ly90LmNvLw&guce_referrer_sig=AQAAAI0aa2ck9D-T4j1sTXmem_U6DdqcjdFPaQNr_sm4kcvEuXNMBFTCZx8dzbimfXFDKXhsEK2rfSIKLvnD-nsiZ6JYXxWODrE2IgX4_uEwDs2uWi9apNlWNzpHyKwjf1xun40tcjScnu9tDGN8NqylmRvjLbLzlGM_OTMh-17iVRXU",
+      "createdAt": "2021-08-03T20:25:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://kinjal.mirror.xyz/eD3-Sgv2h50j-kwjHQCOnwqMKqSLTfnrqrtNypU-P5k",
+      "createdAt": "2021-08-01T21:26:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://gnosisguild.mirror.xyz/t4F5rItMw4-mlpLZf5JQhElbDfQ2JRVKAzEpanyxW1Q?s=09",
+      "createdAt": "2021-07-30T10:16:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.theguardian.com/society/2021/jul/18/loneliness-coping-with-the-gap-where-friends-used-to-be",
+      "createdAt": "2021-07-20T11:26:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://30000feet.substack.com/p/issue-24-daos-reputation-and-the",
+      "createdAt": "2021-07-05T21:43:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://openscientist.pubpub.org/pub/eic38nbm/release/3?readingCollection=c1701ebd",
+      "createdAt": "2021-06-26T10:04:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://noahpinion.substack.com/p/interview-marc-andreessen-vc-and",
+      "createdAt": "2021-06-23T12:48:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://future.a16z.com/fantasy-hollywood-crypto-and-community-owned-characters/",
+      "createdAt": "2021-06-17T12:22:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.notboring.co/p/were-never-going-back",
+      "createdAt": "2021-06-10T16:41:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://codepunk.io/one-billion-seconds-from-now/",
+      "createdAt": "2021-06-09T09:12:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.notboring.co/p/the-cooperation-economy-",
+      "createdAt": "2021-06-07T16:09:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.theverge.com/2021/5/30/22460964/vilnius-lithuania-portal-poland-connection-pandemic",
+      "createdAt": "2021-06-04T21:48:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.edgeofbeing.org/cultural-architecture/",
+      "createdAt": "2021-06-03T14:02:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.thejaymo.net/long-form/solarpunk-rusted-chrome/",
+      "createdAt": "2021-06-01T18:24:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://otherlife.co/urbit/?ck_subscriber_id=1207580246",
+      "createdAt": "2021-05-29T22:39:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://time.com/5930790/shoshana-zuboff-interview/",
+      "createdAt": "2021-05-25T20:03:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://aeon.co/essays/the-self-is-not-singular-but-a-fluid-network-of-identities",
+      "createdAt": "2021-05-23T13:54:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "http://www.whatisemerging.com/opinions/co-creating-urban-regenerative-futures",
+      "createdAt": "2021-05-13T12:59:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://orbit.love/blog/communitree-a-network-of-community-conversations/",
+      "createdAt": "2021-05-12T21:47:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://tals.substack.com/p/defi-creators-",
+      "createdAt": "2021-05-10T15:03:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://danco.substack.com/p/world-building",
+      "createdAt": "2021-05-09T18:41:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.bbc.co.uk/news/business-56915767",
+      "createdAt": "2021-05-09T16:15:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://makopool.com/better_space_with_wots.html",
+      "createdAt": "2021-05-07T19:53:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://stratechery.com/2021/sovereign-writers-and-substack/",
+      "createdAt": "2021-05-07T08:40:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://boundless.substack.com/p/how-to-unlock-your-creativity-138",
+      "createdAt": "2021-05-06T19:03:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://digitalnative.substack.com/p/the-rise-of-synthetic-media-and-digital",
+      "createdAt": "2021-05-04T14:15:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://review.firstround.com/the-founder-dating-playbook-heres-the-process-i-used-to-find-my-co-founder",
+      "createdAt": "2021-04-30T14:56:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.openculture.com/2019/03/artificial-intelligence-identifies-the-six-main-arcs-in-storytelling-welcome-to-the-brave-new-world-of-literary-criticism.html",
+      "createdAt": "2021-04-29T20:28:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://consilienceproject.org/challenges-to-making-sense-of-the-21st-century/",
+      "createdAt": "2021-04-28T11:05:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.notboring.co/p/fairmint",
+      "createdAt": "2021-04-20T11:17:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://medium.com/concoda/when-the-u-s-dollar-collapses-the-majority-will-back-the-elites-new-currency-not-crypto-18ca3269204c",
+      "createdAt": "2021-04-15T11:41:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.lesswrong.com/posts/hTwshHAce4qZHL5zE/propinquity-cities-1",
+      "createdAt": "2021-04-13T21:51:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://medium.com/boundless-roots/roots-of-transformation-lessons-and-leverage-points-for-sustainable-living-cec40131534c",
+      "createdAt": "2021-04-09T18:03:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://medium.com/activate-the-future/the-economy-of-place-part-4-b20eb9edb706",
+      "createdAt": "2021-04-09T08:15:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://medium.com/activate-the-future/an-economy-of-place-part-7-from-extractive-to-interconnected-economies-9fb11a1e544",
+      "createdAt": "2021-04-07T11:33:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.theguardian.com/commentisfree/2021/mar/30/nature-lockdown-government-environmental-crisis?CMP=Share_iOSApp_Other",
+      "createdAt": "2021-03-31T23:58:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://thedefiant.io/decentralized-reputation-is-about-to-open-a-new-web3-frontier-kevin-owocki/",
+      "createdAt": "2021-03-28T22:28:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/in-search-of-leverage/in-defense-of-theory-part-i-why-our-obsession-with-action-is-perilous-3df48976e249",
+      "createdAt": "2021-03-25T13:17:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://medium.com/in-search-of-leverage/in-defense-of-theory-part-ii-why-product-market-fit-is-the-wrong-mental-model-for-systems-ed6a7113ee6c",
+      "createdAt": "2021-03-23T20:53:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://link.medium.com/WYilMzV6Qeb",
+      "createdAt": "2021-03-23T08:34:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.theguardian.com/environment/2021/mar/20/our-biggest-challenge-lack-of-imagination-the-scientists-turning-the-desert-green",
+      "createdAt": "2021-03-21T09:37:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.armthecreators.com/the-definition-of-a-creator/",
+      "createdAt": "2021-03-17T14:06:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://otherlife.co/the-meaning-of-clubhouse-vs-taylor-lorenz/",
+      "createdAt": "2021-03-08T01:52:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.tourismupdate.co.za/article/mother-city-targets-digital-nomads",
+      "createdAt": "2021-02-27T18:52:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://simontomes.blog/how-much-does-the-community-belonging-path-relate-to-your-community",
+      "createdAt": "2021-02-25T11:43:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://colivingfromthetrenches.com/its-not-easy-to-run-a-coliving/",
+      "createdAt": "2021-02-23T15:47:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.wired.com/story/mirrorworld-ar-next-big-tech-platform/",
+      "createdAt": "2021-02-14T14:45:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://emergencemagazine.org/story/the-serviceberry/",
+      "createdAt": "2021-02-14T12:51:00.000Z",
+      "selected": true
+    },
+    {
+      "url": "https://www.media.mit.edu/articles/neri-oxman-has-all-the-answers/",
+      "createdAt": "2021-02-03T08:47:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/rebel-wisdom/the-age-of-breach-gamestop-wokeism-and-the-capitol-8e3ac46efaf9",
+      "createdAt": "2021-01-30T02:15:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/@anoukruhaak/data-trusts-why-what-and-how-a8b53b53d34",
+      "createdAt": "2021-01-28T19:34:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://a16z.com/2020/04/18/its-time-to-build/",
+      "createdAt": "2021-01-26T23:59:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/reinventing-work/decision-making-how-to-use-the-advice-process-6cd6e2c8a296",
+      "createdAt": "2021-01-23T02:06:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://medium.com/@bababenja/igniting-change-bf5f269c79e8",
+      "createdAt": "2021-01-19T16:41:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://sifted.eu/articles/perchpeek-anyone-work-anywhere/",
+      "createdAt": "2021-01-18T23:51:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.theguardian.com/society/2021/jan/17/is-the-boom-in-communal-living-really-the-good-life?CMP=Share_iOSApp_Other",
+      "createdAt": "2021-01-17T20:28:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://hackernoon.com/startups-need-a-new-option-exit-to-community-ig12v2z73",
+      "createdAt": "2021-01-17T17:52:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://www.packym.com/blog/conjuring-scenius",
+      "createdAt": "2021-01-11T23:45:00.000Z",
+      "selected": false
+    },
+    {
+      "url": "https://hbr.org/2016/09/know-your-customers-jobs-to-be-done",
+      "createdAt": "2021-01-08T13:42:00.000Z",
+      "selected": false
     }
   ]
 }

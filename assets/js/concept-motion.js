@@ -22,7 +22,7 @@
    position=rest+spring;progress=raw;Object.assign(motion.style,{position:'fixed',inset:'auto',left:(target.left+target.width/2)+'px',top:position+'px',width:target.width+'px',height:target.height+'px',transform:'translate(-50%,-50%)'});
   }
   motion.classList.remove('is-travelling','is-docked');Object.assign(motion.style,{opacity:'1',visibility:box.bottom<0||box.top>innerHeight?'hidden':'visible'});motion.dataset.scrollProgress=progress.toFixed(4);motion.dataset.docked=String(docked);
-  const p=progress,grade=Math.max(0,Math.min(1,p/.3)),smooth=grade*grade*(3-2*grade);motion.style.filter='brightness('+(.7+.3*smooth)+')';motion.style.setProperty('--intro-vignette',String(1-smooth));
+  const p=progress*progress;motion.dataset.animationProgress=p.toFixed(4);const grade=Math.max(0,Math.min(1,p/.3)),smooth=grade*grade*(3-2*grade);motion.style.filter='brightness('+(.7+.3*smooth)+')';motion.style.setProperty('--intro-vignette',String(1-smooth));
   const fade=Math.max(0,Math.min(1,(p-.32)/.18));for(const film of films){film.el.style.opacity=film.el.classList.contains('concept-triangle-older')?String(.5*(1-fade*fade*(3-2*fade))):'1';const position=docked?film.count-1:Math.min(film.count-1-.00001,p*(film.count-1)),index=Math.floor(position);film.wanted=index;film.next=Math.min(film.count-1,index+1);film.mix=position-index;frame(film,index,true);frame(film,film.next,true);paint(film);for(const delta of [1,-1,2,-2,3,-3]){const next=index+delta;if(next>=0&&next<film.count)frame(film,next)}}
   if(mode==='release')request();
  }
@@ -33,7 +33,7 @@
 (() => {
  const intro=document.querySelector('.concept-intro');if(!intro)return;const title=intro.querySelector('.fader'),once=intro.querySelector('.fade1'),lines=[...intro.querySelectorAll('.concept-intro-line')],reduce=matchMedia('(prefers-reduced-motion:reduce)');let pending=false;
  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t)};
- function update(){pending=false;const rect=intro.getBoundingClientRect(),p=Math.max(0,Math.min(100,-rect.top/Math.max(1,rect.height-innerHeight)*100));[title,once].forEach((el,i)=>{const exit=smooth((p-25)/17),alpha=reduce.matches?1:smooth((p-i*2)/7)*(1-exit);el.style.setProperty('--intro-opacity',alpha);el.style.setProperty('--intro-lift',(-32*exit)+'px')});lines.forEach((el,i)=>{const alpha=reduce.matches?1:smooth((p-(12+i*11))/10)*(1-smooth((p-86)/14));el.style.setProperty('--intro-opacity',alpha);el.style.setProperty('--intro-lift',(12*(1-alpha)-85*smooth((p-25)/17))+'px')});intro.dataset.scrollProgress=p.toFixed(2)}
+ function update(){pending=false;const rect=intro.getBoundingClientRect(),p=Math.max(0,Math.min(100,-rect.top/Math.max(1,rect.height-innerHeight)*100));const scroll=Math.max(0,-rect.top/innerHeight),base=innerWidth<=740?4.4:4.8,exit=smooth((scroll-base*.25)/(base*.17)),starts=[base*.18,base*.235,base*.385];[title,once].forEach((el,i)=>{const alpha=reduce.matches?1:smooth((scroll-i*base*.02)/(base*.07))*(1-exit);el.style.setProperty('--intro-opacity',alpha);el.style.setProperty('--intro-lift',(-32*exit)+'px')});lines.forEach((el,i)=>{const alpha=reduce.matches?1:smooth((scroll-starts[i])/(base*.08))*(1-smooth((p-80)/13));el.style.setProperty('--intro-opacity',alpha);el.style.setProperty('--intro-lift',(12*(1-alpha)-85*exit)+'px')});intro.dataset.scrollProgress=p.toFixed(2)}
  function request(){if(!pending){pending=true;requestAnimationFrame(update)}}window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);reduce.addEventListener('change',request);update();
 })();
 
