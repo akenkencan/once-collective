@@ -1,0 +1,63 @@
+/* ONCE — Laminated Glass. Apply .laminated-glass to a positioned button. */
+body .laminated-glass{position:relative;isolation:isolate;overflow:hidden;backdrop-filter:blur(.6px) saturate(1.12)!important;-webkit-backdrop-filter:blur(.6px) saturate(1.12)!important;background:linear-gradient(120deg,#fff1,#fff02 50%,#fff1)!important;transition:box-shadow 1.8s ease,background 1.8s ease!important}
+body .laminated-glass:before{content:""!important;position:absolute;inset:-30%;padding:0;border-radius:inherit;pointer-events:none;mask:none!important;-webkit-mask:none!important;background:linear-gradient(115deg,transparent 20%,#ffc6de20 36%,#c8baff25 43%,#a8e5e528 50%,#fff0bd22 57%,transparent 72%)!important;transform:translateX(-14%)!important;opacity:0!important;transition:opacity 1.8s ease,transform 2.8s cubic-bezier(.25,.1,.25,1)!important;filter:blur(5px)!important}
+body .laminated-glass:is(:hover,:focus-visible):before{opacity:.65!important;transform:translateX(14%)!important}
+body .laminated-glass:after{content:"";position:absolute;inset:0;padding:7px;pointer-events:none;border-radius:inherit;background:linear-gradient(120deg,#f4d9eb30,#beebec20 40%,#ead3a530)!important;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;backdrop-filter:blur(9px) url(#updates-glass-refract) saturate(1.25)!important;-webkit-backdrop-filter:blur(9px) saturate(1.25)!important;box-shadow:inset 0 1px 3px #fff8,inset 0 -2px 5px #c8e1e977!important}
+.frame-updates-slot>.laminated-glass{min-height:36px;padding-block:4.64px;line-height:1.25}
+/* Continuous proximity opacity; the approach class must not force a binary reveal. */
+body.site-unified.nav-left-near>.navbar-wrapper .brand{opacity:var(--nav-left,0)!important;transition:opacity .65s cubic-bezier(.22,1,.36,1)!important}
+body.site-unified.nav-return-visible>.navbar-wrapper .brand{opacity:1!important}
+/* Concept reading, with a still entry and upward-only departure. */
+.concept-page .concept-intro{height:580vh;min-height:2800px}.concept-intro-stage{gap:clamp(14px,2.5vh,26px);padding:60px 6vw}
+.concept-page .concept-intro :is(.fader,.fade1,.concept-intro-line){margin:0!important;text-align:center;text-wrap:balance;will-change:transform,opacity}
+.concept-page .concept-intro .fader{font-size:clamp(34px,5.4vw,78px)}
+.concept-page .concept-intro .fade1{font-size:clamp(23px,3vw,40px)}
+.concept-page .concept-intro .concept-intro-line{font-family:var(--font-heading)!important;font-size:clamp(19px,2.3vw,32px);line-height:1.4;opacity:var(--intro-opacity,0);transform:translateY(var(--intro-lift,0px));font-weight:400;max-width:1050px;align-self:center}
+.concept-page .concept-intro .concept-intro-line:first-of-type{padding-top:clamp(18px,3vh,38px)}
+.concept-page .concept-intro :is(.fader,.fade1){transform:translateY(var(--intro-lift,0px))!important}
+.concept-intro-stage>.concept-scroll-cue{top:auto!important;bottom:15vh!important}
+.concept-worlds-title{font-family:var(--font-heading)!important;font-size:clamp(32px,5.8vw,86px);font-weight:400;letter-spacing:.04em;text-align:center;color:#dfd0b5;text-shadow:0 1px #f5ead7,0 3px 12px #80704b55;margin:clamp(50px,8vh,110px) 3vw 0;text-wrap:balance}
+.page-concept #Showreel{margin-top:clamp(30px,5vh,65px)!important;margin-bottom:clamp(85px,12vh,170px)!important}.concept-contact .contact-actions{margin-top:0}.concept-film-stage{margin-top:clamp(150px,23vh,280px)!important}
+/* Home: the native symbol spread pulls six independent type planes toward us. */
+html.home-gravity-opening body.page-home{background:#000!important}
+html.home-gravity-opening .fullscreen-section:not(.overlay)>.text{visibility:hidden}
+.home-depth-row{width:100%;flex:none;transform-origin:50% 50%;transform-style:preserve-3d;will-change:transform,opacity;opacity:0}.home-depth-row:nth-child(1),.home-depth-row:nth-child(6){height:16vh}.home-depth-row:nth-child(2),.home-depth-row:nth-child(5){height:6.19vh}.home-depth-row:nth-child(3),.home-depth-row:nth-child(4){height:3.5vh}
+.home-depth-row>.text-row{height:100%}.home-gravity-complete .home-depth-row{will-change:auto}
+/* Welcome: an original framed artwork and a separate card/seal arrangement. */
+.welcome-form-composition{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(12px,2vw,28px);align-items:center;margin:36px 0 48px;position:relative}
+.welcome-form-composition figure{margin:0}.welcome-framed-angels{aspect-ratio:625/610;position:relative;min-width:0}.welcome-framed-angels .framed-art-image{position:absolute;left:24%;top:24%;width:53%;height:52%;object-fit:cover}.welcome-framed-angels .physical-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.welcome-sealed-cards{position:relative;min-width:0}.welcome-sealed-cards>.card-cluster{display:block;width:100%;height:auto}.welcome-sealed-cards>.seal-centre{position:absolute;width:31%;height:auto;left:40%;top:47%;transform:rotate(-9deg)}.welcome-sealed-cards>.seal-side{position:absolute;width:30%;height:auto;right:-5%;bottom:0;transform:rotate(13deg)}
+.joker-portrait>.painting-magnifier{display:none;position:absolute;z-index:27;pointer-events:none;max-width:none!important;height:auto!important}.joker-portrait.lens-active>.painting-magnifier{display:block}.joker-portrait.lens-active{cursor:none!important}
+/* Compact menu close, stacked logo and five evenly aligned word engines. */
+.nav-menu>.navbar-wrapper.absolute{padding-right:10px!important}.nav-menu .menu-icon-wrap.long{min-width:70px;min-height:54px;gap:6px;padding:12px 4px!important;margin-left:auto}.nav-menu .menu-icon-wrap.long .close{font-size:12px!important;line-height:1.2}.nav-menu .menu-icon-wrap.long .x{width:12px!important;height:12px!important}.nav-menu .navbar-wrapper.absolute .brand.hide{display:block!important;opacity:1!important;visibility:visible!important}.nav-menu .navbar-wrapper.absolute .logo{width:48px!important;height:48px!important;max-height:none;object-fit:contain}
+.nav-menu .symbol-menu-mobile,.welcome-menu-symbols{display:grid!important;grid-template-columns:1fr!important;gap:clamp(8px,1.7vh,18px);width:min(680px,90vw);margin:18px auto 0!important;padding:0!important}
+.nav-engine-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:clamp(12px,3vw,44px);align-items:center;min-height:76px;position:relative}
+.nav-engine-row>a{width:96px!important;height:76px!important;min-width:0!important;margin:0!important;padding:0!important;position:relative;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important}.nav-engine-row>a>img{width:96px;height:76px;object-fit:contain}
+.nav-symbol-ink{position:absolute;inset:0;mask-image:var(--menu-symbol-mask);-webkit-mask-image:var(--menu-symbol-mask);mask-size:contain;-webkit-mask-size:contain;mask-position:center;-webkit-mask-position:center;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;opacity:0;transition:opacity .7s;pointer-events:none}.is-bursting>.nav-symbol-ink{opacity:1}.nav-symbol-ink canvas{width:100%;height:100%}
+.nav-cylinder{height:66px;perspective:500px;position:relative;overflow:hidden;opacity:0;transition:opacity .6s;mask-image:linear-gradient(transparent,#000 25%,#000 75%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 25%,#000 75%,transparent);pointer-events:none}.nav-engine-row:is(:hover,:focus-within) .nav-cylinder{opacity:1}.nav-cylinder-rotor{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}.nav-cylinder-word{position:absolute;left:0;right:0;top:50%;height:30px;line-height:30px;margin-top:-15px;font-family:var(--font-heading,'ONCE Brygada 1918',serif)!important;font-size:clamp(18px,2.4vw,30px);text-align:center;backface-visibility:hidden;color:#eee8db;white-space:nowrap}.nav-engine-row.is-bursting .nav-cylinder-word{background:linear-gradient(110deg,#f8dfb1,#f2bad1,#b7b9ef,#a7e3df,#eee2b3);background-size:250% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:menu-word-spectrum 7s linear infinite}
+@keyframes menu-word-spectrum{to{background-position:250% 0}}
+.nav-menu .nav-link.colour-burst-button{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;margin:0!important;border-radius:0!important;min-height:0}.nav-menu .nav-link .burst-label{color:inherit}.nav-menu .nav-link .burst-surface{opacity:0!important}.nav-menu .nav-link .burst-ink{background-clip:text;-webkit-background-clip:text}
+#welcome-site-menu .welcome-menu-close{font-size:12px;min-width:70px;min-height:54px;right:10px}.welcome-menu-stacked{position:absolute;left:28px;top:22px;width:48px;height:48px}
+/* Found diagram: a reversible view on this page. */
+.found-diagram-dialog{width:min(96vw,1500px);max-width:96vw;max-height:94vh;padding:0;border:0;background:transparent;overflow:visible}.found-diagram-dialog::backdrop{background:#000e;backdrop-filter:blur(8px)}.found-diagram-dialog>img{display:block;max-width:100%;max-height:90vh;margin:auto;object-fit:contain}.found-diagram-dialog>.diagram-close{position:absolute;right:0;top:-32px;background:#111b;color:#fff;border:0;min-height:32px;cursor:pointer}
+.page-found .heading-20[data-size-boost]{font-size:clamp(27.3px,3.458vw,52.78px)!important}
+.world-frame-return{position:absolute;inset:0;background:none;border:0;width:100%;height:100%;cursor:n-resize}.ark-private-zone{pointer-events:none}.ark-private-zone button{pointer-events:auto}
+@media(max-width:740px){.concept-page .concept-intro{height:540vh;min-height:2800px}.concept-intro-stage{gap:16px;padding-block:45px}.concept-page .concept-intro .concept-intro-line{font-size:19px;line-height:1.35}.concept-page .concept-intro .fader{font-size:34px}.concept-film-stage{margin-top:130px!important}.page-found .heading-20[data-size-boost]{font-size:38.22px!important}.nav-engine-row{grid-template-columns:76px minmax(0,1fr);gap:12px;min-height:64px}.nav-engine-row>a,.nav-engine-row>a>img{width:76px!important;height:64px!important}.nav-menu .nav-link .med-word{font-size:26px!important}.nav-cylinder{height:58px}.welcome-form-composition{gap:12px}.welcome-sealed-cards>.seal-side{right:0}}
+@media(prefers-reduced-motion:reduce){.home-depth-row{transform:none!important;opacity:1!important}.nav-cylinder-rotor{transform:none!important;filter:none!important}.nav-cylinder-word{visibility:hidden}.nav-cylinder-word:first-child{visibility:visible;transform:none!important}.nav-engine-row.is-bursting .nav-cylinder-word{animation:none}body .laminated-glass:before{transition:opacity .2s!important;transform:none!important}}
+
+.nav-menu .symbol-menu-mobile{width:100%!important;max-width:680px;padding-inline:12px!important;box-sizing:border-box}
+.nav-menu .nav-link.colour-burst-button:after,#welcome-site-menu .welcome-menu-word:after{content:none!important}
+.nav-menu .nav-link .burst-ink,.nav-menu .nav-link .burst-ink *,#welcome-site-menu .welcome-menu-word .burst-ink,#welcome-site-menu .welcome-menu-word .burst-ink *{color:transparent!important;background:linear-gradient(110deg,#f6d3a5,#efb5d5,#bbc0f4,#a4e5da,#f5e9b9);background-clip:text;-webkit-background-clip:text}
+#welcome-site-menu .welcome-menu-word{display:block;position:relative;border:0!important;background:none!important;box-shadow:none!important;margin:0!important;padding:0!important;border-radius:0!important}
+#welcome-site-menu .welcome-menu-word>.burst-surface{display:none}
+.world-frame-return{clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,28% 27%,28% 71%,72% 71%,72% 27%,28% 27%)}
+
+.nav-cylinder-word{filter:blur(var(--engine-blur,9px))}.painting-magnifier{mask-image:radial-gradient(ellipse 21% 22% at 38.8% 35.2%,#0002 78%,#000 100%);-webkit-mask-image:radial-gradient(ellipse 21% 22% at 38.8% 35.2%,#0002 78%,#000 100%)}
+
+#welcome-site-menu .welcome-menu-symbols{width:100%!important;max-width:100%;box-sizing:border-box}.nav-cylinder-word{font-size:clamp(17px,2vw,27px)}
+
+@font-face{font-family:'ONCE Cormorant';src:url('/welcome/assets/fonts/CormorantGaramond-Variable.ttf') format('truetype');font-weight:300 700;font-display:swap}.concept-worlds-title{font-family:'ONCE Cormorant',serif!important;font-weight:500;letter-spacing:.06em}
+
+.nav-menu .menu-icon-wrap.long .close{font-size:min(12px,1.2vh)!important;margin-right:6px!important}
+
+#welcome-site-menu .welcome-menu-close{font-size:10px!important}
