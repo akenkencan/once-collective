@@ -1,0 +1,22 @@
+/* Keep the foreground safely within the visible paper at tablet/phone widths. */
+@media(max-width:1100px){
+ .meaning-grid .meaning-paper-stack>article.paper{--paper-image:url('/assets/images/oct23-r28/reading-paper-trimmed.webp');padding:clamp(48px,7vw,78px) clamp(36px,8vw,88px)!important;min-width:0;box-sizing:border-box}
+ .meaning-grid .meaning-paper-stack>article.paper::before{inset:0!important;background-size:100% 100%!important}
+ .meaning-paper-stack .section-heading{gap:16px;align-items:start}
+ .meaning-paper-stack .section-heading h2{font-size:clamp(27px,4vw,42px);line-height:1.15;min-width:0;overflow-wrap:normal}
+ .meaning-paper-stack .section-heading>.section-symbol{width:clamp(28px,5vw,48px);height:auto;flex:none}
+ body:has(.studio-heading) main .meaning-paper-stack article.paper p{font-size:clamp(16px,1.8vw,19px)!important;line-height:1.65}
+ .studio-heading>article.paper{padding:clamp(40px,7vw,70px) clamp(34px,7vw,76px)!important;min-width:0;box-sizing:border-box}
+ .studio-heading>article.paper::before{inset:0!important;background-size:100% 100%!important}
+}
+@media(max-width:740px){
+ .meaning-grid .meaning-paper-stack>article.paper{padding:42px clamp(30px,8vw,55px)!important}
+ .meaning-paper-stack .section-heading h2{font-size:clamp(26px,6vw,36px)}
+ .meaning-grid .card-reveal{margin-top:18px}
+ .framed-reveal.is-open>.frame-updates-slot,.framed-reveal.is-open>.frame-signup-group{height:0!important;min-height:0!important;padding:0!important;margin-top:0!important;overflow:hidden}
+}
+/* One live text surface prevents slice seams and a different layout at handoff. */
+html.home-gravity-opening .fullscreen-section:not(.overlay) [data-oil-symbol],html.home-gravity-opening .fullscreen-section:not(.overlay) [data-symbol-word]{pointer-events:none!important}
+.home-depth-row{backface-visibility:hidden;transform-style:preserve-3d}
+
+body.page-home:not(.home-activation-armed) .fullscreen-section:not(.overlay) [data-oil-symbol],body.page-home:not(.home-activation-armed) .fullscreen-section:not(.overlay) [data-symbol-word]{pointer-events:none!important}
