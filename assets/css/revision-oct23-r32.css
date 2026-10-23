@@ -27,3 +27,6 @@
 /* Reserve illustration space before the original lazy images decode. */
 .community-resources .community-potential-media img{aspect-ratio:179/168}
 .community-relationships>img.image-17{aspect-ratio:222/196}
+.community-benefits-first .community-introduction>h1{margin-bottom:32px!important}
+.community-wider-context{margin-block:45px 65px}
+.community-wider-context .community-promises{margin-top:45px}
