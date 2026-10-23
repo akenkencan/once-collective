@@ -21,7 +21,11 @@
    card.style.setProperty('--hidden-y',(origin.top+origin.height*.55-stage.top-y-h/2)+'px');
    if(final)heights=[y+h+padding,y+h+padding];else heights[col]=y+h+padding;
   });
-  collapse.tabIndex=expanded?0:-1;tray.style.height=expanded?(Math.max(0,...heights)+24)+'px':'0px';
+  // Fit the right-hand cards to the left article and its revealed paper, allowing
+  // only half that paper's height to extend the overall section.
+  let total=Math.max(0,...heights)+24;
+  if(!mobile){const leftCard=paperTray.clientWidth/1.43,article=paperStack.querySelector('article'),budget=Math.max(220,article.getBoundingClientRect().bottom+leftCard*1.5-stage.top),scale=Math.min(1,budget/total);if(scale<1){cards.filter(card=>card.style.display!=='none').forEach(card=>{const w=parseFloat(card.style.width)*scale,h=parseFloat(card.style.height)*scale,x=width/2+(parseFloat(card.style.left)-width/2)*scale,y=parseFloat(card.style.top)*scale;Object.assign(card.style,{width:w+'px',height:h+'px',left:x+'px',top:y+'px'});if(card.classList.contains('reveal-clockwise')){card.style.setProperty('--turned-width',h+'px');card.style.setProperty('--turned-height',w+'px')}card.style.setProperty('--hidden-x',(origin.left+origin.width/2-stage.left-x-w/2)+'px');card.style.setProperty('--hidden-y',(origin.top+origin.height*.55-stage.top-y-h/2)+'px')});total*=scale}}
+  collapse.tabIndex=expanded?0:-1;tray.style.height=expanded?total+'px':'0px';
  }
  function queue(){cancelAnimationFrame(frame);frame=requestAnimationFrame(layout)}
  function sync(){const updates=group.querySelector('.frame-updates-slot');updates.inert=expanded;updates.setAttribute('aria-hidden',String(expanded));if(expanded&&updates.querySelector('button')?.getAttribute('aria-expanded')==='true')document.dispatchEvent(new CustomEvent('once:signup-close'));portrait.setAttribute('aria-expanded',String(expanded));paperTray.classList.toggle('is-open',expanded);paperTray.setAttribute('aria-hidden',String(!expanded));group.classList.toggle('is-open',expanded);tray.classList.toggle('is-open',expanded);paperStack.classList.toggle('is-open',expanded);tray.setAttribute('aria-hidden',String(!expanded));layout()}

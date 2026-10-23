@@ -11,6 +11,7 @@
  }
  async function close(){if(!panel)return;await reveal(false);opener?.focus({preventScroll:true})}
  document.addEventListener('click',event=>{
+  const jump=event.target.closest('[data-open-welcome-updates]');if(jump){event.preventDefault();event.stopImmediatePropagation();const rug=document.querySelector('.updates-carpet'),target=rug?.querySelector('button');if(target){if(target.getAttribute('aria-expanded')!=='true')target.click();requestAnimationFrame(()=>rug.scrollIntoView({behavior:'smooth',block:'start'}))}return}
   const button=event.target.closest('a,button');if(!button)return;
   const label=(button.querySelector('.burst-label')||button).textContent.trim();if(!/^(leave an email|reach out|get updates)$/i.test(label))return;
   event.preventDefault();event.stopImmediatePropagation();if(opener===button&&panel&&opened){close();return}

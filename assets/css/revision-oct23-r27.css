@@ -1,0 +1,45 @@
+/* Round 27: layout zones own their space instead of accumulating offsets. */
+.frame-updates-slot{margin: -5px auto 0!important;display:flex;justify-content:center;align-items:center;position:relative;left:50%;transform:translateX(-50%)!important}
+.frame-updates-slot>.laminated-glass{left:0!important;margin:0!important;font:750 16px/1.25 var(--font-interface)!important;text-shadow:0 2px 4px #000d}
+.enter-details-link{color:inherit;text-decoration:underline;text-underline-offset:3px}
+#welcome-updates{scroll-margin-top:110px}
+.welcome-form-composition{background:none!important;padding:0!important}
+.welcome-framed-angels{aspect-ratio:1028/1049}
+.welcome-framed-angels .framed-art-image{left:12.4%;top:12.4%;width:75.2%;height:75.2%;object-fit:cover}
+.what-copy{display:flex;flex-direction:column;align-self:stretch}
+.what-copy>.what-ending{margin-top:auto;padding-top:clamp(40px,5vh,70px)}
+.what-ending-copy .closing-line+p{margin-top:clamp(32px,4vh,55px)}
+body .icon-wrap[data-oil-symbol] .oil-face{inset:0!important;top:0!important;bottom:0!important;mask-size:100% 100%;-webkit-mask-size:100% 100%}
+body .icon-wrap[data-oil-symbol]>.oil-icon{transform-origin:50% 50%!important}
+.home-roller-strip{position:absolute;inset:0;pointer-events:none;transform-origin:center;backface-visibility:hidden}
+.home-roller-strip>.text-row{height:100%!important;align-items:center}
+.home-depth-row.is-rolling>.text-row{visibility:hidden!important}
+/* The upper page zone and lower symbol zone remain separate at every height. */
+body .nav-menu-wrapper[data-menu-open] .nav-menu{width:clamp(340px,32vw,460px);height:100dvh;padding:calc(var(--site-logo-centre,50px) + 85px) 28px 18px!important;display:flex!important;flex-direction:column;gap:0;overflow-y:auto}
+.menu-page-zone{display:flex;flex-direction:column;justify-content:space-around;flex:0 0 38%;min-height:230px;margin-bottom:20px}
+body .nav-menu .menu-page-zone>.nav-link.colour-burst-button{padding:0!important;margin:0!important;min-width:0}
+body .nav-menu .nav-link .med-word{font-size:clamp(36px,6.8vh,64px)!important;line-height:1.12!important}
+body .nav-menu .symbol-menu-mobile,#welcome-site-menu .welcome-menu-symbols{flex:1!important;min-height:280px!important;grid-template-rows:repeat(5,minmax(52px,1fr))!important;gap:0!important;margin:0!important;padding:0!important;width:100%;align-content:stretch}
+body .nav-engine-row{grid-template-columns:clamp(62px,8vh,100px) minmax(0,1fr);min-height:0;gap:18px;align-items:center;--engine-height:clamp(52px,7.3vh,88px)}
+body .nav-engine-row>a,body .nav-engine-row>a>img{width:100%!important;height:var(--engine-height)!important;object-fit:contain}
+body .nav-cylinder{width:100%;min-width:0;overflow:hidden;perspective:800px}
+body .nav-cylinder-rotor{inset:0 16px}
+body .nav-cylinder-word{text-align:center;font-size:var(--engine-font-size,18px);white-space:nowrap;letter-spacing:0}
+.engine-too-small>.nav-cylinder{visibility:hidden;opacity:0!important}
+.nav-menu .credit{order:1;position:static!important;margin:16px 0 0!important;padding:0!important;font-size:10px!important;line-height:1.4;flex:none;max-width:100%;text-align:left}
+.nav-menu .credit *{font-size:inherit!important}
+#welcome-site-menu{width:clamp(340px,32vw,460px)!important;height:100dvh;max-height:100dvh;padding:calc(var(--site-logo-centre,38px) + 85px) 28px 22px!important;overflow-y:auto}
+#welcome-site-menu nav{display:flex;height:100%;flex-direction:column;gap:0}
+#welcome-site-menu .welcome-menu-word{font-size:clamp(36px,6.8vh,64px);line-height:1.12;padding:0!important;margin:0!important}
+.world-page .world-ideas p.world-coordination-copy{font-family:var(--font-heading)!important;font-size:clamp(27px,3.5vw,50px)!important;line-height:1.4!important;text-transform:none}
+@media(max-width:740px){
+ body .nav-menu-wrapper[data-menu-open] .nav-menu,#welcome-site-menu{width:min(92vw,390px)!important;padding-inline:24px!important}
+ .menu-page-zone{flex-basis:38%;min-height:210px}
+ body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:clamp(34px,6.4vh,55px)!important}
+ body .nav-cylinder{display:none!important}
+ body .nav-engine-row{grid-template-columns:1fr;justify-items:start}
+ body .nav-engine-row>a{width:84px!important}
+ .world-page .world-ideas p.world-coordination-copy{font-size:27px!important}
+ .what-copy>.what-ending{padding-top:36px}
+}
+@media(max-height:680px){.menu-page-zone{min-height:170px;flex-basis:34%;margin-bottom:12px}body .nav-menu .symbol-menu-mobile,#welcome-site-menu .welcome-menu-symbols{min-height:220px!important}body .nav-engine-row{--engine-height:44px}body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:34px!important}}
