@@ -8,8 +8,10 @@
   paperTray.style.height=expanded&&!mobile?(paperTray.clientWidth/1.43)+'px':'0px';
   let heights=[0,0];
   if(distributed){const specimens=aside.querySelector('.meaning-specimens');heights[0]=Math.min(0,specimens.getBoundingClientRect().bottom-tray.getBoundingClientRect().top+24)}
-  group.style.setProperty('--updates-centre',(portrait.offsetLeft+portrait.offsetWidth/2)+'px');
   const origin=portrait.getBoundingClientRect(),stage=tray.getBoundingClientRect();
+  // CSS owns the shared centre; only constrain the rug to the space on either side.
+  const centre=origin.left+origin.width/2,viewport=document.documentElement.clientWidth;
+  group.style.setProperty('--updates-rug-width',Math.max(0,Math.min(456,viewport-24,2*Math.min(centre-12,viewport-12-centre)))+'px');
   cards.forEach((card,i)=>{
    if(mobile&&i>=2){card.style.display='none';return}
    if(card.classList.contains('optional-reveal')){card.style.display='none';return}
@@ -38,5 +40,5 @@
  });
  collapse.addEventListener('click',()=>{if(expanded){details.querySelector('summary').click();details.querySelector('summary').focus({preventScroll:true})}});
  portrait.addEventListener('click',()=>details.querySelector('summary').click());portrait.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();details.querySelector('summary').click()}});
- tray.querySelectorAll('img').forEach(img=>img.addEventListener('load',queue));const observer=new ResizeObserver(queue);[group,paperStack,aside].forEach(e=>observer.observe(e));window.addEventListener('resize',queue);sync();
+ tray.querySelectorAll('img').forEach(img=>img.addEventListener('load',queue));const observer=new ResizeObserver(queue);[group,portrait,paperStack,aside].forEach(e=>observer.observe(e));window.addEventListener('resize',queue);sync();
 })();
