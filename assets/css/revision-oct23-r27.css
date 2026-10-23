@@ -1,5 +1,5 @@
 /* Round 27: layout zones own their space instead of accumulating offsets. */
-.frame-updates-slot{margin: -5px auto 0!important;display:flex;justify-content:center;align-items:center;position:relative;left:50%;transform:translateX(-50%)!important}
+.frame-updates-slot{margin: -5px auto 0!important;display:flex;justify-content:center;align-items:center;position:relative;left:var(--updates-centre,50%);transform:translateX(-50%)!important}
 .frame-updates-slot>.laminated-glass{left:0!important;margin:0!important;font:750 16px/1.25 var(--font-interface)!important;text-shadow:0 2px 4px #000d}
 .enter-details-link{color:inherit;text-decoration:underline;text-underline-offset:3px}
 #welcome-updates{scroll-margin-top:110px}

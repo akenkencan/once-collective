@@ -8,6 +8,7 @@
   paperTray.style.height=expanded&&!mobile?(paperTray.clientWidth/1.43)+'px':'0px';
   let heights=[0,0];
   if(distributed){const specimens=aside.querySelector('.meaning-specimens');heights[0]=Math.min(0,specimens.getBoundingClientRect().bottom-tray.getBoundingClientRect().top+24)}
+  group.style.setProperty('--updates-centre',(portrait.offsetLeft+portrait.offsetWidth/2)+'px');
   const origin=portrait.getBoundingClientRect(),stage=tray.getBoundingClientRect();
   cards.forEach((card,i)=>{
    if(mobile&&i>=2){card.style.display='none';return}
