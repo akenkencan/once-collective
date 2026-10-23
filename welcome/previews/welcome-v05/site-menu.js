@@ -5,5 +5,5 @@
  menu.querySelector('.welcome-menu-close').addEventListener('click',close);
  menu.addEventListener('close',()=>toggle.setAttribute('aria-expanded','false'));
  menu.addEventListener('click',e=>{if(e.target===menu)close()});
- menu.querySelector('[data-local-showreel]').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();close();document.getElementById('showreel').scrollIntoView({behavior:'smooth',block:'center'});history.pushState(null,'',location.pathname+'#showreel')});
+ menu.querySelector('[data-local-showreel]').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();close();(()=>{const video=document.getElementById('showreel-video'),b=video.getBoundingClientRect();window.scrollTo({top:b.top+scrollY+b.height/2-innerHeight/2,behavior:'smooth'})})();history.pushState(null,'',location.pathname+'#showreel')});
 })();
