@@ -1,0 +1,29 @@
+/* Clear the opening before the origins enter the reading viewport. */
+.concept-page .concept-story .concept-origins-container{margin-top:-40vh!important}
+/* The heading owns an equally generous interval above and below it. */
+.community-restored-support>.community-oil-painting{grid-column:2;grid-row:1/3;position:relative;--bird-frame-size:24px}
+.community-restored-support>.c--heading{
+ grid-column:1;grid-row:2;margin:clamp(54px,5vw,80px) 0!important;
+}
+.community-restored-support>.community-resources{margin-top:0!important}
+.community-restored-support>.community-relationships{margin-top:64px!important}
+.community-restored-support>.community-oil-painting.gold-framed-art>img{transform:scale(1.025)!important}
+.community-oil-painting:after{content:"";position:absolute;inset:calc(-1 * var(--bird-frame-size));border:var(--bird-frame-size) solid transparent;border-image:inherit;pointer-events:none;z-index:2}
+/* Additive light preserves the dark background while lifting the supplied cards. */
+.community-digital-section .community-digital-media{isolation:auto}
+.community-digital-section .community-digital-media>img{mix-blend-mode:screen}
+@supports(mix-blend-mode:plus-lighter){.community-digital-section .community-digital-media>img{mix-blend-mode:plus-lighter}}
+/* Ten percent more width, still within the page's outer viewport margin. */
+.connected-page .connected-closing-art>.editorial-image{width:110%!important;max-width:none!important;margin-inline:-5%!important}
+@media(max-width:800px){
+ .community-restored-support>.community-oil-painting,
+ .community-restored-support>.c--heading{grid-column:1;grid-row:auto}
+ .community-restored-support>.c--heading{margin-block:48px!important}
+ .community-restored-support>.community-relationships{margin-top:56px!important}
+}
+@media(max-width:520px){.community-oil-painting{--bird-frame-size:18px!important}}
+.community-restored-support>.community-restored-grid.community-relationships{margin-top:64px!important}
+@media(max-width:800px){.community-restored-support>.community-restored-grid.community-relationships{margin-top:56px!important}}
+/* Reserve illustration space before the original lazy images decode. */
+.community-resources .community-potential-media img{aspect-ratio:179/168}
+.community-relationships>img.image-17{aspect-ratio:222/196}

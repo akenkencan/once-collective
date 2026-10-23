@@ -1,0 +1,10 @@
+.git
+.vercel
+.manus
+.agents
+.codex
+.env
+.env.*
+*.log
+.DS_Store
+tests
