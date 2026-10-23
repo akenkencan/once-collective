@@ -33,5 +33,33 @@
     "full": "/assets/images/gallery/PoliticalRecombination.webp",
     "width": 1536,
     "height": 1024
+  },
+  {
+    "title": "The Core Tradeoffs",
+    "src": "/assets/images/gallery/CoreTradeoffs-preview.webp",
+    "full": "/assets/images/gallery/CoreTradeoffs.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "title": "Purpose and Coherence",
+    "src": "/assets/images/gallery/PurposeAndCoherence-preview.webp",
+    "full": "/assets/images/gallery/PurposeAndCoherence.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "title": "ONCE Living Archive",
+    "src": "/assets/images/gallery/LivingArchive-preview.webp",
+    "full": "/assets/images/gallery/LivingArchive.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "title": "European Renaissance",
+    "src": "/assets/images/gallery/EuropeanRenaissance-preview.webp",
+    "full": "/assets/images/gallery/EuropeanRenaissance.webp",
+    "width": 1536,
+    "height": 1024
   }
 ]

@@ -1,6 +1,12 @@
 // One rotating diagram gallery, mutually exclusive with the pitch and interest form.
-(()=>{
- const opener=document.querySelector('[data-graphic-gallery]'),panel=document.getElementById('connected-graphic-gallery');if(!opener||!panel)return;
+(async()=>{
+ const opener=document.querySelector('[data-graphic-gallery]'),panel=document.getElementById(opener?.getAttribute('aria-controls'));if(!opener||!panel)return;
+ try{
+  const response=await fetch('/assets/data/graphic-gallery.json?v=20261023-round31');if(!response.ok)throw new Error('Gallery unavailable');
+  const entries=await response.json(),stage=document.createElement('div');stage.className='graphic-gallery-stage';
+  entries.forEach((entry,i)=>{const card=document.createElement('button'),preview=document.createElement('img');card.type='button';card.className='graphic-gallery-item';card.dataset.galleryIndex=String(i);card.dataset.galleryFull=entry.full;card.setAttribute('aria-label','View '+entry.title);Object.assign(preview,{src:entry.src,alt:entry.title,width:entry.width,height:entry.height,loading:'lazy',decoding:'async'});card.append(preview);stage.append(card)});
+  panel.append(stage);const controls=document.createElement('div');controls.className='graphic-gallery-controls';controls.innerHTML='<button type="button" data-gallery-prev aria-label="Previous diagram">←</button><span data-gallery-caption aria-live="polite"></span><button type="button" data-gallery-next aria-label="Next diagram">→</button><button type="button" data-gallery-expand aria-label="Enlarge diagram">⤢</button>';panel.append(controls);
+ }catch(error){opener.disabled=true;opener.title='Gallery could not load. Please refresh.';return}
  const cards=[...panel.querySelectorAll('.graphic-gallery-item')],caption=panel.querySelector('[data-gallery-caption]'),reduced=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
  let selected=0,revision=0,animations=[],open=false,zoom=1,previousOverflow='';
  const dialog=document.createElement('dialog');dialog.className='graphic-zoom-dialog';dialog.setAttribute('aria-label','Enlarged diagram');
@@ -11,7 +17,7 @@
  function closeZoom(){if(!dialog.open)return;dialog.close();document.body.style.overflow=previousOverflow;pointers.clear();opener.focus({preventScroll:true})}
  async function setOpen(next){
   const run=++revision,from=panel.hidden?0:panel.getBoundingClientRect().height;animations.forEach(a=>a.cancel());
-  if(next){const detail={waits:[]};document.dispatchEvent(new CustomEvent('once:gallery-opening',{detail}));await Promise.all(detail.waits);if(run!==revision)return;panel.hidden=false;reflect()}
+  if(next){document.dispatchEvent(new CustomEvent('once:signup-close'));document.querySelectorAll('.contact-socials[data-disclosure-open="true"]').forEach(body=>document.querySelector('[data-open-application="'+body.id+'"]')?.click());const detail={waits:[]};document.dispatchEvent(new CustomEvent('once:gallery-opening',{detail}));await Promise.all(detail.waits);if(run!==revision)return;panel.hidden=false;reflect()}
   else if(panel.hidden)return;
   if(dialog.open)closeZoom();open=next;opener.setAttribute('aria-expanded',String(open));panel.inert=!open;
   const height=panel.scrollHeight,time=reduced()?0:650,easing='cubic-bezier(.22,1,.36,1)';panel.dataset.state=open?'opening':'closing';
@@ -33,5 +39,6 @@
  for(const type of ['pointerup','pointercancel'])viewport.addEventListener(type,event=>{pointers.delete(event.pointerId);drag=null});
  viewport.addEventListener('wheel',event=>{if(event.ctrlKey||event.metaKey){event.preventDefault();applyZoom(zoom*Math.exp(-event.deltaY*.01))}},{passive:false});window.addEventListener('resize',()=>{if(dialog.open)fit()});
  for(const type of ['once:pitch-opening','once:application-opening'])document.addEventListener(type,event=>{if(open||!panel.hidden)event.detail.waits.push(setOpen(false))});
+ for(const type of ['once:email-opening','once:social-opening'])document.addEventListener(type,()=>{if(open)setOpen(false)});
  document.addEventListener('click',event=>{if(!open||dialog.open||panel.contains(event.target)||opener.contains(event.target))return;setOpen(false)},true);reflect();
 })();

@@ -1,0 +1,41 @@
+/* The closing artwork scales naturally with its column, just like the opposite card. */
+.connected-oracle-row>.connected-iridescent-element{
+ align-self:center;aspect-ratio:832/1248;height:auto!important;
+ display:block;min-height:0;
+}
+.connected-oracle-row>.connected-iridescent-element img{width:100%;height:auto!important;object-fit:contain}
+/* Keep each couplet close in space while each line has its own scroll reveal. */
+.concept-page .concept-intro .concept-intro-line{opacity:1;transform:none}
+.concept-poem-line{display:block;opacity:var(--intro-opacity,0);transform:translateY(var(--intro-lift,12px));will-change:opacity,transform}
+.concept-poem-line+.concept-poem-line{margin-top:.55em}
+/* Four actions remain together at tablet and larger widths. */
+.concept-contact .contact-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(7px,1.2vw,18px);width:100%}
+.concept-contact .contact-actions>.colour-burst-button{min-width:0;width:100%;font-size:clamp(12px,1.55vw,18px)!important;padding:14px clamp(5px,1.3vw,23px);white-space:nowrap}
+.concept-contact .concept-graphic-gallery{margin:20px 0 0}
+.concept-contact:has(.concept-graphic-gallery:not([hidden])) .concept-film-stage{margin-top:28px!important}
+/* Each feature owns its associated visual, in reading order. */
+.community-restored-support>.community-diagram-row,
+.community-restored-support>.community-lifestyle{grid-column:1/-1;width:100%;margin-block:28px}
+.community-lifestyle{grid-template-columns:1fr}
+.community-lifestyle>.community-copy{max-width:1000px;margin-inline:auto}
+.community-restored-grid>.community-potential-media img{display:block;width:100%;height:auto;max-height:500px;object-fit:contain}
+.community-restored-grid.community-digital-section>.community-digital-media{margin:0!important;overflow:visible}
+.community-restored-grid.community-digital-section>.community-digital-media>img{width:100%!important;max-width:100%!important;max-height:680px!important;object-fit:contain}
+@media(max-width:800px){
+ .community-restored .community-row>.community-copy{grid-column:1;grid-row:1}
+ .community-restored .community-row>.community-art{grid-column:1;grid-row:2}
+ .community-restored-support>.community-diagram-row{display:grid;grid-template-columns:1fr!important}
+ .community-restored .community-row>.community-art{margin-block:12px 24px}
+ .community-restored-support .community-restored-grid{row-gap:28px!important}
+ .community-restored-grid>.community-potential-media{margin-bottom:28px!important}
+ .community-restored-grid>.community-trust-media{margin:0 0 28px!important}
+ .community-restored-grid>.community-friends-blob{margin-bottom:28px!important}
+}
+@media(max-width:479px){
+ .concept-contact .contact-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .concept-contact .contact-actions>.colour-burst-button{font-size:14px!important}
+}
+@media(max-width:800px){
+ .community-lifestyle{gap:28px}
+ .community-lifestyle>.community-personal-map{width:min(660px,100%);margin:0 auto!important}
+}
