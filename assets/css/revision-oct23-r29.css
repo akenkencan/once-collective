@@ -1,0 +1,26 @@
+/* Menu proportions, with identical geometry for the base and coloured label. */
+body .nav-menu-wrapper[data-menu-open] .nav-menu{width:clamp(306px,28.8vw,414px);padding-top:calc(var(--site-logo-centre,50px) + 73px)!important}
+#welcome-site-menu{width:clamp(306px,28.8vw,414px)!important;padding-top:calc(var(--site-logo-centre,38px) + 73px)!important}
+.menu-page-zone{flex-basis:calc(38% - 28px);min-height:196px;margin-bottom:60px;align-self:stretch;min-width:0}
+body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:clamp(30.6px,5.78vh,54.4px)!important}
+.nav-menu .nav-link>.burst-label,#welcome-site-menu .welcome-menu-word>.burst-label{display:block!important;width:100%;text-align:left!important;line-height:inherit}
+.nav-menu .nav-link>.burst-ink,#welcome-site-menu .welcome-menu-word>.burst-ink{display:block!important;inset:0!important;padding:0!important;text-align:left!important;line-height:inherit;justify-content:flex-start!important}
+.nav-menu .nav-link>.burst-ink>.med-word{width:100%;box-sizing:border-box}
+#welcome-site-menu .welcome-menu-word{display:block;width:100%;box-sizing:border-box}
+@media(max-width:740px){
+ body .nav-menu-wrapper[data-menu-open] .nav-menu,#welcome-site-menu{width:min(82.8vw,351px)!important}
+ .menu-page-zone{min-height:178.5px}
+ body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:clamp(28.9px,5.44vh,46.75px)!important}
+}
+@media(max-height:680px){
+ .menu-page-zone{min-height:144.5px;flex-basis:calc(34% - 20px);margin-bottom:40px}
+ body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:28.9px!important}
+}
+/* The opening bends the live text; no cloned rows or image handoff. */
+.home-depth-row.home-on-roller{will-change:transform,filter;transform-style:preserve-3d}
+
+.ark-private-art>picture,.ark-private-art>picture>img{display:block;width:100%;height:auto}
+
+body.page-home .home-on-roller .large-word{filter:blur(calc(14px * var(--roller-blur-scale,1)))!important}
+body.page-home .home-on-roller .med-word{filter:blur(calc(10px * var(--roller-blur-scale,1)))!important}
+body.page-home .home-on-roller .small-word{filter:blur(calc(8px * var(--roller-blur-scale,1)))!important}
