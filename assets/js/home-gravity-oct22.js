@@ -21,7 +21,7 @@
   layers.forEach(({wrap,index})=>{let y=first+(last-first)*index/(layers.length-1);if(index===0)y-=innerHeight*.025;wrap.style.top=(y-innerHeight*heights[index]/200)+'px';wrap.dataset.homeY=y.toFixed(3);const map=layers[index].map,h=innerHeight*heights[index]/100;map.setAttribute('x',String(-innerWidth));map.setAttribute('y',String(-h));map.setAttribute('width',String(innerWidth*3));map.setAttribute('height',String(h*3))});return true;
  }
  function finish(){
-  finished=true;links.forEach(link=>link.style.setProperty('--opening-y','0px'));
+  finished=true;root.style.setProperty('--home-start-scale','1');links.forEach(link=>link.style.setProperty('--opening-y','0px'));
   layers.forEach(({wrap,bend})=>{bend.setAttribute('scale','0');wrap.style.transform='none';wrap.style.filter='none';wrap.style.opacity='1';wrap.classList.remove('home-on-roller')});
   root.classList.remove('home-gravity-opening');document.body.classList.add('home-gravity-complete');document.body.dataset.homeOpening='settled';text.style.visibility='';cancelAnimationFrame(frame);frame=0;document.dispatchEvent(new CustomEvent('once:home-ready'));if(!desktop.matches||reduced.matches)arm();
  }
@@ -29,12 +29,12 @@
   frame=0;if(!geometry&&!layout()){frame=requestAnimationFrame(paint);return}if(!started)started=now;
   if(reduced.matches||!desktop.matches){finish();return}
   // Preserve the original inOutCubic spread and the star's quarter-duration delay.
-  // The duration is stretched uniformly, so their relative movement stays intact.
-  const elapsed=now-started-450,duration=3200,starDelay=duration*.25;
+  // The shorter timeline retains the stagger; type starts with the first outward movement.
+  const elapsed=now-started-120,duration=2100,starDelay=duration*.20;
   const progress=links.map((_,index)=>cubic(clamp((elapsed-(index===0?starDelay:0))/duration)));
   document.body.classList.add('home-opening-ready');text.style.visibility='visible';document.body.dataset.homeOpening=elapsed<=0?'together':'spreading';
   links.forEach((link,index)=>link.style.setProperty('--opening-y',((geometry.centre-geometry.centres[index])*(1-progress[index]))+'px'));
-  const p=progress[0];root.style.setProperty('--home-opening-progress',p);
+  const p=cubic(clamp(elapsed/(duration*.9)));root.style.setProperty('--home-start-scale',String(1+.05*(1-p)));root.style.setProperty('--home-opening-progress',p);
   for(const {wrap,index,bend} of layers){const y=Number(wrap.dataset.homeY),side=index<3?-1:1,radius=innerHeight*.48,angle=(1-p)*Math.PI/2,curve=Math.sin(p*Math.PI);
    // Tangent, depth and curved ink flatten continuously into their existing DOM position.
    wrap.style.transform=`perspective(1200px) translate3d(0,${(geometry.centre-y)*(1-p)+side*curve*innerHeight*.035}px,${-radius*(1-Math.cos(angle))}px) rotateX(${side*88*(1-p)}deg)`;

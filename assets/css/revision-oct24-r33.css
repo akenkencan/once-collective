@@ -1,0 +1,87 @@
+/* Neutral page labels are independent of Webflow's current-page and pointer-focus styles. */
+body .nav-menu .nav-link>.burst-label .med-word,
+#welcome-site-menu .welcome-menu-word>.burst-label{color:#96958f!important;opacity:1!important}
+body .nav-menu .nav-link:is(:hover,:focus-visible)>.burst-label .med-word,
+#welcome-site-menu .welcome-menu-word:is(:hover,:focus-visible)>.burst-label{color:#e6e2d8!important}
+.menu-page-zone{min-height:212px;flex-basis:calc(40.7% - 28px);gap:5px}
+@media(max-width:740px){.menu-page-zone{min-height:191px}}
+@media(max-height:680px){.menu-page-zone{min-height:155px}}
+@media(min-width:992px){
+ body.page-home .icon-wrap[data-oil-symbol=square]{top:-2px}
+ html.home-gravity-opening body.page-home .icon-wrap[data-oil-symbol] .oil-face{scale:var(--home-start-scale,1.05)}
+}
+/* A restrained pastel field replaces the oversized architecture heading. */
+.community-restored-support>.c--heading{
+ font-size:clamp(15px,1.5vw,22px)!important;line-height:1.5!important;
+ background:linear-gradient(105deg,#f5d5c3,#e5c7e7,#c6cff4,#bee4e0,#e9e7c5,#f5d5c3);
+ background-size:220% 100%;background-clip:text;-webkit-background-clip:text;color:transparent!important;
+ animation:community-pastel-field 24s ease-in-out infinite alternate;
+}
+@keyframes community-pastel-field{to{background-position:100% 50%}}
+/* Larger resource illustration rests on the closing line rather than the bird frame above. */
+.community-restored-grid>.community-potential-media{align-self:end!important;overflow:visible;min-width:0}
+.community-restored-grid>.community-potential-media>img{width:120%!important;max-width:none!important;max-height:none!important;height:auto!important;transform:translateX(-8.333%)!important;display:block;margin:0!important}
+.community-restored-support>.community-lifestyle{margin-top:0!important;margin-bottom:12px}
+/* The two new lines share space with the right-aligned, single-framed spiral. */
+.concept-stewardship-composition{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,64px);align-items:center;margin-top:32px}
+.concept-stewardship-composition>.blocktext{margin:0!important;width:100%!important}
+.concept-darling-art{display:block;width:100%;margin:0;border:1px solid #bca984;box-sizing:border-box}
+.concept-darling-art img{width:100%;height:auto;display:block}
+.concept-page .concept-art-project-line{margin-top:2.6em!important}
+/* Crop only the requested source edges, retaining the high-quality image variants. */
+.connected-copy>.connected-volcano-crop{position:relative;aspect-ratio:2534.4/1404;overflow:hidden}
+.connected-volcano-crop>img{position:absolute;left:0;top:0;width:101.010101%!important;max-width:none!important;height:102.564103%!important;object-fit:fill}
+/* Both ending cards retain their proportions and share identical vertical boundaries. */
+.connected-oracle-row>.connected-iridescent-element{width:118.954248%!important;max-width:333.071895px;aspect-ratio:832/1248}
+.connected-oracle-row>.connected-iridescent-element img{width:100%;height:auto!important}
+/* Silver and gold flank the plant and its text, with a clear buffer at either side. */
+.connected-card-invitation{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.7fr) minmax(0,.72fr);gap:clamp(24px,4vw,70px);width:100%;max-width:80vw;align-items:center;margin:20px 0}
+.invitation-card{margin:0;width:100%;max-width:280px;justify-self:center}
+.invitation-card img{display:block;width:100%;height:auto}
+.connected-invitation-copy{display:flex;flex-direction:column;align-items:center;gap:28px;min-width:0}
+.connected-invitation-copy .connected-relic{width:min(65%,220px);margin:0}
+.connected-invitation-copy .connected-relic img{display:block;width:100%;height:auto}
+.connected-invitation-copy>.connected-passage{width:100%!important;margin:0!important;font:400 clamp(17px,1.4vw,22px)/1.65 var(--font-body)!important;text-align:center}
+/* Four outer artefacts retain the original two inner elements beside the passage. */
+.found-page .found-framed-copy{grid-template-columns:minmax(45px,.4fr) minmax(65px,.6fr) minmax(0,4fr) minmax(65px,.6fr) minmax(45px,.4fr);gap:clamp(14px,2vw,32px)}
+.found-central-objects{display:contents}
+.found-page .found-framed-copy>.found-framed-text{grid-column:3;grid-row:1}
+.found-sun{grid-column:2;grid-row:1}.found-botanical{grid-column:4;grid-row:1}
+.found-artefact-rail{grid-row:1;align-self:stretch;display:flex;flex-direction:column;justify-content:space-around;gap:40px;padding-block:20px;min-width:0}
+.found-artefact-left{grid-column:1}.found-artefact-right{grid-column:5}
+.found-artefact-rail img{width:100%;height:auto;max-height:140px;object-fit:contain;opacity:.88}
+.found-main-heading>span{will-change:opacity,transform,letter-spacing,filter}
+@media(max-width:1100px){
+ .found-page .found-framed-copy{grid-template-columns:65px minmax(0,1fr) 65px;gap:20px}
+ .found-page .found-framed-copy>.found-framed-text{grid-column:2;grid-row:1}
+ .found-artefact-left{grid-column:1}.found-artefact-right{grid-column:3}
+ .found-central-objects{display:flex;grid-column:1/-1;grid-row:2;justify-content:center;align-items:center;gap:50px}
+ .found-central-objects>.found-side-element{width:22%;max-height:180px;object-fit:contain}
+}
+@media(max-width:800px){
+ .community-restored-grid>.community-potential-media>img{width:100%!important;max-width:100%!important;transform:none!important}
+ .community-restored-grid>.community-potential-media{margin-bottom:16px!important}
+ .connected-oracle-row>.connected-iridescent-element{max-width:178.431373px}
+ .connected-card-invitation{max-width:90vw;gap:18px;grid-template-columns:minmax(0,.65fr) minmax(0,1.7fr) minmax(0,.65fr)}
+ .connected-invitation-copy{gap:18px}
+}
+@media(max-width:600px){
+ .concept-stewardship-composition{grid-template-columns:1fr}
+ .concept-darling-art{width:72%;justify-self:end}
+ .connected-card-invitation{grid-template-columns:1fr 1fr;gap:24px}
+ .connected-invitation-copy{grid-column:1/-1;grid-row:1}
+ .invitation-card{width:75%;max-width:160px;grid-row:2}
+ .invitation-silver{grid-column:1}.invitation-gold{grid-column:2}
+ .found-page .found-framed-copy{grid-template-columns:34px minmax(0,1fr) 34px;gap:12px}
+ .found-framed-text .heading-23{font-size:clamp(22px,5vw,30px)!important}
+ .found-framed-text .heading-18{font-size:clamp(26px,6vw,36px)!important}
+}
+@media(max-width:520px){.connected-oracle-row>.connected-iridescent-element{width:89.215686%!important}}
+@media(prefers-reduced-motion:reduce){.community-restored-support>.c--heading{animation:none}.found-main-heading>span{will-change:auto}}
+.community-restored-grid.community-resources>div:first-child{align-self:end!important}
+.community-restored-grid>.community-potential-media>img{max-height:528px!important;aspect-ratio:179/168;object-fit:contain}
+.concept-trickster>img{border:0!important;box-shadow:none!important}
+.menu-page-zone>.nav-link.colour-burst-button{opacity:1!important}
+.connected-invitation-copy>.connected-passage{font-size:clamp(20px,1.8vw,28px)!important}
+@media(max-width:800px){.connected-invitation-copy>.connected-passage{font-size:17px!important}}
+.community-restored-grid>.community-potential-media>img{flex:none;transform:none!important}

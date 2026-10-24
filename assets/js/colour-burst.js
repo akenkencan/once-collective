@@ -34,10 +34,11 @@
   }
   function on(){clearTimeout(fadeTimer);element.classList.remove('is-colour-fading');wanted=true;element.classList.add('is-bursting');if(!active){active=true;last=0;lastStep=performance.now();paint(lastStep)}else if(reduced.matches)paint(performance.now()+33)}
   function off(){if(home){element.classList.add('is-colour-fading');clearTimeout(fadeTimer);fadeTimer=setTimeout(()=>{wanted=false;reveal=0;active=false;cancelAnimationFrame(frame);element.classList.remove('is-bursting');element.dataset.burstState='idle'},900);return;}wanted=false;if(reduced.matches){reveal=0;active=false;cancelAnimationFrame(frame);element.classList.remove('is-bursting');element.dataset.burstState='idle'}}
-  element.addEventListener('pointerenter',on);element.addEventListener('pointerleave',()=>{if(!element.matches(':focus-visible'))off()});element.addEventListener('focus',on);element.addEventListener('blur',off);
+  element.addEventListener('pointerenter',on);element.addEventListener('pointerleave',()=>{if(!element.matches(':focus-visible'))off()});element.addEventListener('focus',()=>{if(element.matches(':focus-visible'))on()});element.addEventListener('blur',off);
   element.addEventListener('once:motion',event=>{paused=event.detail.paused});const api={on,off};registry.set(element,api);return api;
  }
  document.querySelectorAll('[data-colour-burst]').forEach(el=>{const label=document.createElement('span');label.className='burst-label';while(el.firstChild)label.append(el.firstChild);el.append(label);const ink=label.cloneNode(true);ink.className='burst-ink';ink.setAttribute('aria-hidden','true');el.append(ink);const surface=document.createElement('span');surface.className='burst-surface';surface.setAttribute('aria-hidden','true');el.prepend(surface);attach(el,surface)});
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)registry.forEach((api,element)=>{if(element.matches(':hover')||document.activeElement===element||element.classList.contains('is-energized'))api.on()})});
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)registry.forEach((api,element)=>{if(element.matches(':hover')||element.matches(':focus-visible')||element.classList.contains('is-energized'))api.on();else api.off()})});
+ document.querySelectorAll('.nav-menu-wrapper,#welcome-site-menu').forEach(menu=>new MutationObserver(()=>{const open=menu.tagName==='DIALOG'?menu.open:menu.dataset.menuOpen==='true';if(!open)registry.forEach((api,element)=>{if(menu.contains(element)){api.off();element.classList.remove('is-bursting')}})}).observe(menu,{attributes:true,attributeFilter:['data-menu-open','open']}));
  window.ONCEColourBurst={attach};
 })();
