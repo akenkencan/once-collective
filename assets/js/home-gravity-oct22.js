@@ -16,7 +16,7 @@
  const clamp=t=>Math.max(0,Math.min(1,t)),cubic=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
  function layout(){
   const row=links[0].parentElement;if(!links[0].offsetHeight||!row.getBoundingClientRect().height){geometry=null;return false}
-  const origin=row.getBoundingClientRect().top,centres=links.map(link=>origin+link.offsetTop+link.offsetHeight/2),centre=centres[2];
+  const origin=row.getBoundingClientRect().top,centres=links.map(link=>link.getBoundingClientRect().top+link.getBoundingClientRect().height/2-(Number.parseFloat(link.style.getPropertyValue('--opening-y'))||0)),centre=centres[2];
   geometry={centres,centre};const first=desktop.matches?centres[0]:innerHeight*.15,last=desktop.matches?centres[4]:innerHeight*.89;
   layers.forEach(({wrap,index})=>{let y=first+(last-first)*index/(layers.length-1);if(index===0)y-=innerHeight*.025;wrap.style.top=(y-innerHeight*heights[index]/200)+'px';wrap.dataset.homeY=y.toFixed(3);const map=layers[index].map,h=innerHeight*heights[index]/100;map.setAttribute('x',String(-innerWidth));map.setAttribute('y',String(-h));map.setAttribute('width',String(innerWidth*3));map.setAttribute('height',String(h*3))});return true;
  }
@@ -38,7 +38,7 @@
   for(const {wrap,index,bend} of layers){const y=Number(wrap.dataset.homeY),side=index<3?-1:1,radius=innerHeight*.48,angle=(1-p)*Math.PI/2,curve=Math.sin(p*Math.PI);
    // Tangent, depth and curved ink flatten continuously into their existing DOM position.
    wrap.style.transform=`perspective(1200px) translate3d(0,${(geometry.centre-y)*(1-p)+side*curve*innerHeight*.035}px,${-radius*(1-Math.cos(angle))}px) rotateX(${side*88*(1-p)}deg)`;
-   bend.setAttribute('scale',String(innerHeight*heights[index]/100*.95*curve));wrap.style.setProperty('--roller-blur-scale',String(.45+.55*p));wrap.style.opacity=String(Math.min(1,p*6));
+   bend.setAttribute('scale',String(innerHeight*heights[index]/100*.95*curve));wrap.style.setProperty('--roller-blur-scale',String(2-p));wrap.style.opacity=String(Math.min(1,p*6));
   }
   if(elapsed>=duration+starDelay){finish();return}frame=requestAnimationFrame(paint);
  }

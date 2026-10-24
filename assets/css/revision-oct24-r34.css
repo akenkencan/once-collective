@@ -1,0 +1,59 @@
+/* All five opening marks share exactly the same artwork box. */
+@media(min-width:992px){body.page-home .fullscreen-section:not(.overlay) .icon-wrap[data-oil-symbol]{width:14vh!important;height:14vh!important}}
+/* Webflow hover styles cannot leave ink sharp after its temporary owner returns. */
+html:not(.home-gravity-opening) body.page-home .fullscreen-section:not(.overlay) [data-symbol-word]:not(.is-word-lifted):not(.home-word-direct-focus){filter:blur(var(--home-word-rest-blur,8px))!important;opacity:.6!important}
+/* The panel sheds one 8vh symbol column; its five marks use one shared size. */
+body .nav-menu-wrapper[data-menu-open] .nav-menu,#welcome-site-menu{width:clamp(256px,calc(28.8vw - 8vh),342px)!important;container-type:inline-size}
+body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:clamp(27px,min(6.8vh,19cqi),54.4px)!important}
+body .nav-menu .nav-engine-row,#welcome-site-menu .nav-engine-row{grid-template-columns:clamp(46px,6.2vh,70px) minmax(0,1fr);--engine-height:clamp(42px,6.2vh,70px);gap:22px}
+body .nav-menu .nav-engine-row>a,#welcome-site-menu .nav-engine-row>a{width:100%!important;height:var(--engine-height)!important;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;min-width:0!important;max-width:none!important;margin:0!important;padding:0!important}
+body .nav-menu .nav-engine-row>a>img,#welcome-site-menu .nav-engine-row>a>img{width:100%!important;height:100%!important;object-fit:contain!important}
+body.page-home .nav-menu .credit{position:absolute!important;inset:auto 20px 5px!important;width:auto!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;font-size:5px!important;line-height:1.3!important;text-align:left}
+body.page-home .nav-menu .credit *{font-size:5px!important;line-height:1.3!important}
+/* Quarter-width art sits beside the two lines, with a doubled single border. */
+.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) minmax(80px,11.25%);gap:clamp(20px,3vw,40px);align-items:center}
+.concept-darling-art{width:100%;border-width:2px}
+.concept-page .concept-art-project-line{margin-top:1.6em!important}
+/* Each illustration belongs to its text in the document as well as on screen. */
+.community-restored-support>.community-lifestyle,.community-paired-row{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,96px);align-items:center;width:100%;margin:44px 0!important}
+.community-restored-support>.community-lifestyle .community-copy{text-align:left!important;width:100%!important;margin:0!important}
+.community-lifestyle>.community-lifestyle-art{display:block;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+.community-lifestyle-art>img{display:block;width:100%!important;max-width:100%!important;height:auto!important;max-height:580px;object-fit:contain}
+.community-accumulate>.community-potential-media{width:100%;align-self:end!important;margin:0!important}
+.community-accumulate>.community-potential-media>img{display:block;width:100%!important;max-width:100%!important;height:auto!important;max-height:580px!important;object-fit:contain;transform:none!important;margin:0!important}
+.community-paired-row>.feature,.community-paired-row>div{width:100%!important;max-width:none!important;margin:0!important;text-align:left!important;min-width:0}
+.community-trust{align-items:end;margin-bottom:24px!important}
+.community-trust>.community-trust-media{width:100%!important;max-width:none!important;margin:0!important;align-self:center}
+.community-trust-media>img{display:block;width:100%!important;max-width:100%!important;height:auto!important;max-height:600px;object-fit:contain;margin:0!important}
+.community-trust .mainpara{margin-bottom:0!important}
+.community-restored-support>.community-freedom-row{margin-top:24px!important}
+/* Half the previous crop, preserving the original high-resolution source. */
+.connected-copy>.connected-volcano-crop{aspect-ratio:2547.2/1422}
+.connected-volcano-crop>img{width:100.502513%!important;height:101.265823%!important}
+.connected-iridescent-element{isolation:auto!important}
+.connected-iridescent-element>img{mix-blend-mode:lighten}
+/* A wider exposure pass develops each phrase independently as it enters view. */
+.found-signal-line{display:block;perspective:900px}
+.found-signal-ink{display:block;transform-origin:50% 70%}
+.found-signal-heading.is-exposing .found-signal-ink{will-change:clip-path,transform,filter,opacity;clip-path:inset(0 calc((1 - var(--exposure,1))*100%) 0 0);opacity:calc(.15 + .85*var(--exposure,1));filter:blur(calc((1 - var(--exposure,1))*3px));transform:translateY(calc((1 - var(--exposure,1))*24px)) rotateX(calc((1 - var(--exposure,1))*18deg));letter-spacing:calc((1 - var(--exposure,1))*.035em)}
+.found-signal-heading.is-exposing .found-signal-line:nth-child(2) .found-signal-ink{clip-path:inset(0 0 0 calc((1 - var(--exposure,1))*100%))}
+.found-signal-heading.is-exposing .found-signal-line:nth-child(3) .found-signal-ink{clip-path:inset(0 calc((1 - var(--exposure,1))*50%))}
+@media(max-width:800px){
+ .community-restored-support>.community-lifestyle,.community-paired-row{grid-template-columns:1fr;gap:28px;margin-block:36px!important}
+ .community-accumulate>.feature,.community-trust>div{grid-row:1}
+ .community-accumulate>.community-potential-media,.community-trust>.community-trust-media{grid-row:2}
+ .community-lifestyle-art>img,.community-trust-media>img{max-height:450px!important}
+ .community-trust{margin-bottom:16px!important}
+ .community-restored-support>.community-freedom-row{margin-top:16px!important}
+}
+@media(max-width:740px){
+ body .nav-menu-wrapper[data-menu-open] .nav-menu,#welcome-site-menu{width:min(calc(82.8vw - 6.2vh),287px)!important;min-width:240px}
+ body .nav-menu .nav-engine-row,#welcome-site-menu .nav-engine-row{grid-template-columns:1fr}
+ body .nav-menu .nav-engine-row>a,#welcome-site-menu .nav-engine-row>a{width:var(--engine-height)!important}
+ body .nav-menu .nav-link .med-word,#welcome-site-menu .welcome-menu-word{font-size:clamp(27px,20cqi,46px)!important}
+}
+@media(max-width:600px){.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) 25%;gap:16px}.concept-darling-art{width:100%;justify-self:end}}
+@media(prefers-reduced-motion:reduce){.found-signal-heading.is-exposing .found-signal-ink{clip-path:none!important;opacity:1!important;filter:none!important;transform:none!important;letter-spacing:normal!important;will-change:auto}}
+.community-restored-support>.community-paired-row{grid-column:1/-1}
+@media(min-width:801px){.community-freedom-row>.c--heading{align-self:start!important;margin-top:clamp(40px,7vw,90px)!important}}
+html.home-gravity-opening .home-on-roller [data-symbol-word]{transition:none!important}

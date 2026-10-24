@@ -9,3 +9,12 @@
  function request(){if(!pending){pending=true;requestAnimationFrame(update)}}
  window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);reduced.addEventListener('change',request);document.fonts?.ready.then(request);request();
 })();
+// Opposing exposures develop the next three statements, ending in stable, clear type.
+(()=>{
+ const heading=document.querySelector('.found-signal-line')?.parentElement;if(!heading)return;
+ const lines=[...heading.querySelectorAll('.found-signal-line')],reduced=matchMedia('(prefers-reduced-motion:reduce)');let pending=false;
+ heading.classList.add('found-signal-heading','is-exposing');
+ function update(){pending=false;lines.forEach(line=>{const top=line.getBoundingClientRect().top,raw=Math.max(0,Math.min(1,(innerHeight*.94-top)/(innerHeight*.42))),p=reduced.matches?1:raw*raw*(3-2*raw);line.style.setProperty('--exposure',String(p));line.dataset.exposure=p.toFixed(3)})}
+ function request(){if(!pending){pending=true;requestAnimationFrame(update)}}
+ window.addEventListener('scroll',request,{passive:true});window.addEventListener('resize',request);reduced.addEventListener('change',request);document.fonts?.ready.then(request);request();
+})();
