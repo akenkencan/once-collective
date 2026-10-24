@@ -1,0 +1,45 @@
+/* The triangle's acute tip sits inside the square during the opening stack only. */
+@media(min-width:992px){html.home-gravity-opening body.page-home .icon-wrap[data-oil-symbol=triangle] .oil-face{scale:calc(var(--home-start-scale,1) * (1 - .04 * (1 - var(--home-opening-progress,0))));translate:0 calc(.5px * (1 - var(--home-opening-progress,0)))}}
+/* Ownership changes must never interpolate an unblurred original into view. */
+body.page-home .fullscreen-section:not(.overlay) [data-symbol-word].is-word-lifted{filter:blur(var(--home-word-rest-blur,8px))!important;opacity:0!important;transition:none!important}
+html:not(.home-gravity-opening) body.page-home .fullscreen-section:not(.overlay) [data-symbol-word]:not(.is-word-lifted):not(.home-word-direct-focus){transition-property:transform!important;transform:none!important}
+/* The larger artwork rises into the reserved space beside the lighthouse sentence. */
+.concept-lighthouse-copy{display:block;width:calc(78% - clamp(20px,3vw,40px))}
+.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) 22%;align-items:center}
+.concept-stewardship-composition>.concept-darling-art{width:100%;margin-top:clamp(-100px,-8vw,-50px);margin-bottom:0;align-self:end}
+/* Each sentence shares fixed ornament rails, keeping lunar/solar pairs registered. */
+.connected-card-invitation{max-width:90vw;column-gap:clamp(52px,6vw,84px)}
+.connected-invitation-copy>.connected-symbol-lines{width:calc(100% + 112px)!important;max-width:none!important;display:flex;flex-direction:column;gap:14px}
+.connected-symbol-line{display:grid;grid-template-columns:56px minmax(0,1fr) 56px;gap:8px;align-items:center;width:100%}
+.connected-symbol-sentence{display:block;text-align:center;min-width:0}
+.connected-ornament{display:block;aspect-ratio:1;width:100%;pointer-events:none}
+.connected-ornament>img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten}
+/* A feathered aperture exposes a pastel wake, which settles completely to white. */
+.found-signal-ink{display:inline-block;max-width:100%;--ink-direction:90deg;--ink-lilac:color-mix(in srgb,#b7b9ef calc(var(--spectrum-strength,0)*100%),#eee);--ink-pink:color-mix(in srgb,#f2bad1 calc(var(--spectrum-strength,0)*100%),#eee);--ink-aqua:color-mix(in srgb,#a7e3df calc(var(--spectrum-strength,0)*100%),#eee);--ink-gold:color-mix(in srgb,#f8dfb1 calc(var(--spectrum-strength,0)*100%),#eee)}
+.found-signal-heading.is-exposing .found-signal-ink{
+ clip-path:none!important;will-change:mask-image,transform,filter,opacity;
+ color:transparent!important;-webkit-text-fill-color:transparent;background-clip:text;-webkit-background-clip:text;
+ background-image:linear-gradient(var(--ink-direction),#eee calc(var(--exposure-edge,111%) - 34%),var(--ink-pink) calc(var(--exposure-edge,111%) - 28%),var(--ink-lilac) calc(var(--exposure-edge,111%) - 21%),var(--ink-aqua) calc(var(--exposure-edge,111%) - 14%),var(--ink-gold) calc(var(--exposure-edge,111%) - 7%),#eee calc(var(--exposure-edge,111%) + 3%));
+ mask-image:linear-gradient(var(--ink-direction),#000 calc(var(--exposure-edge,111%) - 7%),transparent calc(var(--exposure-edge,111%) + 7%));
+ -webkit-mask-image:linear-gradient(var(--ink-direction),#000 calc(var(--exposure-edge,111%) - 7%),transparent calc(var(--exposure-edge,111%) + 7%));
+}
+.found-signal-heading.is-exposing .found-signal-line:nth-child(2) .found-signal-ink{--ink-direction:270deg}
+.found-signal-heading.is-exposing .found-signal-line:nth-child(3) .found-signal-ink{
+ mask-image:linear-gradient(90deg,transparent calc(50% - var(--exposure-edge,111%)/2 - 4%),#000 calc(50% - var(--exposure-edge,111%)/2 + 4%),#000 calc(50% + var(--exposure-edge,111%)/2 - 4%),transparent calc(50% + var(--exposure-edge,111%)/2 + 4%));
+ -webkit-mask-image:linear-gradient(90deg,transparent calc(50% - var(--exposure-edge,111%)/2 - 4%),#000 calc(50% - var(--exposure-edge,111%)/2 + 4%),#000 calc(50% + var(--exposure-edge,111%)/2 - 4%),transparent calc(50% + var(--exposure-edge,111%)/2 + 4%));
+ background-image:linear-gradient(90deg,#eee,var(--ink-gold) calc(50% - var(--exposure-edge,111%)/2),var(--ink-aqua) calc(57% - var(--exposure-edge,111%)/2),var(--ink-lilac) calc(63% - var(--exposure-edge,111%)/2),#eee 50%,var(--ink-lilac) calc(37% + var(--exposure-edge,111%)/2),var(--ink-aqua) calc(43% + var(--exposure-edge,111%)/2),var(--ink-gold) calc(50% + var(--exposure-edge,111%)/2),#eee);
+}
+@media(max-width:800px){
+ .connected-card-invitation{column-gap:52px}
+ .connected-invitation-copy>.connected-symbol-lines{width:calc(100% + 88px)!important}
+ .connected-symbol-line{grid-template-columns:36px minmax(0,1fr) 36px}
+}
+@media(max-width:600px){
+ .concept-lighthouse-copy{width:100%}
+ .concept-stewardship-composition{grid-template-columns:1fr}
+ .concept-stewardship-composition>.concept-darling-art{display:none}
+ .connected-card-invitation{column-gap:24px}
+ .connected-invitation-copy>.connected-symbol-lines{width:100%!important;gap:16px}
+ .connected-symbol-line{grid-template-columns:32px minmax(0,1fr) 32px}
+}
+@media(prefers-reduced-motion:reduce){.found-signal-heading.is-exposing .found-signal-ink{mask-image:none!important;-webkit-mask-image:none!important;color:#eee!important;-webkit-text-fill-color:currentColor!important;background:none!important}}
