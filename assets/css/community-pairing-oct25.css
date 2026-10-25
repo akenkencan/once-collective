@@ -1,0 +1,16 @@
+/* Each artwork keeps the sizing of its new text companion. */
+.community-accumulate>.community-once-print{align-self:center!important}
+.community-trust>.community-network-art{align-self:center}
+.community-network-art>img{width:100%!important;height:auto!important;max-height:560px;object-fit:contain;transform:none!important}
+.community-relationships>.community-friends-media{align-self:center;width:100%;margin:0}
+.community-friends-media>img{display:block;width:100%!important;max-width:100%!important;height:auto!important;max-height:540px;object-fit:contain;margin:0!important}
+/* Reserve only the heading's actual height before placing the animation underneath. */
+.community-restored-support>.community-freedom-row{grid-template-rows:min-content minmax(0,1fr);row-gap:0;align-items:start}
+.community-freedom-row>.community-friends-blob{align-self:start;margin-top:24px;transform:translateX(-4%)}
+@media(max-width:800px){
+ .community-restored-support>.community-freedom-row{grid-template-rows:auto auto auto;row-gap:24px}
+ .community-freedom-row>.c--heading{grid-column:1;grid-row:1}
+ .community-freedom-row>.community-friends-blob{grid-column:1;grid-row:2;margin:0;transform:none}
+ .community-freedom-row>.community-cloth-art{grid-column:1;grid-row:3;margin:0 auto}
+ .community-friends-media>img{max-height:450px}
+}
