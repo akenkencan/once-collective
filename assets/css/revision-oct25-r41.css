@@ -1,0 +1,58 @@
+/* Proximity laminates keep their original pigment beneath the moving light. */
+.proximity-foil{position:relative;display:block;isolation:isolate;overflow:hidden;transform:perspective(1300px) rotateX(var(--foil-rx,0deg)) rotateY(var(--foil-ry,0deg));transform-origin:center;--foil-near:0}
+.proximity-foil>img:not(.foil-colour-echo){display:block;width:100%;height:auto}
+.proximity-foil>.foil-colour-echo{position:absolute!important;inset:0;width:100%!important;height:100%!important;object-fit:fill;pointer-events:none;filter:saturate(1.85) contrast(1.06);mix-blend-mode:normal;opacity:calc(var(--foil-near,0)*.75);mask-image:radial-gradient(ellipse at var(--foil-x,50%) var(--foil-y,50%),#000 0%,#0009 24%,transparent 64%)}
+.proximity-foil.foil-card:before{opacity:calc(var(--foil-near,0)*.3);z-index:2}
+.proximity-foil.foil-card:after{opacity:calc(var(--foil-near,0)*.16);z-index:3}
+.proximity-foil>.foil-gloss{opacity:calc(var(--foil-near,0)*.48);z-index:4}
+.proximity-foil:focus-visible{outline:2px solid #e3d6bb;outline-offset:7px}
+.about-network-art>img{mix-blend-mode:normal}
+/* The oracle occupies the space immediately before the heading's star. */
+.hero-heading{display:grid;grid-template-columns:minmax(0,1fr) clamp(100px,12vw,180px);gap:clamp(24px,3vw,56px);align-items:center}
+.hero-heading .welcome-film-card{width:100%;margin:0;aspect-ratio:897/1600;cursor:pointer;box-shadow:0 8px 30px #0004}
+.welcome-film-card>.film-card-lettering{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+@media(max-width:740px){.hero-heading{grid-template-columns:minmax(0,1fr) clamp(76px,20vw,130px);gap:18px}.hero-heading h1{font-size:clamp(28px,6.7vw,48px)}.hero-heading .welcome-film-card{align-self:center}}
+@media(max-width:400px){.hero-heading{padding-right:0;gap:14px}.hero-heading>.hero-heading-symbol{top:-18px!important;width:24px!important;height:24px!important}.hero-heading h1{font-size:29px}}
+/* Give the poem breathing room without a poster-sized gap. */
+.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) clamp(160px,19vw,240px);gap:clamp(30px,4vw,64px)}
+.concept-stewardship-composition>#copy-concept-16{font:italic 400 clamp(27px,3vw,46px)/1.35 var(--font-heading)!important;background:linear-gradient(105deg,#d8dbf4,#c2e7de,#f1dbba,#e9c7df,#d8dbf4);background-size:240% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:stewardship-light 24s ease-in-out infinite alternate;margin:0}
+@keyframes stewardship-light{to{background-position:100% 50%}}
+.concept-darling-art.is-expanded{visibility:hidden}
+.artwork-viewer{padding:0;background:transparent;cursor:zoom-out}
+.artwork-viewer[open]{display:block}
+.artwork-viewer::backdrop{background:transparent;backdrop-filter:none}
+.artwork-viewer>.artwork-dimmer{position:absolute;inset:0;background:#080808b8;backdrop-filter:blur(8px);opacity:0;pointer-events:none}
+.artwork-viewer>img{position:fixed;display:block;max-width:none;max-height:none;margin:0;object-fit:fill;transform-origin:0 0;animation:none;box-shadow:0 15px 80px #0008;cursor:zoom-out}
+.artwork-viewer-close{z-index:2;right:16px;top:12px}
+@media(max-width:700px){.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) 25%;gap:25px}}
+@media(max-width:600px){.concept-stewardship-composition{grid-template-columns:1fr}.concept-stewardship-composition>#copy-concept-16{font-size:28px!important}}
+/* Natural document flow replaces the sticky runway. All three phrases share one direction. */
+.found-signal-scroll{min-height:0!important;margin:clamp(40px,5vw,80px) 0}
+.found-signal-stage{position:static;top:auto;padding:0}
+.found-signal-stage>.heading-45{text-align:center!important}
+.found-signal-line{display:block;text-align:center!important}
+.found-signal-line+.found-signal-line{margin-top:clamp(34px,5vw,64px)}
+.found-signal-heading.is-exposing .found-signal-line:nth-child(n) .found-signal-ink{--ink-direction:90deg;clip-path:none;transform:none;letter-spacing:normal;opacity:1;filter:blur(calc((1 - var(--exposure,1))*1.2px));background-image:linear-gradient(90deg,#eee calc(var(--exposure-edge,120%) - 34%),var(--ink-pink) calc(var(--exposure-edge,120%) - 28%),var(--ink-lilac) calc(var(--exposure-edge,120%) - 21%),var(--ink-aqua) calc(var(--exposure-edge,120%) - 14%),var(--ink-gold) calc(var(--exposure-edge,120%) - 7%),#eee calc(var(--exposure-edge,120%) + 3%));mask-image:linear-gradient(90deg,#000 calc(var(--exposure-edge,120%) - 10%),transparent calc(var(--exposure-edge,120%) + 10%));-webkit-mask-image:linear-gradient(90deg,#000 calc(var(--exposure-edge,120%) - 10%),transparent calc(var(--exposure-edge,120%) + 10%))}
+/* A full-bleed ribbon of dark liquid light with balanced space on both sides. */
+.page-found .found-disclosure{padding-block:48px;margin-block:0}
+.page-found .found-read-toggle{position:relative;width:100vw;max-width:none;margin:0 0 0 calc(50% - 50vw);transform:none;min-height:106px;background:#121314;border-color:#d5d2d136;color:#f4f0e9;z-index:0}
+.page-found .found-read-toggle::before{inset:0;z-index:0;background:linear-gradient(90deg,#1112,#111b 35%,#111e 50%,#111b 65%,#1112);opacity:1;animation:none;transform:none;transition:opacity .6s}
+.page-found .found-read-toggle:is(:hover,:focus-visible)::before{opacity:.67}
+.page-found .found-read-label{position:relative;z-index:1;color:#f4f0e9;-webkit-text-fill-color:currentColor;background:none;animation:none}
+.found-read-toggle>.found-read-indicator{position:relative;z-index:1}
+.found-liquid-bar{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.72;transition:opacity .6s}
+.found-read-toggle:is(:hover,:focus-visible)>.found-liquid-bar{opacity:1}
+.found-read-toggle[aria-expanded=true]>.found-liquid-bar{opacity:.4}
+.community-mid-apply{display:flex;justify-content:flex-start;margin:20px 0 48px}
+@media(prefers-reduced-motion:reduce){.proximity-foil{transform:none!important}.concept-stewardship-composition>#copy-concept-16{animation:none}.found-signal-heading.is-exposing .found-signal-line:nth-child(n) .found-signal-ink{mask:none;-webkit-mask:none;background:none;color:#eee;-webkit-text-fill-color:currentColor;filter:none}.found-liquid-bar{transition:none}}
+/* Remove the empty legacy availability slot before the invitation. */
+.page-found .section-5{padding-top:0}
+.page-found .section-5>.container-20{display:none}
+.page-found .found-liquid-bar{filter:saturate(1.6) brightness(1.18)}
+@media(prefers-reduced-motion:reduce){.found-signal-heading.is-exposing .found-signal-line:nth-child(n) .found-signal-ink{mask:none;-webkit-mask:none;background:none}}
+.page-found #copy-found-03>br{display:none}
+.page-found .widecontainer{margin-bottom:0!important}
+.about-signature-composition{grid-template-columns:minmax(0,1fr) minmax(180px,32%)}
+@media(max-width:800px){.about-signature-composition{grid-template-columns:1fr}}
+.page-found .found-framed-copy{margin-bottom:0!important}
+.page-found #copy-found-07{margin-bottom:0}

@@ -1,15 +1,18 @@
-// The laminate wakes as the viewer approaches; the expanded image remains still.
+// One image moves continuously between its reserved page position and the right-hand viewing area.
 (()=>{
- const card=document.querySelector('.concept-darling-art'),trigger=card?.querySelector('.concept-art-trigger'),dialog=document.querySelector('#concept-art-viewer');if(!card||!trigger||!dialog)return;
- const reduced=matchMedia('(prefers-reduced-motion:reduce)');let point=null,frame=0,near=0,rx=0,ry=0;
- function paint(){frame=0;const r=card.getBoundingClientRect();let target=0,x=.5,y=.5;
-  if(point&&!dialog.open&&!reduced.matches){const dx=Math.max(r.left-point.x,0,point.x-r.right),dy=Math.max(r.top-point.y,0,point.y-r.bottom),p=Math.max(0,1-Math.hypot(dx,dy)/180);target=p*p*(3-2*p);x=Math.max(0,Math.min(1,(point.x-r.left)/r.width));y=Math.max(0,Math.min(1,(point.y-r.top)/r.height))}
-  const tx=(y-.5)*-11.25*target,ty=(x-.5)*11.25*target;near+=(target-near)*.12;rx+=(tx-rx)*.12;ry+=(ty-ry)*.12;
-  card.style.setProperty('--foil-near',near.toFixed(4));card.style.setProperty('--foil-x',(x*100)+'%');card.style.setProperty('--foil-y',(y*100)+'%');card.style.setProperty('--foil-rx',rx+'deg');card.style.setProperty('--foil-ry',ry+'deg');
-  if(Math.abs(target-near)>.001||Math.abs(tx-rx)>.005||Math.abs(ty-ry)>.005)schedule();
+ const card=document.querySelector('.concept-darling-art'),trigger=card?.querySelector('.concept-art-trigger'),source=trigger?.querySelector('img'),dialog=document.querySelector('#concept-art-viewer'),image=dialog?.querySelector('img'),dimmer=dialog?.querySelector('.artwork-dimmer');if(!source||!dialog||!image||!dimmer)return;
+ const reduced=matchMedia('(prefers-reduced-motion:reduce)');let motion=null,shade=null,revision=0,expanded=false;
+ function destination(){const sourceBox=source.getBoundingClientRect(),h=Math.min(innerHeight*.9,(innerWidth-32)*1280/905),w=h*905/1280,right=Math.min(innerWidth-16,Math.max(w+16,sourceBox.right));return {left:right-w,top:(innerHeight-h)/2,width:w,height:h}}
+ function place(r){Object.assign(image.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'})}
+ async function move(next){
+  const run=++revision,wasOpen=dialog.open,from=wasOpen?image.getBoundingClientRect():source.getBoundingClientRect(),opacity=wasOpen?getComputedStyle(dimmer).opacity:'0';
+  motion?.cancel();shade?.cancel();expanded=next;
+  if(!wasOpen){dialog.showModal();card.classList.add('is-expanded');trigger.setAttribute('aria-expanded','true')}
+  const landing=next?destination():source.getBoundingClientRect(),hasLanding=landing.width>0&&landing.height>0,to=hasLanding?landing:from;place(to);
+  const start=`translate(${from.left-to.left}px,${from.top-to.top}px) scale(${from.width/to.width},${from.height/to.height})`,options={duration:reduced.matches?0:650,easing:'cubic-bezier(.22,.75,.22,1)',fill:'forwards'};
+  motion=image.animate([{transform:start,opacity:1},{transform:'translate(0,0) scale(1)',opacity:hasLanding?1:0}],options);shade=dimmer.animate([{opacity},{opacity:next?1:0}],options);
+  try{await motion.finished;if(run!==revision)return;motion.cancel();shade.cancel();motion=null;shade=null;dimmer.style.opacity=next?'1':'0';if(!next){dialog.close();card.classList.remove('is-expanded');trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true})}}catch{}
  }
- function schedule(){if(!frame)frame=requestAnimationFrame(paint)}
- document.addEventListener('pointermove',e=>{point={x:e.clientX,y:e.clientY};schedule()},{passive:true});document.documentElement.addEventListener('pointerleave',()=>{point=null;schedule()});window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);reduced.addEventListener('change',schedule);
- trigger.addEventListener('click',()=>{dialog.showModal();dialog.classList.add('is-visible');schedule()});
- dialog.addEventListener('click',e=>{if(e.target.tagName!=='IMG')dialog.close()});dialog.addEventListener('close',()=>{dialog.classList.remove('is-visible');trigger.focus({preventScroll:true});schedule()});
+ trigger.addEventListener('click',()=>move(true));dialog.addEventListener('click',event=>move(event.target===image?!expanded:false));dialog.addEventListener('cancel',e=>{e.preventDefault();move(false)});
+ dialog.addEventListener('close',()=>{revision++;motion?.cancel();shade?.cancel();expanded=false;card.classList.remove('is-expanded');trigger.setAttribute('aria-expanded','false')});window.addEventListener('resize',()=>{if(dialog.open&&expanded)move(source.getBoundingClientRect().width>0)});
 })();
