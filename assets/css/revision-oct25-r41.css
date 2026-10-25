@@ -55,4 +55,4 @@
 .about-signature-composition{grid-template-columns:minmax(0,1fr) minmax(180px,32%)}
 @media(max-width:800px){.about-signature-composition{grid-template-columns:1fr}}
 .page-found .found-framed-copy{margin-bottom:0!important}
-.page-found #copy-found-07{margin-bottom:0}
+.page-found #copy-found-07{margin-bottom:0!important}
