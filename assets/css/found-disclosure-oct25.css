@@ -1,0 +1,30 @@
+/* The invitation stays a single quiet band, with colour in motion while it is visible. */
+.page-found .found-read-toggle{display:flex;align-items:center;justify-content:center;gap:16px;width:100%;min-height:96px;appearance:none;border:0;border-block:1px solid #d4c8b05e;border-radius:0;background:#161715;color:#eee7d9;padding:24px;isolation:isolate;overflow:hidden;font:400 clamp(28px,4vw,44px)/1.2 var(--font-heading);transition:border-color .4s,background-color .4s}
+.found-read-toggle::before{content:"";position:absolute;inset:-80% -15%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 25% 50%,#e5d1f0 0%,transparent 35%),radial-gradient(ellipse at 72% 52%,#cce5e9 0%,transparent 38%),radial-gradient(ellipse at 50% 52%,#e8e8c7 0%,transparent 32%);opacity:.18;transform:translateX(-8%);animation:found-invitation-wash 10s ease-in-out infinite alternate;animation-play-state:paused;transition:opacity .5s}
+.found-read-label{display:inline-block;background:linear-gradient(105deg,#eee6dc 5%,#e6cef0 25%,#cce5ed 43%,#e4edcd 62%,#f1d3d8 80%,#eee6dc 95%);background-size:240% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:found-invitation-type 12s ease-in-out infinite alternate;animation-play-state:paused}
+.found-read-indicator::before{content:"+";font-size:.72em;color:#dfd9cf;display:block;transition:transform .4s}
+.found-read-toggle[aria-expanded=true] .found-read-indicator::before{content:"−"}
+.found-read-toggle[data-read-in-view=true][aria-expanded=false]::before,.found-read-toggle[data-read-in-view=true][aria-expanded=false] .found-read-label{animation-play-state:running}
+.page-found .found-read-toggle:is(:hover,:focus-visible){border-color:#e3d5f2b3;background-color:#1c1e1b}
+.found-read-toggle:is(:hover,:focus-visible)::before{opacity:.32}
+.found-read-toggle:is(:hover,:focus-visible) .found-read-indicator::before{transform:scale(1.16)}
+.found-read-toggle[aria-expanded=true]::before{opacity:.06}
+@keyframes found-invitation-wash{to{transform:translateX(8%)}}
+@keyframes found-invitation-type{to{background-position:100% 50%}}
+/* The objects, star and label are all part of the disclosed content and all close it. */
+.found-read-ending{position:relative;margin:36px 0 28px;padding:0 0 0;isolation:isolate}
+.found-read-ending::after{content:"";position:absolute;left:0;right:0;bottom:18px;height:1px;background:linear-gradient(90deg,transparent,#c9bea64d 22%,#c9bea64d 78%,transparent);z-index:-1;pointer-events:none}
+.found-read-ending>.found-closing-pair{margin:0 auto 24px}
+.found-close-artefact,.found-close-control{appearance:none;display:block;border:0;border-radius:0!important;padding:0;background:transparent;color:inherit;cursor:pointer;box-shadow:none}
+.found-closing-pair>.found-close-artefact{flex:none;width:180px;height:160px;max-width:calc(46vw - 20px);transition:transform .4s,filter .4s}
+.found-close-artefact>img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten;pointer-events:none}
+.found-close-artefact:is(:hover,:focus-visible){transform:translateY(-3px);filter:brightness(1.13)}
+.found-close-control{width:max-content;max-width:100%;margin:0 auto;text-align:center}
+.page-found .found-close-control>.found-footer-star{margin:0 auto 16px}
+.found-close-label{display:block;position:relative;width:max-content;margin:0 auto;padding:0 18px;background:#111;font:400 28px/36px var(--font-heading);color:#dfd9cb;transition:color .3s}
+.found-close-control:is(:hover,:focus-visible) .found-close-label{color:#e6d4f0}
+.found-close-control:focus-visible,.found-close-artefact:focus-visible{outline:2px solid #ded1ed;outline-offset:8px}
+@media(max-width:600px){.page-found .found-read-toggle{min-height:86px;padding:22px 16px}.found-closing-pair>.found-close-artefact{width:140px;height:140px}.found-close-label{font-size:25px}.found-read-ending{margin-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.found-read-toggle::before,.found-read-label{animation:none}.found-read-toggle,.found-close-artefact,.found-read-indicator::before{transition:none}.found-close-artefact:is(:hover,:focus-visible){transform:none}}
+body.site-unified .found-read-toggle,body.site-unified .found-read-toggle>span{font-family:var(--font-heading)!important}
+.found-read-ending>.found-closing-pair,.found-close-artefact{pointer-events:auto}

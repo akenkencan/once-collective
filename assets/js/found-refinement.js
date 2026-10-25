@@ -8,10 +8,11 @@
    const run=++revision,from=panel.hidden?0:clip.getBoundingClientRect().height;animation?.forEach(a=>a.cancel());open=next;toggle.setAttribute('aria-expanded',String(open));panel.inert=!open;
    panel.hidden=false;const height=panel.scrollHeight,time=matchMedia('(prefers-reduced-motion:reduce)').matches?0:700,easing='cubic-bezier(.22,1,.36,1)';
    const size=clip.animate([{height:from+'px'},{height:(open?height:0)+'px'}],{duration:time,easing,fill:'forwards'}),slide=panel.animate([{transform:open?'translateY(-50px)':'none',opacity:open?0:1},{transform:open?'none':'translateY(-50px)',opacity:open?1:0}],{duration:time,easing,fill:'forwards'});animation=[size,slide];
-   try{await size.finished;if(run!==revision)return;panel.hidden=!open;animation.forEach(a=>a.cancel());animation=null}catch(error){}
+   try{await size.finished;if(run!==revision)return false;panel.hidden=!open;animation.forEach(a=>a.cancel());animation=null;return true}catch(error){return false}
   }
-  document.querySelector('.found-read-close')?.addEventListener('click',()=>{setOpen(false);toggle.scrollIntoView({behavior:'smooth',block:'center'});toggle.focus({preventScroll:true})});
-  async function locatePassage(){const target=document.getElementById(location.hash.slice(1));if(target&&(target===panel||panel.contains(target))){await setOpen(true);target.scrollIntoView({block:target===panel?'start':'center'})}}panel.inert=true;locatePassage();window.addEventListener('hashchange',locatePassage);toggle.addEventListener('click',()=>setOpen(!open));toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
+  panel.addEventListener('click',event=>{if(!(event.target instanceof Element)||!event.target.closest('[data-found-close]'))return;const restore=panel.contains(document.activeElement);setOpen(false).then(done=>{if(done&&restore&&!open)toggle.focus({preventScroll:true})})});
+  const attention=new IntersectionObserver(entries=>{entries.forEach(entry=>{toggle.dataset.readInView=String(entry.isIntersecting)})},{threshold:.1});attention.observe(toggle);
+  async function locatePassage(){const target=document.getElementById(location.hash.slice(1));if(target&&(target===panel||panel.contains(target))){await setOpen(true);target.scrollIntoView({block:target===panel?'start':'center'})}}panel.inert=true;locatePassage();window.addEventListener('hashchange',locatePassage);toggle.addEventListener('click',()=>setOpen(!open));if(toggle.tagName!=='BUTTON')toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
  }
 
  // Warm at most two approaching films; one initial segment is retained until playback.
