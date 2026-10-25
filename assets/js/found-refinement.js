@@ -11,9 +11,16 @@
    try{await size.finished;if(run!==revision)return;panel.hidden=!open;animation.forEach(a=>a.cancel());animation=null}catch(error){}
   }
   document.querySelector('.found-read-close')?.addEventListener('click',()=>{setOpen(false);toggle.scrollIntoView({behavior:'smooth',block:'center'});toggle.focus({preventScroll:true})});
-  if(location.hash==='#found-read-panel'){setOpen(true);requestAnimationFrame(()=>panel.scrollIntoView({block:'start'}))}else panel.inert=true;toggle.addEventListener('click',()=>setOpen(!open));toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
+  async function locatePassage(){const target=document.getElementById(location.hash.slice(1));if(target&&(target===panel||panel.contains(target))){await setOpen(true);target.scrollIntoView({block:target===panel?'start':'center'})}}panel.inert=true;locatePassage();window.addEventListener('hashchange',locatePassage);toggle.addEventListener('click',()=>setOpen(!open));toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
  }
 
+ // Warm at most two approaching films; one initial segment is retained until playback.
+ const connection=navigator.connection,queue=[];let warming=0;
+ function pump(){while(warming<2&&queue.length){const video=queue.shift();warming++;ONCEMedia.warm(video).catch(()=>{}).finally(()=>{warming--;pump()})}}
+ if(!connection?.saveData&&!/^(slow-)?2g$/.test(connection?.effectiveType||'')){
+  const seen=new WeakSet(),warmObserver=new IntersectionObserver(entries=>{entries.filter(e=>e.isIntersecting).forEach(e=>{if(seen.has(e.target))return;seen.add(e.target);queue.push(e.target);warmObserver.unobserve(e.target)});pump()},{rootMargin:'900px'});
+  document.querySelectorAll('video[data-hls]').forEach(video=>warmObserver.observe(video));
+ }
  const films=[...document.querySelectorAll('[data-proximity-film]')].map(box=>{
   const video=box.querySelector('video');video.autoplay=false;video.loop=false;video.muted=true;video.playsInline=true;
   let near=false,active=false,finished=false,leaveTimer,fadeTimer,token=0;
@@ -32,7 +39,7 @@
   video.addEventListener('ended',()=>{finished=true;fade()});
   box.addEventListener('pointerenter',()=>{finished=false;start()});box.addEventListener('focus',()=>{finished=false;start()});function interact(){video.muted=true;video.volume=0;if(active&&!video.paused){video.pause()}else if(active){video.play().catch(()=>{})}else{finished=false;start()}}
   box.addEventListener('click',interact);box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();interact()}});
-  const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)ONCEMedia.ensure(video).catch(()=>{});else{clearTimeout(leaveTimer);fade();near=false}},{rootMargin:'200px'});observer.observe(box);
+  const observer=new IntersectionObserver(entries=>{if(!entries[0].isIntersecting){clearTimeout(leaveTimer);fade();near=false}},{rootMargin:'200px'});observer.observe(box);
   return {check,stop:fade};
  });
  let pending=false,px=-1000,py=-1000;

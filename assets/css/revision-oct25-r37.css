@@ -1,0 +1,56 @@
+/* A row has one bounded blur surface, with steady source glyphs underneath. */
+html.home-gravity-opening body.page-home .home-on-roller{overflow:clip;overflow-clip-margin:120px;backface-visibility:hidden;transform-style:flat;will-change:transform,filter,opacity}
+html.home-gravity-opening body.page-home .home-on-roller .large-word{filter:blur(14px)!important}
+html.home-gravity-opening body.page-home .home-on-roller .med-word{filter:blur(10px)!important}
+html.home-gravity-opening body.page-home .home-on-roller .small-word{filter:blur(8px)!important}
+/* A larger laminated artwork has its own corridor; it never forces the sentence beside it. */
+.concept-lighthouse-copy{width:100%}
+.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) minmax(220px,29%);gap:clamp(28px,4vw,64px);align-items:center}
+.concept-stewardship-composition>.concept-darling-art{margin:0;align-self:center}
+.concept-darling-art.foil-card{position:relative;isolation:isolate;overflow:hidden;transform:perspective(1300px) rotateX(var(--foil-rx,0deg)) rotateY(var(--foil-ry,0deg));border-radius:3px;box-shadow:inset 0 0 0 1px #fff4}
+.concept-art-trigger{display:block;width:100%;border:0;padding:0;margin:0;background:transparent;cursor:zoom-in}
+.concept-art-trigger:focus-visible{outline:2px solid #f1e6ca;outline-offset:-6px}
+.concept-art-trigger>img{display:block;width:100%;height:auto}
+.concept-darling-art.foil-card:before{opacity:calc(var(--foil-near,0)*.34)}
+.concept-darling-art.foil-card:after{opacity:calc(var(--foil-near,0)*.2)}
+.concept-darling-art>.foil-gloss{opacity:calc(var(--foil-near,0)*.42)}
+.concept-elixir{font:400 clamp(25px,2.6vw,39px)/1.4 var(--font-heading);margin:42px 0 0}
+.artwork-viewer{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:5dvh 5vw;border:0;background:#080808b8;overflow:hidden;box-sizing:border-box}
+.artwork-viewer::backdrop{background:#0808089c;backdrop-filter:blur(12px)}
+.artwork-viewer[open]{display:flex;align-items:center;justify-content:center}
+.artwork-viewer>img{display:block;width:auto;max-width:90vw;height:auto;max-height:90dvh;object-fit:contain;box-shadow:0 15px 80px #0008;animation:artwork-open .3s cubic-bezier(.22,1,.36,1)}
+.artwork-viewer-close{position:absolute;right:20px;top:14px;min-width:44px;min-height:44px;border:0;background:none;color:#eee;font:32px/1 sans-serif;cursor:pointer}
+@keyframes artwork-open{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.concept-art-reel-frame{aspect-ratio:16/9!important}
+.concept-art-reel-frame>img{width:100%!important;height:100%!important;object-fit:cover!important}
+/* The final About paragraph and its artwork have clear, separate columns. */
+.about-signature-composition{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,25%);gap:26px;align-items:end}
+.about-network-art{margin:0 0 24px;width:100%;align-self:end}
+.about-network-art>img{display:block;width:100%;height:auto;mix-blend-mode:lighten}
+/* Each phrase has a complete scroll beat and a pause before the next. */
+.found-signal-scroll{position:relative;min-height:210vh;width:100%}
+.found-signal-stage{position:sticky;top:12vh;padding-block:30px}
+.found-signal-stage>.heading-45{margin:0!important}
+.found-signal-line+.found-signal-line{margin-top:clamp(28px,4vh,50px)}
+.found-flow-accent.found-closing-pair{display:flex;justify-content:center;align-items:center;gap:clamp(24px,4vw,60px);width:max-content;max-width:92%;margin:36px auto}
+.found-flow-accent.found-closing-pair>img{flex:none;width:180px!important;height:160px!important;max-width:calc(46vw - 20px);object-fit:contain;mix-blend-mode:lighten}
+.community-digital-media{position:relative}
+.community-digital-media:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#111 0%,#111111e6 6%,#11111180 14%,transparent 22%)}
+/* Closing copy is always outside this card's own height reservation. */
+.cards-context>.welcome-card-clearance{flex:none;clear:both;isolation:isolate}
+.cards-context>.cards-ending{position:relative;z-index:1}
+.meaning-subheading{font:400 clamp(27px,2.8vw,42px)/1.25 var(--font-heading);margin:44px 0 22px}
+@media(max-width:800px){.about-signature-composition{grid-template-columns:1fr}.about-network-art{width:min(100%,300px);justify-self:center;margin:0 0 24px}.found-signal-scroll{min-height:225vh}}
+@media(max-width:700px){.concept-stewardship-composition{grid-template-columns:minmax(0,1fr) 30%;gap:24px}}
+@media(max-width:600px){.concept-stewardship-composition{grid-template-columns:1fr}.concept-stewardship-composition>.concept-darling-art{display:none}.found-signal-stage{top:9vh}.found-flow-accent.found-closing-pair>img{width:140px!important;height:140px!important}.found-signal-line+.found-signal-line{margin-top:24px}}
+@media(prefers-reduced-motion:reduce){.found-signal-scroll{min-height:0}.found-signal-stage{position:static}.artwork-viewer>img{animation:none}.concept-darling-art.foil-card{transform:none!important}}
+
+.community-freedom-row>.community-friends-blob{grid-column:1;grid-row:2;align-self:center;width:100%;max-width:none;aspect-ratio:1.9;margin:24px 0 0}
+.community-freedom-row>.community-cloth-art{grid-column:2;grid-row:1 / span 2}
+.community-friends-print{margin:0;align-self:center;width:100%}
+.community-friends-print>img{display:block;width:100%;height:auto}
+@media(max-width:800px){.community-freedom-row>.community-friends-blob{grid-column:1;grid-row:auto;aspect-ratio:1.7}.community-freedom-row>.community-cloth-art{grid-column:1;grid-row:auto}}
+
+[id^="copy-"]{scroll-margin-block:90px}
+
+html:has(#concept-art-viewer[open]){overflow:hidden}

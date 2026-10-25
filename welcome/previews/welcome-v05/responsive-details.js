@@ -3,8 +3,9 @@
  const what=document.querySelector('.what-copy'),whatEnd=document.querySelector('.what-ending'),objects=document.querySelector('.what-grid>aside'),scene=objects.querySelector('.diagram-pending');
  const cards=document.querySelector('.cards-context'),cardsEnd=document.querySelector('.cards-ending'),blue=cards.querySelector('.card-back'),right=document.querySelector('.after-form-artefacts');
  function place(){
-  if(mode.matches){if(whatEnd.parentNode!==objects)scene.before(whatEnd);if(cardsEnd.parentNode!==right)right.append(cardsEnd)}
-  else{if(whatEnd.parentNode!==what)what.append(whatEnd);if(cardsEnd.parentNode!==cards)blue.before(cardsEnd)}
+  const clearance=blue.closest('.welcome-card-clearance');if(clearance&&(cardsEnd.parentNode!==cards||cardsEnd.nextElementSibling!==clearance))clearance.before(cardsEnd);
+  if(mode.matches){if(whatEnd.parentNode!==objects)scene.before(whatEnd);}
+  else{if(whatEnd.parentNode!==what)what.append(whatEnd);}
  }
  mode.addEventListener('change',place);place();
  // Keep the intermediate Symset image inside the existing lens area.

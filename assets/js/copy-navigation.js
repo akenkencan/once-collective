@@ -1,0 +1,2 @@
+// Editorial links open their native disclosure before locating the passage.
+(()=>{function locate(){const target=document.getElementById(location.hash.slice(1));if(!target||!target.id.startsWith('copy-')||target.closest('.found-read-panel'))return;let parent=target.parentElement;while(parent){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement}requestAnimationFrame(()=>target.scrollIntoView({block:'center'}))}window.addEventListener('hashchange',locate);if(document.fonts)document.fonts.ready.then(locate);else locate()})();
