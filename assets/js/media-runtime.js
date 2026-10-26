@@ -12,7 +12,7 @@
   if(video.readyState>=1)ready();
   if(video.dataset.hls){
    if(window.Hls?.isSupported()&&!/^((?!chrome|android).)*safari/i.test(navigator.userAgent)){
-    record.hls=new Hls(warm?{maxBufferLength:2,maxMaxBufferLength:4,maxBufferSize:4*1000*1000,backBufferLength:0,startLevel:0,capLevelToPlayerSize:true}:{maxBufferLength:20});
+    record.hls=new Hls(warm?{maxBufferLength:2,maxMaxBufferLength:4,maxBufferSize:20*1000*1000,backBufferLength:0}:{maxBufferLength:20});
     record.hls.on(Hls.Events.BUFFER_APPENDED,()=>{let ahead=0;for(let i=0;i<video.buffered.length;i++)if(video.buffered.start(i)<=video.currentTime+.1)ahead=Math.max(ahead,video.buffered.end(i)-video.currentTime);
      if(ahead>=1.5){if(!record.active&&!record.stopped){record.hls.stopLoad();record.stopped=true;video.dataset.warmStart='ready'}resolveWarm(video)}
     });

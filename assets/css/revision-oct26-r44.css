@@ -1,0 +1,35 @@
+/* A serif inscription, softly rounded laminate and a star immediately to the card's left. */
+.hero-heading{grid-template-columns:minmax(0,1fr) clamp(26px,3.4vw,48px) clamp(100px,12vw,180px);gap:clamp(18px,2vw,32px);padding-right:0!important}
+.hero-heading>h1{grid-column:1;grid-row:1}
+.hero-heading>.hero-heading-symbol{position:static!important;grid-column:2;grid-row:1;align-self:start;justify-self:center;margin-top:8px;width:100%!important;height:auto!important;max-width:48px;aspect-ratio:1;object-fit:contain}
+.hero-heading>.welcome-film-card{grid-column:3;grid-row:1;justify-self:end;border-radius:clamp(4px,.6vw,9px);outline:1px solid #e1dec66b;outline-offset:-1px;box-shadow:inset 0 0 0 2px #ffffff14,0 8px 30px #0004;overflow:hidden}
+.welcome-film-card .film-card-lettering g{font-family:var(--font-heading);font-weight:400}
+@media(max-width:740px){.hero-heading{grid-template-columns:minmax(0,1fr) 24px clamp(76px,20vw,130px);gap:12px}.hero-heading>.hero-heading-symbol{margin-top:4px;width:24px!important;height:24px!important}.hero-heading>h1{font-size:clamp(27px,6.4vw,48px)}}
+/* Three and four artefacts form distinct vertical rails beside the passage. */
+.found-page .found-framed-copy{grid-template-columns:clamp(65px,9vw,125px) minmax(0,1fr) clamp(65px,9vw,125px);gap:clamp(20px,3vw,48px)}
+.found-page .found-framed-copy>.found-framed-text{grid-column:2;grid-row:1}
+.found-page .found-framed-copy>.found-artefact-group{grid-row:1;flex-direction:column;align-self:stretch;justify-content:space-between;align-items:center;gap:24px;padding-block:10px}
+.found-page .found-framed-copy>.found-artefact-left{grid-column:1}
+.found-page .found-framed-copy>.found-artefact-right{grid-column:3}
+.found-artefact-group>img,.found-artefact-group>.found-side-element{flex:0 0 auto;width:100%!important;height:clamp(85px,9vw,125px)!important;max-width:100px;object-fit:contain}
+.found-artefact-group>.found-relic-key{max-width:48px}
+.found-artefact-group>.found-relic-tag{max-width:65px}
+@media(max-width:600px){.found-page .found-framed-copy{grid-template-columns:34px minmax(0,1fr) 34px;gap:12px;padding-inline:12px}.found-artefact-group>img,.found-artefact-group>.found-side-element{height:70px!important}.found-page .found-framed-copy>.found-artefact-group{padding-block:20px;gap:25px}}
+/* Ragged strata expose the existing Pleroma liquid beneath the page's surface. */
+.page-found .found-disclosure{overflow-anchor:none}
+.page-found .found-read-toggle{--tear-edge:polygon(0% 12%,2% 10%,4% 13%,6% 7%,9% 11%,12% 8%,15% 12%,18% 6%,21% 10%,24% 8%,27% 14%,30% 9%,33% 11%,37% 5%,40% 10%,44% 7%,47% 13%,51% 8%,54% 11%,58% 6%,61% 10%,64% 8%,68% 13%,71% 9%,74% 12%,78% 5%,81% 9%,85% 7%,88% 12%,91% 8%,94% 11%,97% 6%,100% 10%,100% 87%,98% 91%,95% 88%,92% 94%,89% 89%,85% 92%,82% 86%,79% 91%,75% 88%,72% 94%,68% 89%,65% 92%,62% 87%,58% 91%,55% 88%,51% 95%,48% 90%,45% 92%,41% 86%,38% 91%,35% 88%,32% 93%,28% 89%,25% 91%,21% 85%,18% 90%,15% 88%,11% 93%,8% 89%,5% 91%,2% 86%,0% 90%);min-height:126px;padding:30px 24px;border:0;background:transparent;overflow:visible;isolation:isolate;transition:min-height .45s cubic-bezier(.22,1,.36,1),padding .45s,font-size .45s}
+.page-found .found-read-toggle::before,.page-found .found-read-toggle::after{content:"";position:absolute;transform:none;animation:none;pointer-events:none;clip-path:var(--tear-edge);opacity:1}
+.page-found .found-read-toggle::before{inset:0;z-index:0;background:linear-gradient(125deg,#c2bfa74a,#8a789939 23%,#d7e3db4a 45%,#a1907740 70%,#a6b7c74a);filter:none}
+.page-found .found-read-toggle::after{inset:3px 0;z-index:0;background:#232423}
+.page-found .found-read-toggle>.found-tear-surface{position:absolute;inset:7px 0;z-index:1;clip-path:var(--tear-edge);pointer-events:none;background:#121314}
+.found-tear-surface>.found-liquid-bar{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.82;transition:opacity .5s;filter:none}
+.found-tear-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#1112,#111a 34%,#111e 50%,#111a 66%,#1112);transition:opacity .5s}
+.page-found .found-read-toggle>.found-read-label,.page-found .found-read-toggle>.found-read-indicator{position:relative;z-index:2}
+.page-found .found-read-toggle:is(:hover,:focus-visible){background:transparent}
+.page-found .found-read-toggle:is(:hover,:focus-visible) .found-tear-veil{opacity:.72}
+.page-found .found-read-toggle:is(:hover,:focus-visible) .found-liquid-bar{opacity:1}
+.page-found .found-read-toggle[aria-expanded=true]{min-height:68px;padding:16px 24px;font-size:30px}
+.page-found .found-read-toggle[aria-expanded=true] .found-liquid-bar{opacity:.5}
+.page-found .found-read-toggle:focus-visible{outline:2px solid #e9e0ce;outline-offset:6px}
+@media(max-width:600px){.page-found .found-read-toggle{min-height:108px;padding:25px 16px}.page-found .found-read-toggle[aria-expanded=true]{min-height:62px;padding:14px 16px;font-size:27px}}
+@media(prefers-reduced-motion:reduce){.page-found .found-read-toggle,.found-tear-veil,.found-tear-surface>.found-liquid-bar{transition:none}}
