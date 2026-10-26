@@ -1,0 +1,41 @@
+/* Sun/value/mechanism and plant/seal/access share a single vertical centre. */
+.found-page .found-framed-copy{grid-template-columns:clamp(160px,17vw,230px) minmax(0,1fr) clamp(160px,17vw,230px);gap:clamp(18px,2vw,32px)}
+.found-page .found-framed-copy>.found-framed-text{grid-column:2;grid-row:1}
+.found-page .found-framed-copy>.found-artefact-group{grid-row:1;display:flex;align-items:center;justify-content:center;align-self:center;gap:8px;min-width:0;padding:0;pointer-events:none}
+.found-page .found-framed-copy>.found-artefact-left{grid-column:1}
+.found-page .found-framed-copy>.found-artefact-right{grid-column:3}
+.found-artefact-group>img,.found-artefact-group>.found-side-element{flex:0 1 auto;min-width:0;display:block;width:var(--relic-width,60px)!important;height:160px!important;max-height:none;object-fit:contain;margin:0!important;opacity:1}
+.found-relic-coin{--relic-width:56px}.found-relic-mechanic{--relic-width:68px}.found-artefact-group>.found-sun{--relic-width:82px}.found-artefact-group>.found-botanical{--relic-width:75px}.found-relic-seal{--relic-width:60px}.found-relic-key{--relic-width:33px}.found-relic-tag{--relic-width:36px}
+@media(max-width:900px){
+ .found-page .found-framed-copy{grid-template-columns:1fr 1fr;gap:32px 18px}
+ .found-page .found-framed-copy>.found-framed-text{grid-column:1/-1;grid-row:1}
+ .found-page .found-framed-copy>.found-artefact-group{grid-row:2}
+ .found-page .found-framed-copy>.found-artefact-left{grid-column:1}
+ .found-page .found-framed-copy>.found-artefact-right{grid-column:2}
+ .found-artefact-group>img,.found-artefact-group>.found-side-element{height:110px!important}
+}
+/* White type stays above the shared Pleroma pigments and the dark central veil. */
+.page-found .found-disclosure{padding-block:clamp(64px,7vw,100px)}
+.page-found .found-liquid-bar{filter:none;opacity:.82}
+.page-found .found-read-toggle:is(:hover,:focus-visible)>.found-liquid-bar{opacity:1}
+.page-found .found-read-toggle[aria-expanded=true]>.found-liquid-bar{opacity:.55}
+.page-found .found-read-toggle>.found-read-label{color:#fff;-webkit-text-fill-color:#fff;mix-blend-mode:normal;text-shadow:0 1px 12px #000,0 0 24px #0008}
+.page-found .found-read-panel>.found-vision-section{padding-top:clamp(80px,8vw,128px)!important}
+.page-found .found-vision-copy .found-home-heading{font-size:clamp(36px,4.3vw,64px)!important;line-height:1.18!important;max-width:1000px;margin:0 auto 34px!important}
+.page-found .found-vision-copy .found-home-intro>p{font-size:clamp(21px,2.1vw,30px)!important;line-height:1.55!important;text-align:center;max-width:1000px!important;margin:0 auto 24px!important}
+.community-relationships .community-mid-apply{margin:28px 0 0}
+.community-relationships .feature>.mainpara{margin-bottom:0!important}
+/* The same zoom toolbar accompanies the selected graphic on both gallery pages. */
+.graphic-gallery-toolbar{display:flex;justify-content:center;align-items:center;padding:14px 16px 4px;position:relative;z-index:4}
+.graphic-gallery-toolbar .graphic-zoom-tools{display:flex;gap:8px}
+.graphic-gallery-toolbar button,.graphic-zoom-toolbar button,.graphic-zoom-toolbar a{display:inline-grid;place-items:center;flex:none;width:44px;height:44px;padding:0;border:1px solid #e9dfc433;background:#18191bcc;color:#eee8d9;border-radius:6px;cursor:pointer;text-decoration:none}
+.graphic-gallery-toolbar button:disabled{opacity:.35;cursor:default}
+.graphic-gallery-toolbar svg,.graphic-zoom-toolbar svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.graphic-gallery-stage{touch-action:pan-y pinch-zoom}
+.graphic-zoom-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px}
+.graphic-zoom-toolbar>.graphic-zoom-title{grid-column:1;grid-row:1;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;padding-right:12px}
+.graphic-zoom-toolbar>.graphic-zoom-tools{grid-column:2;grid-row:1;display:flex;gap:8px;justify-content:center}
+.graphic-zoom-toolbar>.graphic-zoom-actions{grid-column:3;grid-row:1;display:flex;gap:8px;justify-content:flex-end;min-width:0}
+.graphic-gallery-toolbar button:focus-visible,.graphic-zoom-toolbar :is(button,a):focus-visible{outline:2px solid #d8c7ea;outline-offset:3px}
+@media(max-width:740px){.graphic-zoom-toolbar{gap:4px}.graphic-zoom-toolbar>.graphic-zoom-title{grid-column:1/-1;grid-row:2;padding:3px 4px 1px;text-align:left;font-size:12px}.graphic-zoom-toolbar>.graphic-zoom-tools{grid-row:1}.graphic-zoom-toolbar>.graphic-zoom-actions{grid-row:1;gap:4px}}
+.page-found .found-vision-copy>.div-block-52{display:block!important}

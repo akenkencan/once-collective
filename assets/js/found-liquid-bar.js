@@ -2,12 +2,12 @@
 (()=>{
  const canvas=document.querySelector('.found-liquid-bar'),button=canvas?.closest('button');if(!button)return;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)return;
  const reduced=matchMedia('(prefers-reduced-motion:reduce)'),connection=navigator.connection;let visible=false,frame=0,last=0,time=0,hover=0,target=0,px=.5;
- const palette=[[32,39,47],[72,70,98],[94,77,89],[86,107,108],[117,111,80],[67,92,99],[60,59,90],[32,39,47]];
+ const material=window.ONCEPleromaPalette;if(!material)return;const palette=Array.from({length:6},(_,i)=>material['c'+i].slice(1).match(/../g).map(hex=>parseInt(hex,16)));palette.push(palette[0]);
  canvas.width=560;canvas.height=72;const data=ctx.createImageData(canvas.width,canvas.height);
  function draw(){const w=canvas.width,h=canvas.height,t=time;
   for(let y=0;y<h;y++)for(let x=0;x<w;x++){
    const u=x/w,v=y/h,dx=u-px,warp=Math.sin(u*9+Math.cos(v*4+t*.23)*2+t*.16),swirl=Math.sin(v*5-u*4+t*.21)+Math.cos(u*7+v*3-t*.18),field=Math.sin(u*14+warp*2.2+swirl*1.6+t*.3)+Math.cos(v*6+warp*1.3-t*.2),phase=(field*.74+swirl*.45+t*.12+8)%1;
-   const pos=phase*(palette.length-1),i=Math.floor(pos),f=pos-i,a=palette[i],b=palette[i+1],edge=Math.pow(Math.abs(Math.sin(field*3+swirl*2)),12),light=.58+edge*.48+hover*.3*Math.exp(-dx*dx*12),index=(y*w+x)*4;
+   const pos=phase*(palette.length-1),i=Math.floor(pos),f=pos-i,a=palette[i],b=palette[i+1],edge=Math.pow(Math.abs(Math.sin(field*3+swirl*2)),12),light=.82+edge*.18+hover*.08*Math.exp(-dx*dx*12),index=(y*w+x)*4;
    data.data[index]=(a[0]+(b[0]-a[0])*f)*light;data.data[index+1]=(a[1]+(b[1]-a[1])*f)*light;data.data[index+2]=(a[2]+(b[2]-a[2])*f)*light;data.data[index+3]=255;
   }ctx.putImageData(data,0,0);
  }
