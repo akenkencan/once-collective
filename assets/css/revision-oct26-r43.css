@@ -3,4 +3,3 @@
 html:has(#about-art-viewer[open]){overflow:hidden}
 .about-network-art>.concept-art-trigger{position:relative;z-index:1}
 .about-network-art.foil-card::before,.about-network-art.foil-card::after{pointer-events:none}
-
