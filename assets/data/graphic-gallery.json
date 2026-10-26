@@ -61,5 +61,12 @@
     "full": "/assets/images/gallery/EuropeanRenaissance.webp",
     "width": 1536,
     "height": 1024
+  },
+  {
+    "title": "The Human Equation",
+    "src": "/assets/images/gallery/HumanEquation-preview.webp",
+    "full": "/assets/images/gallery/HumanEquation.webp",
+    "width": 1536,
+    "height": 1024
   }
 ]

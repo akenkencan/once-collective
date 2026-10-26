@@ -1,8 +1,15 @@
 // One image moves continuously between its reserved page position and the right-hand viewing area.
 (()=>{
- const card=document.querySelector('.concept-darling-art'),trigger=card?.querySelector('.concept-art-trigger'),source=trigger?.querySelector('img'),dialog=document.querySelector('#concept-art-viewer'),image=dialog?.querySelector('img'),dimmer=dialog?.querySelector('.artwork-dimmer');if(!source||!dialog||!image||!dimmer)return;
+ document.querySelectorAll('[data-artwork-viewer]').forEach(card=>{
+ const trigger=card.querySelector('.concept-art-trigger'),source=trigger?.querySelector('img'),dialog=document.getElementById(card.dataset.artworkViewer),image=dialog?.querySelector('img'),dimmer=dialog?.querySelector('.artwork-dimmer');if(!source||!dialog||!image||!dimmer)return;
  const reduced=matchMedia('(prefers-reduced-motion:reduce)');let motion=null,shade=null,revision=0,expanded=false;
- function destination(){const sourceBox=source.getBoundingClientRect(),h=Math.min(innerHeight*.9,(innerWidth-32)*1280/905),w=h*905/1280,right=Math.min(innerWidth-16,Math.max(w+16,sourceBox.right));return {left:right-w,top:(innerHeight-h)/2,width:w,height:h}}
+ function destination(){
+  const sourceBox=source.getBoundingClientRect(),ratio=Number(source.getAttribute('width'))/Number(source.getAttribute('height'));
+  // Photographs can opt into a resolution-aware cap; tall original art still fills the screen height.
+  const cap=Number(card.dataset.artworkMaxWidth)||Infinity,pixelCap=card.hasAttribute('data-artwork-max-width')?Number(source.getAttribute('width'))/Math.min(devicePixelRatio||1,1.5):Infinity;
+  const w=Math.min(innerWidth-32,innerHeight*.9*ratio,cap,pixelCap),h=w/ratio,right=Math.min(innerWidth-16,Math.max(w+16,sourceBox.right));
+  return {left:right-w,top:(innerHeight-h)/2,width:w,height:h}
+ }
  function place(r){Object.assign(image.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'})}
  async function move(next){
   const run=++revision,wasOpen=dialog.open,from=wasOpen?image.getBoundingClientRect():source.getBoundingClientRect(),opacity=wasOpen?getComputedStyle(dimmer).opacity:'0';
@@ -15,4 +22,5 @@
  }
  trigger.addEventListener('click',()=>move(true));dialog.addEventListener('click',event=>move(event.target===image?!expanded:false));dialog.addEventListener('cancel',e=>{e.preventDefault();move(false)});
  dialog.addEventListener('close',()=>{revision++;motion?.cancel();shade?.cancel();expanded=false;card.classList.remove('is-expanded');trigger.setAttribute('aria-expanded','false')});window.addEventListener('resize',()=>{if(dialog.open&&expanded)move(source.getBoundingClientRect().width>0)});
+ });
 })();

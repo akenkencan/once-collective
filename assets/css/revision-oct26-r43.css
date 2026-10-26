@@ -1,0 +1,7 @@
+/* Keep the original layout reserved while the artwork travels into the viewing layer. */
+.about-network-art.is-expanded{visibility:hidden;transform:none}
+html:has(#about-art-viewer[open]){overflow:hidden}
+.about-network-art>.concept-art-trigger{position:relative;z-index:1}
+.about-network-art.foil-card::before,.about-network-art.foil-card::after{pointer-events:none}
+
+@media(max-width:740px){.page-community [data-open-application="community-form-body"]{font-size:18px;line-height:1.4;padding:20px;white-space:nowrap}}
