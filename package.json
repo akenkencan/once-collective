@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "bun test",
+    "payments:migrate": "bun scripts/stripe-migrate.js"
+  },
+  "dependencies": {
+    "stripe": "23.0.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.12"
+  }
+}

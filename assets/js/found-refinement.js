@@ -12,39 +12,37 @@
   }
   panel.addEventListener('click',event=>{if(!(event.target instanceof Element)||!event.target.closest('[data-found-close]'))return;const restore=panel.contains(document.activeElement);setOpen(false).then(done=>{if(done&&restore&&!open)toggle.focus({preventScroll:true})})});
   const attention=new IntersectionObserver(entries=>{entries.forEach(entry=>{toggle.dataset.readInView=String(entry.isIntersecting)})},{threshold:.1});attention.observe(toggle);
-  async function locatePassage(){const target=document.getElementById(location.hash.slice(1));if(target&&(target===panel||panel.contains(target))){await setOpen(true);target.scrollIntoView({block:target===panel?'start':'center'})}}panel.inert=true;locatePassage();window.addEventListener('hashchange',locatePassage);toggle.addEventListener('click',()=>{const opening=!open;setOpen(opening);if(opening){window.scrollTo({top:Math.max(0,scrollY+toggle.getBoundingClientRect().top-Math.min(160,innerHeight*.18)),behavior:'instant'})}});if(toggle.tagName!=='BUTTON')toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
+  async function locatePassage(){const target=document.getElementById(location.hash.slice(1));if(target&&(target===panel||panel.contains(target))){await setOpen(true);target.scrollIntoView({block:target===panel?'start':'center'})}}panel.inert=true;locatePassage();window.addEventListener('hashchange',locatePassage);toggle.addEventListener('click',()=>{const opening=!open;setOpen(opening);if(opening){window.scrollTo({top:Math.max(0,scrollY+toggle.getBoundingClientRect().top-Math.min(160,innerHeight*.18)),behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'})}});if(toggle.tagName!=='BUTTON')toggle.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(!open)}});
  }
 
- // Warm at most two approaching films; one initial segment is retained until playback.
+ // Preload one approaching film at a time; foreground playback gets the bandwidth.
  const connection=navigator.connection,queue=[];let warming=0;
- function pump(){while(warming<2&&queue.length){const video=queue.shift();warming++;ONCEMedia.warm(video).catch(()=>{}).finally(()=>{warming--;pump()})}}
+ function pump(){if(document.querySelector('video[data-playback-state="playing"]'))return;while(warming<1&&queue.length){const video=queue.shift();warming++;ONCEMedia.warm(video).catch(()=>{}).finally(()=>{warming--;pump()})}}
+ document.addEventListener('pause',pump,true);document.addEventListener('ended',pump,true);
  if(!connection?.saveData&&!/^(slow-)?2g$/.test(connection?.effectiveType||'')){
-  const seen=new WeakSet(),warmObserver=new IntersectionObserver(entries=>{entries.filter(e=>e.isIntersecting).forEach(e=>{if(seen.has(e.target))return;seen.add(e.target);queue.push(e.target);warmObserver.unobserve(e.target)});pump()},{rootMargin:'900px'});
-  document.querySelectorAll('video[data-hls]').forEach(video=>warmObserver.observe(video));
+  const seen=new WeakSet(),observer=new IntersectionObserver(entries=>{entries.filter(e=>e.isIntersecting).forEach(e=>{if(seen.has(e.target))return;seen.add(e.target);queue.push(e.target);observer.unobserve(e.target)});pump()},{rootMargin:'700px'});
+  document.querySelectorAll('video[data-hls]').forEach(video=>observer.observe(video));
  }
  const films=[...document.querySelectorAll('[data-proximity-film]')].map(box=>{
   const video=box.querySelector('video');video.autoplay=false;video.loop=false;video.muted=true;video.playsInline=true;
-  let near=false,active=false,finished=false,leaveTimer,fadeTimer,token=0;
-  function fade(){active=false;token++;box.classList.remove('is-playing');fadeTimer=setTimeout(()=>video.pause(),850)}
+  let near=false,active=false,finished=false,userPaused=false,leaveTimer,fadeTimer,token=0,startedAt=0;
+  function fade(immediate=false){clearTimeout(leaveTimer);clearTimeout(fadeTimer);active=false;token++;box.classList.remove('is-playing');if(immediate)video.pause();else fadeTimer=setTimeout(()=>video.pause(),850)}
   async function start(){
-   clearTimeout(leaveTimer);clearTimeout(fadeTimer);if(active||finished)return;
-   active=true;const run=++token;box.classList.add('is-playing');
-   try{await ONCEMedia.ensure(video);if(run!==token||!active)return;video.currentTime=0;await video.play();delete box.dataset.playbackError}
+   clearTimeout(leaveTimer);clearTimeout(fadeTimer);if(userPaused||finished)return;if(active&&!video.paused)return;
+   active=true;const run=++token;startedAt=performance.now();
+   try{await ONCEMedia.ensure(video);if(run!==token||!active)return;if(video.ended)video.currentTime=0;await video.play();if(run!==token||!active){video.pause();return}box.classList.add('is-playing');delete box.dataset.playbackError}
    catch(e){active=false;box.classList.remove('is-playing');box.dataset.playbackError=e.message||e.name}
   }
-  function check(x,y){const r=box.getBoundingClientRect(),next=r.bottom>0&&r.top<innerHeight&&x>r.left-180&&x<r.right+180&&y>r.top-180&&y<r.bottom+180;
-   if(next){clearTimeout(leaveTimer);if(!near){finished=false;start()}}
-   else if(near){leaveTimer=setTimeout(fade,1200);finished=false}
-   near=next;
-  }
+  function setNear(next){if(next){clearTimeout(leaveTimer);if(!near){finished=false;userPaused=false;start()}}else if(near){leaveTimer=setTimeout(()=>fade(),900)}near=next}
   video.addEventListener('ended',()=>{finished=true;fade()});
-  box.addEventListener('pointerenter',()=>{finished=false;start()});box.addEventListener('focus',()=>{finished=false;start()});function interact(){video.muted=true;video.volume=0;if(active&&!video.paused){video.pause()}else if(active){video.play().catch(()=>{})}else{finished=false;start()}}
+  box.addEventListener('focus',()=>{finished=false;userPaused=false;start()});
+  function interact(){video.muted=true;video.volume=0;if(active&&!video.paused&&performance.now()-startedAt>500){userPaused=true;video.pause()}else{userPaused=false;finished=false;start()}}
   box.addEventListener('click',interact);box.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();interact()}});
-  const observer=new IntersectionObserver(entries=>{if(!entries[0].isIntersecting){clearTimeout(leaveTimer);fade();near=false}},{rootMargin:'200px'});observer.observe(box);
-  return {check,stop:fade};
+  new IntersectionObserver(entries=>{if(!entries[0].isIntersecting){fade(true);near=false}},{rootMargin:'150px'}).observe(box);
+  return {box,setNear,stop:()=>fade(true)};
  });
  let pending=false,px=-1000,py=-1000;
- function update(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;films.forEach(f=>f.check(px,py))})}
- document.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;update()},{passive:true});document.addEventListener('mousemove',e=>{px=e.clientX;py=e.clientY;update()},{passive:true});window.addEventListener('scroll',update,{passive:true});
+ function update(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;const candidates=films.map(f=>{const r=f.box.getBoundingClientRect(),distance=Math.hypot(Math.max(r.left-px,0,px-r.right),Math.max(r.top-py,0,py-r.bottom));return{f,distance,centre:Math.hypot(px-(r.left+r.right)/2,py-(r.top+r.bottom)/2),visible:r.bottom>0&&r.top<innerHeight}}).filter(c=>c.visible&&c.distance<180).sort((a,b)=>a.distance-b.distance||a.centre-b.centre).slice(0,2);films.forEach(f=>f.setNear(candidates.some(c=>c.f===f)))})}
+ document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;px=e.clientX;py=e.clientY;update()},{passive:true});window.addEventListener('scroll',update,{passive:true});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)films.forEach(f=>f.stop())});
 })();
