@@ -5,7 +5,7 @@ export function eligibleLuckyEntries(data){
 }
 export function eligibleLuckyLinks(data){return eligibleLuckyEntries(data).map(entry=>entry.url)}
 export function pickLuckyDip(data,random=Math.random,recent=[]){
- if(random()<1/3)return gamma;
+ if(random()<.3)return gamma;
  const pool=eligibleLuckyEntries(data);if(!pool.length)return gamma;
  const fresh=pool.filter(entry=>!recent.includes(entry.url)),choices=fresh.length?fresh:pool,weight=entry=>entry.selected?1.35:1;
  let draw=random()*choices.reduce((sum,entry)=>sum+weight(entry),0);for(const entry of choices){draw-=weight(entry);if(draw<0)return entry.url}return choices.at(-1).url;
